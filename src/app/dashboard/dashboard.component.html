@@ -1,0 +1,23 @@
+<div class="dashboard-container">
+  <div class="welcome-card">
+    <h1>{{ 'DASHBOARD.WELCOME' | translate:{name: user?.name} }}</h1>
+    <p>{{ 'DASHBOARD.PANEL' | translate }}</p>
+    
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-value">0</span>
+        <span class="stat-label">{{ 'DASHBOARD.STATS.TASKS' | translate }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">0</span>
+        <span class="stat-label">{{ 'DASHBOARD.STATS.POINTS' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <h3>{{ 'DASHBOARD.STEPS.TITLE' | translate }}</h3>
+      <p>{{ 'DASHBOARD.STEPS.DESCRIPTION' | translate }}</p>
+      <button class="btn btn-primary">{{ 'DASHBOARD.STEPS.CTA' | translate }}</button>
+    </div>
+  </div>
+</div>

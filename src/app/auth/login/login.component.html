@@ -1,0 +1,55 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+      <p>{{ 'LOGIN.SUBTITLE' | translate }}</p>
+    </div>
+
+    <!-- Mensajes de éxito y error -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+      <button *ngIf="showResendButton" (click)="onResendVerification()" class="btn-link" style="color: white; text-decoration: underline; background: none; border: none; padding: 0; margin-left: 10px; cursor: pointer;">
+        {{ 'LOGIN.RESEND_EMAIL' | translate }}
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email" class="form-label">{{ 'LOGIN.EMAIL' | translate }}</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
+          [(ngModel)]="email"
+          name="email"
+          autocomplete="username"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">{{ 'LOGIN.PASSWORD' | translate }}</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="form-control" 
+          placeholder="••••••••"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary w-100">{{ 'LOGIN.BUTTON' | translate }}</button>
+      </div>
+    </form>
+
+    <div class="auth-footer">
+      <p>{{ 'LOGIN.NO_ACCOUNT' | translate }} <a routerLink="/register">{{ 'LOGIN.REGISTER' | translate }}</a></p>
+    </div>
+  </div>
+</div>

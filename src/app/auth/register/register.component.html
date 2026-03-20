@@ -1,0 +1,63 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>{{ 'REGISTER.TITLE' | translate }}</h2>
+      <p>{{ 'REGISTER.SUBTITLE' | translate }}</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="auth-form" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="name" class="form-label">{{ 'REGISTER.NAME' | translate }}</label>
+        <input 
+          type="text" 
+          id="name" 
+          class="form-control" 
+          [placeholder]="'REGISTER.NAME_PLACEHOLDER' | translate"
+          [(ngModel)]="name"
+          name="name"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">{{ 'REGISTER.EMAIL' | translate }}</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate"
+          [(ngModel)]="email"
+          name="email"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">{{ 'REGISTER.PASSWORD' | translate }}</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="form-control" 
+          [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate"
+          [(ngModel)]="password"
+          name="password"
+          minlength="6"
+          required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary w-100" [disabled]="!registerForm.form.valid">{{ 'REGISTER.BUTTON' | translate }}</button>
+      </div>
+    </form>
+
+    <div class="auth-footer">
+      <p>{{ 'REGISTER.HAVE_ACCOUNT' | translate }} <a routerLink="/login">{{ 'REGISTER.LOGIN' | translate }}</a></p>
+    </div>
+  </div>
+
+  <app-status-modal
+    [visible]="statusModal.visible"
+    [type]="statusModal.type"
+    [title]="statusModal.title"
+    [message]="statusModal.message"
+    (close)="closeStatus()"
+  ></app-status-modal>
+</div>

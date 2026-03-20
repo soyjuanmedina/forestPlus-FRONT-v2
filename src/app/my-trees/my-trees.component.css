@@ -1,0 +1,12 @@
+.tree-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.tree-card img {
+  transition: transform 0.5s ease;
+}
+
+.tree-card:hover img {
+  transform: scale(1.05);
+}

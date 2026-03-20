@@ -1,0 +1,73 @@
+<div class="page-header" style="margin-bottom: 2rem;">
+  <a routerLink="/lands" class="btn btn-outline" style="margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+    <i class="fa-solid fa-arrow-left"></i> {{ 'COMMON.BACK' | translate }}
+  </a>
+</div>
+
+<div *ngIf="loading" class="glass-card" style="text-align: center; padding: 3rem;">
+  <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1rem;"></i>
+  <p>{{ 'LANDS.LOADING' | translate }}</p>
+</div>
+
+<div *ngIf="error && !loading" class="glass-card error-card" style="text-align: center; padding: 3rem; color: var(--color-danger);">
+  <i class="fa-solid fa-triangle-exclamation" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+  <h2>{{ 'LANDS.NOT_FOUND' | translate }}</h2>
+  <p>{{ 'LANDS.NOT_FOUND_DESC' | translate }}</p>
+</div>
+
+<div *ngIf="land && !loading" class="land-detail-container animate-fade-in">
+  <div class="glass-card detail-card" style="padding: 0; overflow: hidden;">
+    <div class="land-hero" style="height: 400px; position: relative; background: #ccd5ae;">
+      <img [src]="land.picture || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1200&auto=format&fit=crop'" style="width: 100%; height: 100%; object-fit: cover;">
+      <div class="land-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); display: flex; align-items: flex-end; padding: 2rem;">
+        <div>
+          <h1 style="color: white; font-size: 3rem; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">{{ land.name }}</h1>
+          <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin: 0.5rem 0 0 0; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-location-dot"></i> {{ land.location || ('LANDS.UNKNOWN_LOCATION' | translate) }}
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="detail-content" style="padding: 3rem;">
+      <div class="detail-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+        
+        <div class="main-info">
+          <h2 style="color: var(--color-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-leaf"></i> {{ 'LANDS.ABOUT_LAND' | translate }}
+          </h2>
+          <!-- Aquí se renderiza el HTML provisto por el admin -->
+          <div class="html-description" [innerHTML]="land.description || ('LANDS.NO_DESCRIPTION' | translate)"></div>
+        </div>
+        
+        <div class="side-info">
+          <div class="stats-card" style="background: rgba(105, 210, 145, 0.05); border: 1px solid rgba(105, 210, 145, 0.2); border-radius: 16px; padding: 2rem;">
+            <h3 style="margin-top: 0; margin-bottom: 1.5rem; text-align: center; color: var(--color-text-dark);">
+              {{ 'LANDS.LAND_STATS' | translate }}
+            </h3>
+            
+            <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="color: var(--color-text-light);"><i class="fa-solid fa-ruler-combined"></i> {{ 'LANDS.AREA' | translate }}</span>
+              <span style="font-weight: bold; font-size: 1.1rem;">{{ land.area }} m²</span>
+            </div>
+            
+            <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="color: var(--color-text-light);"><i class="fa-solid fa-tree"></i> {{ 'LANDS.CAPACITY' | translate }}</span>
+              <span style="font-weight: bold; font-size: 1.1rem;">{{ land.maxTrees }} {{ 'LANDS.TREES' | translate }}</span>
+            </div>
+            
+            <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+              <span style="color: var(--color-text-light);"><i class="fa-solid fa-seedling"></i> {{ 'LANDS.PLANTED' | translate }}</span>
+              <span style="font-weight: bold; font-size: 1.1rem; color: var(--color-primary);">{{ land.trees?.length || 0 }} {{ 'LANDS.TREES' | translate }}</span>
+            </div>
+            
+            <button [disabled]="land.isFull" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+              {{ land.isFull ? ('LANDS.FULL_BUTTON' | translate) : ('LANDS.PLANT_HERE' | translate) }}
+            </button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

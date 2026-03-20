@@ -1,0 +1,41 @@
+<div class="page-header" style="margin-bottom: 2rem;">
+  <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ 'MENU.ADMIN.TREE_SPECIES' | translate }} 🌿</h1>
+  <p style="color: var(--color-text-light);">Explora las distintas especies de árboles que plantamos para restablecer los ecosistemas.</p>
+</div>
+
+<div class="lands-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;">
+  <!-- Loader -->
+  <div *ngIf="loading" class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+    <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1rem;"></i>
+    <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
+  </div>
+
+  <!-- Cards -->
+  <div *ngFor="let s of speciesList" class="glass-card land-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+    <div class="land-image" style="height: 200px; background: #e0f2f1; position: relative;">
+      <img [src]="s.picture || 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=600'" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+      <h3 style="margin-bottom: 0.2rem; font-size: 1.3rem;">{{ s.name }}</h3>
+      <div style="font-style: italic; color: #666; font-size: 0.9rem; margin-bottom: 1rem;">{{ s.scientificName }}</div>
+      
+      <div class="land-description" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.9rem;" [innerHTML]="s.description || 'Sin descripción disponible.'">
+      </div>
+      
+      <div class="land-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05);">
+        <div>
+          <span style="display: block; font-size: 0.7rem; color: var(--color-text-light); text-transform: uppercase;">Absorción CO₂/año</span>
+          <span style="font-weight: 700; color: #2ecc71;">{{ s.co2AbsorptionAt20 || 0 }} kg</span>
+        </div>
+        <div>
+          <span style="display: block; font-size: 0.7rem; color: var(--color-text-light); text-transform: uppercase;">Altura Típica</span>
+          <span style="font-weight: 700;">{{ s.typicalHeight || 'Variable' }} m</span>
+        </div>
+      </div>
+
+      <button [routerLink]="['/tree-species', s.id]" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; border-radius: 12px; font-size: 14px;">
+        Ver Especie
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <span class="section-badge">{{ 'HOME.HERO.BADGE' | translate }}</span>
+      <h1>{{ 'HOME.HERO.TITLE' | translate }}</h1>
+      <p>{{ 'HOME.HERO.SUBTITLE' | translate }}</p>
+      <div class="hero-actions">
+        <a routerLink="/register" class="btn btn-primary" style="font-size: 1.1rem; padding: 16px 32px;">{{ 'HOME.HERO.CTA' | translate }}</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="features-header">
+      <span class="section-badge">{{ 'HOME.FEATURES.BADGE' | translate }}</span>
+      <h2>{{ 'HOME.FEATURES.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.FEATURES.DESC' | translate }}</p>
+    </div>
+
+    <div class="features-grid">
+      <!-- 6 Benefits Cards -->
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-tree"></i></div>
+        <h3>{{ 'HOME.FEATURES.BENEFITS.B1.TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURES.BENEFITS.B1.DESC' | translate }}</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>{{ 'HOME.FEATURES.BENEFITS.B2.TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURES.BENEFITS.B2.DESC' | translate }}</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+        <h3>{{ 'HOME.FEATURES.BENEFITS.B3.TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURES.BENEFITS.B3.DESC' | translate }}</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-file-contract"></i></div>
+        <h3>{{ 'HOME.FEATURES.BENEFITS.B4.TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURES.BENEFITS.B4.DESC' | translate }}</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <h3>{{ 'HOME.FEATURES.BENEFITS.B5.TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURES.BENEFITS.B5.DESC' | translate }}</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+        <h3>{{ 'HOME.FEATURES.BENEFITS.B6.TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURES.BENEFITS.B6.DESC' | translate }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="features-header">
+      <span class="section-badge">{{ 'HOME.TESTIMONIALS.BADGE' | translate }}</span>
+      <h2>{{ 'HOME.TESTIMONIALS.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.TESTIMONIALS.DESC' | translate }}</p>
+    </div>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="testimonial-text">{{ 'HOME.TESTIMONIALS.T1.TEXT' | translate }}</p>
+        <div class="testimonial-author">
+          <img src="https://ui-avatars.com/api/?name=Ana+Adan&background=69D291&color=fff&rounded=true" alt="Ana Adán" class="author-img">
+          <div>
+            <strong>{{ 'HOME.TESTIMONIALS.T1.AUTHOR' | translate }}</strong>
+            <span>{{ 'HOME.TESTIMONIALS.T1.ROLE' | translate }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="testimonial-text">{{ 'HOME.TESTIMONIALS.T2.TEXT' | translate }}</p>
+        <div class="testimonial-author">
+          <img src="https://ui-avatars.com/api/?name=Daniel&background=358A5A&color=fff&rounded=true" alt="Daniel" class="author-img">
+          <div>
+            <strong>{{ 'HOME.TESTIMONIALS.T2.AUTHOR' | translate }}</strong>
+            <span>{{ 'HOME.TESTIMONIALS.T2.ROLE' | translate }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="testimonial-text">{{ 'HOME.TESTIMONIALS.T3.TEXT' | translate }}</p>
+        <div class="testimonial-author">
+          <img src="https://ui-avatars.com/api/?name=Fran&background=1E3A2F&color=fff&rounded=true" alt="Fran" class="author-img">
+          <div>
+            <strong>{{ 'HOME.TESTIMONIALS.T3.AUTHOR' | translate }}</strong>
+            <span>{{ 'HOME.TESTIMONIALS.T3.ROLE' | translate }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grow Section with Comparison -->
+  <section class="grow">
+    <div class="features-header">
+      <span class="section-badge">{{ 'HOME.GROW.BADGE' | translate }}</span>
+      <h2>{{ 'HOME.GROW.TITLE' | translate }}</h2>
+      <p style="margin-bottom: 50px;">{{ 'HOME.GROW.DESC' | translate }}</p>
+    </div>
+    
+    <div class="comparison-container">
+      <div class="comparison-card others-card">
+        <h3 class="comparison-title">{{ 'HOME.GROW.COMPARISON.OTHERS.TITLE' | translate }}</h3>
+        <ul class="comparison-list">
+          <li><i class="fa-solid fa-xmark" style="color:var(--color-danger)"></i> <span>{{ 'HOME.GROW.COMPARISON.OTHERS.ITEM1' | translate }}</span></li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--color-danger)"></i> <span>{{ 'HOME.GROW.COMPARISON.OTHERS.ITEM2' | translate }}</span></li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--color-danger)"></i> <span>{{ 'HOME.GROW.COMPARISON.OTHERS.ITEM3' | translate }}</span></li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--color-danger)"></i> <span>{{ 'HOME.GROW.COMPARISON.OTHERS.ITEM4' | translate }}</span></li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--color-danger)"></i> <span>{{ 'HOME.GROW.COMPARISON.OTHERS.ITEM5' | translate }}</span></li>
+        </ul>
+      </div>
+      
+      <div class="comparison-card forest-card">
+        <h3 class="comparison-title">{{ 'HOME.GROW.COMPARISON.US.TITLE' | translate }}</h3>
+        <ul class="comparison-list">
+          <li><i class="fa-solid fa-check" style="color:var(--color-primary)"></i> <span style="font-weight: 600;">{{ 'HOME.GROW.COMPARISON.US.ITEM1' | translate }}</span></li>
+          <li><i class="fa-solid fa-check" style="color:var(--color-primary)"></i> <span style="font-weight: 600;">{{ 'HOME.GROW.COMPARISON.US.ITEM2' | translate }}</span></li>
+          <li><i class="fa-solid fa-check" style="color:var(--color-primary)"></i> <span style="font-weight: 600;">{{ 'HOME.GROW.COMPARISON.US.ITEM3' | translate }}</span></li>
+          <li><i class="fa-solid fa-check" style="color:var(--color-primary)"></i> <span style="font-weight: 600;">{{ 'HOME.GROW.COMPARISON.US.ITEM4' | translate }}</span></li>
+          <li><i class="fa-solid fa-check" style="color:var(--color-primary)"></i> <span style="font-weight: 600;">{{ 'HOME.GROW.COMPARISON.US.ITEM5' | translate }}</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <div class="features-header">
+      <span class="section-badge">{{ 'HOME.CONTACT.BADGE' | translate }}</span>
+      <h2>{{ 'HOME.CONTACT.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.CONTACT.DESC' | translate }}</p>
+    </div>
+    
+    <div class="contact-form-container">
+      <form class="contact-form" (ngSubmit)="submitContact()" #contactForm="ngForm">
+        <div *ngIf="contactSuccess" class="alert alert-success" style="background:#d4edda; color:#155724; padding:15px; border-radius:10px; margin-bottom:20px;">
+          Mensaje enviado correctamente. ¡Pronto te responderemos!
+        </div>
+        <div *ngIf="contactError" class="alert alert-danger" style="background:#f8d7da; color:#721c24; padding:15px; border-radius:10px; margin-bottom:20px;">
+          Hubo un error al enviar el mensaje. Inténtalo de nuevo.
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Name" class="form-control" name="name" [(ngModel)]="contactData.name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Email" class="form-control" name="email" [(ngModel)]="contactData.email" required>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Message" class="form-control" rows="4" name="message" [(ngModel)]="contactData.message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid || sendingContact" style="width: 100%;">
+          <i *ngIf="sendingContact" class="fa-solid fa-spinner fa-spin" style="margin-right: 8px;"></i>
+          {{ 'HOME.CONTACT.SUBMIT' | translate }}
+        </button>
+      </form>
+    </div>
+  </section>
+
+</div>

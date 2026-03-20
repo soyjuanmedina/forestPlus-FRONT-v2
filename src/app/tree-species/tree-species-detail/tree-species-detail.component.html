@@ -1,0 +1,41 @@
+<div *ngIf="loading" style="text-align: center; padding: 5rem;">
+  <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--color-primary);"></i>
+  <p style="margin-top: 1rem; color: var(--color-text-light);">Cargando especie...</p>
+</div>
+
+<div *ngIf="!loading && species" class="detail-card animate-fade-in" style="margin-bottom: 2rem;">
+  <img [src]="species.picture || 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=1200'" class="hero-image" alt="Species">
+  
+  <div class="content-area">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+      <div>
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--color-text-dark);">{{ species.name }}</h1>
+        <p style="font-size: 1.2rem; color: var(--color-text-light); font-style: italic;">{{ species.scientificName }}</p>
+      </div>
+      <button routerLink="/tree-species" class="btn btn-secondary" style="border-radius: 20px; padding: 8px 20px;">
+        <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Volver
+      </button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+      <div class="description-section">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">Sobre la especie</h2>
+        <p style="color: var(--color-text); line-height: 1.8; font-size: 1.05rem;" [innerHTML]="species.description || 'No hay descripción detallada disponible para esta especie.'"></p>
+      </div>
+
+      <div class="stats-sidebar" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="stats-box">
+          <i class="fa-solid fa-cloud-arrow-down" style="font-size: 2rem; color: #2ecc71; margin-bottom: 1rem;"></i>
+          <h3 style="font-size: 0.9rem; text-transform: uppercase; color: var(--color-text-light);">Absorción CO₂ (20 años)</h3>
+          <p style="font-size: 1.8rem; font-weight: 700;">{{ species.co2AbsorptionAt20 || 0 }} <span style="font-size: 1rem; color: var(--color-text-light);">kg/año</span></p>
+        </div>
+
+        <div class="stats-box">
+          <i class="fa-solid fa-arrows-up-down" style="font-size: 2rem; color: #3498db; margin-bottom: 1rem;"></i>
+          <h3 style="font-size: 0.9rem; text-transform: uppercase; color: var(--color-text-light);">Altura Típica</h3>
+          <p style="font-size: 1.8rem; font-weight: 700;">{{ species.typicalHeight || 'N/A' }} <span style="font-size: 1rem; color: var(--color-text-light);">metros</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

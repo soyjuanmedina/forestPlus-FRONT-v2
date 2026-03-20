@@ -1,0 +1,121 @@
+<div class="admin-page animate-fade-in">
+  <div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+      <h1>{{ 'ADMIN_USERS.TITLE' | translate }}</h1>
+      <p>{{ 'ADMIN_USERS.SUBTITLE' | translate }}</p>
+    </div>
+    <button (click)="openNew()" class="btn btn-primary">
+      <i class="fas fa-plus"></i> {{ 'ADMIN_USERS.ADD_BUTTON' | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
+  </div>
+
+  <div *ngIf="!loading" class="users-table-container glass">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>{{ 'USER.NAME_LABEL' | translate }}</th>
+          <th>{{ 'USER.EMAIL_LABEL' | translate }}</th>
+          <th>{{ 'USER.ROLE_LABEL' | translate }}</th>
+          <th>{{ 'COMMON.VERIFIED' | translate }}</th>
+          <th>{{ 'COMMON.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }} {{ user.surname }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span [class]="'badge' + (user.role === 'ADMIN' ? ' badge-admin' : ' badge-user')">
+              {{ user.role }}
+            </span>
+          </td>
+          <td>
+            <span [class]="'verify-dot' + (user.emailVerified ? ' verified' : ' pending')"></span>
+            {{ user.emailVerified ? ('COMMON.YES' | translate) : ('COMMON.NO' | translate) }}
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button (click)="editUser(user)" class="btn-icon" [title]="'COMMON.EDIT' | translate">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteUser(user.id)" class="btn-icon btn-delete" [title]="'COMMON.DELETE' | translate">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de Edición/Creación -->
+  <div *ngIf="editingUser" class="modal-overlay">
+    <div class="modal-card">
+      <h3>{{ isNew ? ('USER.NEW_TITLE' | translate) : ('USER.EDIT_TITLE' | translate) }}</h3>
+      
+      <div class="form-group">
+        <label>{{ 'USER.NAME_LABEL' | translate }}</label>
+        <input [(ngModel)]="editingUser.name" class="form-control" [placeholder]="'USER.NAME_PLACEHOLDER' | translate">
+      </div>
+      
+      <div class="form-group">
+        <label>{{ 'USER.SURNAME_LABEL' | translate }}</label>
+        <input [(ngModel)]="editingUser.surname" class="form-control" [placeholder]="'USER.SURNAME_PLACEHOLDER' | translate">
+      </div>
+
+      <div *ngIf="isNew" class="form-group">
+        <label>{{ 'USER.EMAIL_LABEL' | translate }}</label>
+        <input [(ngModel)]="editingUser.email" class="form-control" [placeholder]="'USER.EMAIL_PLACEHOLDER' | translate">
+      </div>
+
+      <div *ngIf="isNew" class="form-group notice-box">
+        <p><i class="fas fa-info-circle"></i> {{ 'USER.AUTO_PASSWORD_NOTICE' | translate }}</p>
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'USER.ROLE_LABEL' | translate }}</label>
+        <select [(ngModel)]="editingUser.role" class="form-control">
+          <option value="USER">USER</option>
+          <option value="ADMIN">ADMIN</option>
+          <option value="COMPANY_ADMIN">COMPANY_ADMIN</option>
+        </select>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="editingUser.emailVerified">
+          {{ 'COMMON.EMAIL_VERIFIED' | translate }}
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="saveUser()" class="btn btn-primary">
+          {{ isNew ? ('USER.CREATE_BUTTON' | translate) : ('USER.EDIT_BUTTON' | translate) }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-status-modal
+    [visible]="statusModal.visible"
+    [type]="statusModal.type"
+    [title]="statusModal.title"
+    [message]="statusModal.message"
+    (close)="closeStatus()"
+  ></app-status-modal>
+
+  <app-confirm-modal
+    [visible]="confirmModal.visible"
+    [message]="confirmModal.message"
+    (confirm)="confirmDeleteUser()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+</div>

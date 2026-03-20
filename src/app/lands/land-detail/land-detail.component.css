@@ -1,0 +1,59 @@
+.land-detail-container {
+    animation: fadeIn 0.4s ease;
+  }
+  
+  .html-description {
+    line-height: 1.8;
+    color: var(--color-text-dark);
+    font-size: 1.05rem;
+  }
+  
+  .html-description h1, .html-description h2, .html-description h3 {
+    color: var(--color-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .html-description p {
+    margin-bottom: 1rem;
+  }
+  
+  .html-description ul, .html-description ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  
+  .html-description li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .html-description a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .html-description a:hover {
+    text-decoration: underline;
+  }
+  
+  .html-description img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 1rem 0;
+  }
+  
+  .html-description blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: 1rem;
+    margin-left: 0;
+    font-style: italic;
+    color: #666;
+  }
+  
+  @media (max-width: 900px) {
+    .detail-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }

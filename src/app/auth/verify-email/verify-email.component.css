@@ -1,0 +1,52 @@
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.auth-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  padding: 50px 40px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.verify-icon {
+  margin-bottom: 25px;
+  display: inline-flex;
+  padding: 20px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+}
+
+.auth-header h2 {
+  font-size: 26px;
+  margin-bottom: 15px;
+  color: var(--color-text-dark);
+}
+
+.auth-header p {
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.resend-action {
+  margin-top: 25px;
+}
+
+.resend-action p {
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.resend-action a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.resend-action a:hover {
+  text-decoration: underline;
+}

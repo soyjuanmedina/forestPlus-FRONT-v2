@@ -1,0 +1,430 @@
+{
+  "COMMON": {
+    "YES": "Yes",
+    "NO": "No",
+    "OK": "Got it",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "VERIFIED": "Verified",
+    "ACTIONS": "Actions",
+    "CONFIRM_DELETE": "Are you sure you want to delete this item?",
+    "SUCCESS_DELETE": "✅ Deleted successfully",
+    "ERROR_DELETE": "❌ Could not delete the item",
+    "ERROR_PROCESSING": "❌ There was a problem processing the request",
+    "EMAIL_VERIFIED": "Email verified"
+  },
+  "HOME": {
+    "TITLE": "Manage your digital forest, measure your real impact",
+    "SUBTITLE": "forest+ is a reforestation startup designed for individuals and companies that measure every planted tree. Create your digital forest and track the impact in real time with our dashboard. From individuals aiming for Net Zero to large companies complying with regulations: one platform, one purpose, verifiable impact.",
+    "LOGIN": "Sign In",
+    "REGISTER": "Create Account",
+    "HERO": {
+      "BADGE": "Trust",
+      "TITLE": "Manage your digital forest, measure your real impact",
+      "SUBTITLE": "forest+ is a reforestation startup designed for individuals and companies that measure every planted tree. Create your digital forest and track the impact in real time with our dashboard. From individuals aiming for Net Zero to large companies complying with regulations: one platform, one purpose, verifiable impact.",
+      "CTA": "Get Started"
+    },
+    "FEATURES": {
+      "BADGE": "Benefits",
+      "TITLE": "Join the change",
+      "DESC": "Discover how your digital forest can regenerate territory, care for the climate, and help you make sustainable decisions every month.",
+      "BENEFITS": {
+        "B1": {
+          "TITLE": "Create your own forest",
+          "DESC": "Every payment translates into trees planted in real projects, with species and locations designed to regenerate climate, water, and soil."
+        },
+        "B2": {
+          "TITLE": "See your impact, not just numbers",
+          "DESC": "Your digital forest shows you trees, offset CO₂, and regeneration stories, so you feel you are moving the needle every month."
+        },
+        "B3": {
+          "TITLE": "Accompaniment",
+          "DESC": "We answer questions, explain projects, and provide context so each decision is made with information and environmental awareness."
+        },
+        "B4": {
+          "TITLE": "Corporate impact",
+          "DESC": "The trees in your forest generate certificates and reports useful for communication, ESG, and regulatory compliance when you need it."
+        },
+        "B5": {
+          "TITLE": "Clear values",
+          "DESC": "forest+ is born to care for the territory and its inhabitants, always prioritizing the health of ecosystems over any other interest."
+        },
+        "B6": {
+          "TITLE": "You participate in something collective",
+          "DESC": "Every tree you add is integrated into shared projects with city councils and other people, amplifying your impact."
+        }
+      }
+    },
+    "TESTIMONIALS": {
+      "BADGE": "Testimonials",
+      "TITLE": "What They Say About Us",
+      "DESC": "Discover the vision and impact of forest+ through its founders, mentors, and those who trust our commitment to the environment and innovation.",
+      "T1": {
+        "TEXT": "I fully trust the founders of forest+, they intend to impact and regenerate the environment. Their goal is to drive society to take active action on our planet.",
+        "AUTHOR": "Ana Adán",
+        "ROLE": "Mentor"
+      },
+      "T2": {
+        "TEXT": "Our journey begins with reforestation, but our vision encompasses all dimensions of sustainability: carbon, water, soil, biodiversity. This is the first step towards a comprehensive platform.",
+        "AUTHOR": "Daniel",
+        "ROLE": "Founder forest+"
+      },
+      "T3": {
+        "TEXT": "It has been a success to see their growth in our accelerator. The elegance of forest+ lies in its simplicity: it connects digital will with real regeneration of the territory. Clicks that turn into trees, into data, into future.",
+        "AUTHOR": "Fran",
+        "ROLE": "Dir. Mision Agrotech"
+      }
+    },
+    "GROW": {
+      "BADGE": "Why forest+",
+      "TITLE": "Grow with impact",
+      "DESC": "Our values are people and the environment: we seek to grow sustainably, regenerate ecosystems and accompany you so that your impact is real and lasting.",
+      "COMPARISON": {
+        "OTHERS": {
+          "TITLE": "Other Tools",
+          "ITEM1": "Priority to business, not to the ecosystem",
+          "ITEM2": "They think of CO₂, ignore soil and water",
+          "ITEM3": "Impact in PDFs, not in trees",
+          "ITEM4": "Automated, nothing adapted to you",
+          "ITEM5": "Slow and impersonal support"
+        },
+        "US": {
+          "TITLE": "forest+",
+          "ITEM1": "We prioritize the ecosystem",
+          "ITEM2": "We care for soil, water, climate and biodiversity",
+          "ITEM3": "Real trees, not just metrics",
+          "ITEM4": "Certificates for you and your company",
+          "ITEM5": "People first"
+        }
+      }
+    },
+    "CONTACT": {
+      "BADGE": "Contact Us",
+      "TITLE": "Want to know more?",
+      "DESC": "Write to us if you want more information, to better understand how your digital forest works, or to talk about a project for you or your company.",
+      "SUBMIT": "Submit"
+    }
+  },
+  "DASHBOARD": {
+    "WELCOME": "Welcome, {{name}}!",
+    "PANEL": "This is your personal dashboard on forest+.",
+    "LOGOUT": "Log out",
+    "STATS": {
+      "TASKS": "Completed tasks",
+      "POINTS": "Points earned"
+    },
+    "STEPS": {
+      "TITLE": "Next steps",
+      "DESCRIPTION": "Here you can start developing the features of your new project.",
+      "CTA": "Create new item"
+    }
+  },
+  "LOGIN": {
+    "TITLE": "Login",
+    "SUBTITLE": "Welcome back. Please enter your details to continue.",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "example@email.com",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Invalid email format",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MINLENGTH": "Password must be at least {{length}} characters",
+    "BUTTON": "Login",
+    "NO_ACCOUNT": "Don't have an account?",
+    "REGISTER": "Register",
+    "EMAIL_NOT_VERIFIED": "Email has not been verified",
+    "EMAIL_ALREADY_EXISTS": "Email already exists. Try to login"
+  },
+  "MENU": {
+    "MENU": "Menu",
+    "COLLAPSE": "Collapse menu",
+    "HOME": "Home",
+    "PROFILE": "Profile",
+    "MY_COMPANY": "My company",
+    "MY_LANDS": "My lands",
+    "MY_TREES": "My trees",
+    "MY_COMPANY_TREES": "Company trees",
+    "LANDS": "Lands",
+    "ADMIN": {
+      "ADMIN": "Administration",
+      "USERS": "Users",
+      "COMPANIES": "Companies",
+      "TREE_SPECIES": "Tree species",
+      "PLANNED_PLANTATIONS": "Planned plantations",
+      "TREES": "Trees",
+      "AVAILABLE_LANDS": "Available lands",
+      "LANDS": "Lands"
+    },
+    "LOGIN": "Login",
+    "REGISTER": "Register"
+  },
+  "ADMIN_PAGE": {
+    "USERS_TITLE": "User Management",
+    "LANDS_TITLE": "Land Management",
+    "LOADING": "Loading..."
+  },
+  "AUTH": {
+    "LOGOUT": "Logout",
+    "ROLE": "Role",
+    "ADMIN": "Administrator",
+    "USER": "User",
+    "COMPANY_ADMIN": "Company Admin"
+  },
+  "LAND_DETAIL": {
+    "BACK": "Back to lands",
+    "COORDINATES": "Coordinates",
+    "NO_COORDINATES": "No coordinates have been defined for this land yet",
+    "PLANTED_TREES": "Trees planted on this land",
+    "PLANTED_TREES_BY_USER": "Trees planted by the user",
+    "COORDINATES_SHORT": "Coordinates",
+    "NO_PLANTED_TREES_IN_LAND": "No trees have been planted on this land yet",
+    "NO_PLANTED_TREES_BY_USER": "This user has not planted any trees yet"
+  },
+  "ADMIN_LANDS": {
+    "TITLE": "Land Management",
+    "SUBTITLE": "Add new lands or edit existing ones",
+    "ADD_BUTTON": "New Land"
+  },
+  "ASSIGN_TREES": {
+    "TITLE": "Assign tree",
+    "PLANNED_PLANTATION": "Planned plantation",
+    "SEARCH_PLACEHOLDER": "Search plant...",
+    "TREE_TYPES": "Tree types",
+    "AVAILABLE_IN_LAND": "Available in the land: {{value}} m²",
+    "EMPTY_LIST": "No trees to assign",
+    "SUCCESS": "Tree assigned successfully",
+    "ERROR": "Error assigning tree",
+    "CLOSE_BUTTON": "Close"
+  },
+  "LAND_MODAL": {
+    "NEW_TITLE": "New Land",
+    "EDIT_TITLE": "Edit Land",
+    "NAME": "Land name",
+    "NAME_PLACEHOLDER": "E.g.: Cedar Forest",
+    "LOCATION": "Location",
+    "LOCATION_PLACEHOLDER": "Lat, Long or City Name",
+    "AREA": "Area (m²)",
+    "CAPACITY": "Tree Capacity",
+    "IMAGE_URL": "Image URL",
+    "DESCRIPTION": "Description",
+    "CANCEL": "Cancel",
+    "SAVE": "Save Changes",
+    "CREATE": "Create Land",
+    "SUCCESS_CREATE": "✅ Land created successfully",
+    "SUCCESS_EDIT": "✅ Land updated successfully",
+    "ERROR": "❌ Error processing the land"
+  },
+  "TREE_DETAIL": {
+    "BACK": "Back to my trees",
+    "PLANTED_IN": "Planted in",
+    "SPECIES": "Species",
+    "PLANTATION_DATE": "Planting date",
+    "TREE_NAME": "Tree name",
+    "DETAILS": "Tree details",
+    "IMPACT": {
+      "TITLE": "Your impact with this tree",
+      "CO2": "CO₂ offset per year",
+      "STATUS": "Estimated lifespan"
+    },
+    "PICS": "Tracking photos",
+    "NO_PICS": "Tracking photos coming soon",
+    "CERTIFICATE": "View certificate",
+    "STATS_TITLE": "Tree statistics",
+    "PROGRESS": "Growth progress",
+    "PRELAUNCH": "With our first action we contribute to offset the CO₂ produced by:",
+    "CAR": "{{value}} km by car",
+    "PLANE": "{{value}} km by plane",
+    "HOMES": "{{value}} homes / year",
+    "HOME_PERCENT": "{{value}}% of a home"
+  },
+  "NO_TREES": {
+    "TITLE": "You don't have any trees planted yet!",
+    "DESCRIPTION": "Start planting a tree and contribute to the forest.",
+    "CTA": "Plant a tree"
+  },
+  "NEXT_PLANTATION": "Next plantation",
+  "PROFILE": {
+    "INFO_TITLE": "Personal Information",
+    "EDIT_BUTTON": "Edit Profile",
+    "NAME": "First Name",
+    "SURNAME": "First Last Name",
+    "SECOND_SURNAME": "Second Last Name",
+    "EMAIL": "Email Address",
+    "NOT_EDITABLE": "Not editable",
+    "RECEIVE_EMAILS": "Receive Emails",
+    "RECEIVE_EMAILS_DESC": "I wish to receive updates about my trees and projects.",
+    "SAVE_CHANGES": "Save Changes",
+    "SECURITY_TITLE": "Security",
+    "SECURITY_DESC": "Keep your account secure by changing your password periodically.",
+    "CHANGE_PASSWORD": "Change Password",
+    "CURRENT_PASSWORD": "Current Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_PASSWORD": "Confirm New Password",
+    "UPDATE_PASSWORD": "Update Password",
+    "SUCCESS_UPDATE": "✅ Profile updated successfully",
+    "SUCCESS_PICTURE": "✅ Profile picture updated",
+    "SUCCESS_PASSWORD": "✅ Password changed successfully",
+    "PASSWORD_MISMATCH": "❌ Passwords do not match",
+    "FILE_TOO_LARGE": "❌ The image is too large. Maximum 10MB.",
+    "MUST_CHANGE_NOTICE": "⚠️ For security, you must change your temporary password before continuing.",
+    "LAST_LOGIN": "Last login",
+    "LOGIN_COUNT": "Successful logins",
+    "ROLE": "Role",
+    "AVATAR_ALT": "Avatar",
+    "COMPANY_LABEL": "Company"
+  },
+  "REGISTER": {
+    "TITLE": "Create account",
+    "SUBTITLE": "Join our community and start planting trees.",
+    "NAME": "Full Name",
+    "NAME_PLACEHOLDER": "Enter your name",
+    "NAME_REQUIRED": "Name is required",
+    "SURNAME": "First last name",
+    "SURNAME_PLACEHOLDER": "Enter your first last name",
+    "SURNAME_REQUIRED": "Last name is required",
+    "SECOND_SURNAME": "Second last name",
+    "SECOND_SURNAME_PLACEHOLDER": "Enter your second last name (optional)",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "Enter your email",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Email is invalid",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter your password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MINLENGTH": "Password must be at least {{length}} characters",
+    "ROLE": "Role",
+    "ROLE_REQUIRED": "Role is required",
+    "BUTTON": "Register",
+    "HAVE_ACCOUNT": "Already have an account?",
+    "LOGIN": "Login",
+    "SUCCESS": "Thanks for registering at forest+. Please verify your email before logging in",
+    "ALREADY_ACCOUNT": "Already have an account?"
+  },
+  "VERIFY_EMAIL": {
+    "TITLE": "Email verification",
+    "PROCESSING": "We are verifying your email, please wait...",
+    "SUCCESS": "Your email has been successfully verified! 🎉",
+    "ERROR": "An error occurred while verifying your email.",
+    "INVALID_LINK": "The verification link is invalid.",
+    "GO_TO_LOGIN": "Go to Login",
+    "SUCCESS_ALERT": "Registration completed successfully!",
+    "SUBTITLE": "We have sent a confirmation link to your email address. Please check your inbox and click the link to activate your account.",
+    "NO_MAIL": "Didn't receive the email?",
+    "RESEND": "Resend email"
+  },
+  "USER": {
+    "NEW_TITLE": "New User",
+    "EDIT_TITLE": "Edit User",
+    "NAME_LABEL": "Name",
+    "NAME_PLACEHOLDER": "Name",
+    "SURNAME_LABEL": "Surname",
+    "SURNAME_PLACEHOLDER": "Surname",
+    "SECOND_SURNAME_LABEL": "Second Surname",
+    "SECOND_SURNAME_PLACEHOLDER": "Second Surname",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Email",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "AUTO_PASSWORD_NOTICE": "A secure random password will be generated and emailed to the user.",
+    "ROLE_LABEL": "Role",
+    "SELECT_ROLE": "Select role",
+    "COMPANY_LABEL": "Company",
+    "SELECT_COMPANY": "Select company",
+    "CREATE_BUTTON": "Create User",
+    "EDIT_BUTTON": "Save User",
+    "FIELD_REQUIRED": "Required field",
+    "INVALID_EMAIL": "Invalid email",
+    "MIN_LENGTH": "Minimum 6 characters",
+    "SUCCESS_MSG": "User created successfully",
+    "CANCEL_BUTTON": "Cancel",
+    "SELECT_IMAGE": "Select image"
+  },
+  "TREE_SPECIES": {
+    "EDIT_TITLE": "Edit Tree Species",
+    "NEW_TITLE": "New Tree Species",
+    "IMAGE_ALT": "Tree species image",
+    "SELECT_IMAGE": "Select image",
+    "NAME": "Name",
+    "NAME_PLACEHOLDER": "Tree species name",
+    "SCIENTIFIC_NAME": "Scientific name",
+    "SCIENTIFIC_NAME_PLACEHOLDER": "Scientific name of the species",
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Tree species description",
+    "CO2": "CO₂ absorption (kg/year)",
+    "CO2_PLACEHOLDER": "E.g. 12.5",
+    "CO2_AT_20_LABEL": "20 years",
+    "CO2_AT_25_LABEL": "25 years",
+    "CO2_AT_30_LABEL": "30 years",
+    "CO2_AT_35_LABEL": "35 years",
+    "CO2_AT_40_LABEL": "40 years",
+    "CO2_UNIT": "tons/year",
+    "HEIGHT": "Typical height (m)",
+    "HEIGHT_PLACEHOLDER": "E.g. 10.0",
+    "TYPICAL_HEIGHT_LABEL": "Typical height",
+    "HEIGHT_UNIT": "meters",
+    "LIFESPAN_PLACEHOLDER": "E.g. 50",
+    "LIFESPAN_UNIT": "years",
+    "LIFESPAN_LABEL": "Life expectancy",
+    "YEARS_UNIT": "years",
+    "CREATE": "Create tree type",
+    "NO_DESCRIPTION": "No description",
+    "EDIT_BUTTON": "Edit",
+    "CO2_ESTIMATIONS_TITLE": "Estimated CO₂ absorptions",
+    "DELETE_ERROR": "The tree species cannot be deleted because it has associated trees"
+  },
+  "MY_TREES": {
+    "TITLE": "My Trees",
+    "SUBTITLE": "Manage your personal forest and watch the impact you're creating.",
+    "STATS": {
+      "TOTAL": "Total Trees",
+      "CO2": "CO₂ Offset"
+    },
+    "LOADING": "Loading your forest...",
+    "EMPTY": {
+      "TITLE": "You don't have trees yet",
+      "SUBTITLE": "Start your environmental impact by acquiring your first tree today.",
+      "CTA": "Acquire Tree"
+    },
+    "NO_NAME": "Untitled tree",
+    "NO_LOCATION": "Location pending",
+    "VIEW_DETAILS": "View details"
+  },
+  "LANDS": {
+    "TITLE": "Available Lands",
+    "SUBTITLE": "Explore reforestation zones and choose where to plant your next tree.",
+    "LOADING": "Searching lands...",
+    "FULL": "Full",
+    "NO_DESCRIPTION": "No description available.",
+    "AREA": "Area",
+    "CAPACITY": "Capacity",
+    "TREES": "Trees",
+    "FULL_BUTTON": "Capacity reached",
+    "PLANT_BUTTON": "View Land",
+    "NOT_FOUND": "Land not found",
+    "NOT_FOUND_DESC": "The land you are looking for does not exist or has been removed.",
+    "UNKNOWN_LOCATION": "Unknown location",
+    "ABOUT_LAND": "About this land",
+    "LAND_STATS": "Land statistics",
+    "PLANTED": "Planted",
+    "PLANT_HERE": "Plant here"
+  },
+  "ADMIN_TREE_TYPES": {
+    "CONFIRM_DELETE_TREE_TYPE": {
+      "TITLE": "Delete tree type",
+      "MESSAGE": "Are you sure you want to delete {{name}}?"
+    },
+    "TREE_TYPE_DELETED": "✅ Tree type deleted",
+    "TREE_TYPE_DELETE_ERROR": "❌ Error deleting tree type"
+  },
+  "ADMIN_USERS": {
+    "TITLE": "User Management",
+    "SUBTITLE": "Manage permissions and status of forest+ users",
+    "CONFIRM_DELETE_USER": {
+      "TITLE": "Delete user",
+      "MESSAGE": "Are you sure you want to delete {{name}}?"
+    },
+    "ADD_BUTTON": "New User"
+  }
+}

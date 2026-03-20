@@ -1,0 +1,111 @@
+<div class="admin-page animate-fade-in">
+  <div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+      <h1>{{ 'MENU.ADMIN.TREE_SPECIES' | translate }}</h1>
+      <p>{{ 'Maneja las diferentes especies de árboles disponibles' }}</p>
+    </div>
+    <button (click)="openNew()" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Nueva Especie
+    </button>
+  </div>
+
+  <div class="users-table-container glass" *ngIf="!loading">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>{{ 'TREE_SPECIES.NAME' | translate }}</th>
+          <th>{{ 'TREE_SPECIES.SCIENTIFIC_NAME' | translate }}</th>
+          <th>{{ 'COMMON.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of treeSpecies">
+          <td>{{ s.id }}</td>
+          <td>
+             <div style="display: flex; align-items: center; gap: 10px;">
+                <img *ngIf="s.picture" [src]="s.picture" alt="img" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
+                <span>{{ s.name }}</span>
+             </div>
+          </td>
+          <td>{{ s.scientificName || '-' }}</td>
+          <td>
+            <div class="action-buttons">
+              <button (click)="editSpecies(s)" class="btn-icon" [title]="'COMMON.EDIT' | translate">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteSpecies(s.id)" class="btn-icon btn-delete" [title]="'COMMON.DELETE' | translate">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="treeSpecies.length === 0">
+          <td colspan="4" class="text-center" style="padding: 2rem;">
+            No hay especies registradas.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Formulario Modal -->
+  <div *ngIf="editingSpecies" class="modal-overlay">
+    <div class="modal-card">
+      <h3>{{ isNew ? ('TREE_SPECIES.NEW_TITLE' | translate) : ('TREE_SPECIES.EDIT_TITLE' | translate) }}</h3>
+      
+      <div class="form-group">
+        <label>{{ 'TREE_SPECIES.NAME' | translate }} *</label>
+        <input type="text" class="form-control" [(ngModel)]="editingSpecies.name" [placeholder]="'TREE_SPECIES.NAME_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'TREE_SPECIES.SCIENTIFIC_NAME' | translate }}</label>
+        <input type="text" class="form-control" [(ngModel)]="editingSpecies.scientificName" [placeholder]="'TREE_SPECIES.SCIENTIFIC_NAME_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'TREE_SPECIES.DESCRIPTION' | translate }}</label>
+        <textarea class="form-control" [(ngModel)]="editingSpecies.description" rows="3" [placeholder]="'TREE_SPECIES.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+      </div>
+
+      <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+        <div class="form-group" style="flex:1;">
+          <label>{{ 'TREE_SPECIES.CO2' | translate }} (a los 20 años)</label>
+          <input type="number" class="form-control" [(ngModel)]="editingSpecies.co2AbsorptionAt20">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>{{ 'TREE_SPECIES.HEIGHT' | translate }}</label>
+          <input type="number" class="form-control" [(ngModel)]="editingSpecies.typicalHeight">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>URL Imagen</label>
+        <input type="text" class="form-control" [(ngModel)]="editingSpecies.picture">
+      </div>
+
+      <div class="modal-actions">
+        <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="saveSpecies()" class="btn btn-primary" [disabled]="!editingSpecies.name">
+          {{ isNew ? ('TREE_SPECIES.CREATE' | translate) : ('COMMON.EDIT' | translate) }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-status-modal
+  [visible]="statusModal.visible"
+  [type]="statusModal.type"
+  [title]="statusModal.title"
+  [message]="statusModal.message"
+  (close)="closeStatus()">
+</app-status-modal>
+
+<app-confirm-modal
+  [visible]="confirmModal.visible"
+  [message]="confirmModal.message"
+  (confirm)="confirmDeleteSpecies()"
+  (cancel)="cancelDelete()">
+</app-confirm-modal>
