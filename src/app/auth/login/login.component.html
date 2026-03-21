@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <form (ngSubmit)="onSubmit()" class="auth-form">
+    <div class="auth-form">
       <div class="form-group">
         <label for="email" class="form-label">{{ 'LOGIN.EMAIL' | translate }}</label>
         <input 
@@ -38,13 +38,14 @@
           placeholder="••••••••"
           [(ngModel)]="password"
           name="password"
-          required>
+          required
+          (keyup.enter)="onSubmit()">
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-primary w-100">{{ 'LOGIN.BUTTON' | translate }}</button>
+        <button type="button" (click)="onSubmit()" class="btn btn-primary w-100">{{ 'LOGIN.BUTTON' | translate }}</button>
       </div>
-    </form>
+    </div>
 
     <div class="auth-footer">
       <p>{{ 'LOGIN.NO_ACCOUNT' | translate }} <a routerLink="/register">{{ 'LOGIN.REGISTER' | translate }}</a></p>
