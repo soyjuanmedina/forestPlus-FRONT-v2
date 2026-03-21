@@ -17,8 +17,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AdminLandsComponent implements OnInit {
   lands: any[] = [];
   loading = true;
-  editingLand: any = null;
+  private _editingLand: any = null;
+  private _originalLand: any = null;
   isNew = false;
+
+  get editingLand() { return this._editingLand; }
+  set editingLand(val: any) {
+    this._editingLand = val;
+    if (val) document.body.classList.add('modal-open');
+    else document.body.classList.remove('modal-open');
+  }
 
   statusModal = {
     visible: false,
@@ -42,6 +50,10 @@ export class AdminLandsComponent implements OnInit {
     this.loadLands();
   }
 
+  ngOnDestroy() {
+    document.body.classList.remove('modal-open');
+  }
+
   loadLands() {
     this.adminService.getLands().subscribe({
       next: (data) => {
@@ -57,6 +69,7 @@ export class AdminLandsComponent implements OnInit {
 
   openNew() {
     this.isNew = true;
+    this._originalLand = null;
     this.editingLand = {
       name: '',
       description: '',
@@ -69,7 +82,14 @@ export class AdminLandsComponent implements OnInit {
 
   editLand(land: any) {
     this.isNew = false;
+    this._originalLand = { ...land };
     this.editingLand = { ...land };
+  }
+
+  isModified(): boolean {
+    if (this.isNew) return true;
+    if (!this._originalLand || !this.editingLand) return false;
+    return JSON.stringify(this.editingLand) !== JSON.stringify(this._originalLand);
   }
 
   cancelEdit() {

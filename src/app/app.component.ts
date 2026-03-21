@@ -24,6 +24,7 @@ export class AppComponent {
   envName: string = environment.name || 'development';
   envColor: string = (environment as any).envColor || '#ff9800';
   launchDate: Date = new Date(environment.launchDate);
+  sidebarCollapsed: boolean = false;
 
   constructor (
     public authService: AuthService,
@@ -91,5 +92,9 @@ export class AppComponent {
     
     // El banner se muestra en cualquier entorno que no sea producción
     this.showEnvBanner = !environment.production;
+  }
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 }

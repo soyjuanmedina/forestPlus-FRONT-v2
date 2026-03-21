@@ -139,8 +139,8 @@
       <div class="modal-actions">
         <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'COMMON.CANCEL' | translate
           }}</button>
-        <button (click)="saveUser()" class="btn btn-primary">
-          {{ isNew ? ('USER.CREATE_BUTTON' | translate) : ('USER.EDIT_BUTTON' | translate) }}
+        <button (click)="saveUser()" class="btn btn-primary" [disabled]="!isModified()">
+          {{ isNew ? ('USER.CREATE_BUTTON' | translate) : ('COMMON.SAVE' | translate) }}
         </button>
       </div>
     </div>

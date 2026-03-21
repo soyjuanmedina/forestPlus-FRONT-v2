@@ -16,8 +16,9 @@
 
   <div *ngIf="!loading" class="lands-grid">
     <div *ngFor="let land of lands" class="land-card">
-      <div class="land-image">
-         <img [src]="land.picture || 'assets/default-land.png'" style="width: 100%; height: 200px; object-fit: cover;">
+      <div class="land-image" [style.backgroundImage]="land.picture ? 'url(' + land.picture + ')' : ''" 
+           style="height: 200px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; background-color: #f1f8e9;">
+        <i *ngIf="!land.picture" class="fa-solid fa-image" style="font-size: 3rem; color: var(--color-primary); opacity: 0.2;"></i>
       </div>
       <div class="land-info">
         <h3>{{ land.name }}</h3>
@@ -36,7 +37,7 @@
 
   <!-- Modal de Edición/Creación -->
   <div *ngIf="editingLand" class="modal-overlay">
-    <div class="modal-card scrollable-modal">
+    <div class="modal-card">
       <h3>{{ isNew ? ('LAND_MODAL.NEW_TITLE' | translate) : ('LAND_MODAL.EDIT_TITLE' | translate) }}</h3>
       
       <div class="form-group">
@@ -88,8 +89,8 @@
 
       <div class="modal-actions">
         <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'LAND_MODAL.CANCEL' | translate }}</button>
-        <button (click)="saveLand()" class="btn btn-primary">
-          {{ isNew ? ('LAND_MODAL.CREATE' | translate) : ('LAND_MODAL.SAVE' | translate) }}
+        <button (click)="saveLand()" class="btn btn-primary" [disabled]="!isModified()">
+          {{ isNew ? ('LAND_MODAL.CREATE' | translate) : ('COMMON.SAVE' | translate) }}
         </button>
       </div>
     </div>

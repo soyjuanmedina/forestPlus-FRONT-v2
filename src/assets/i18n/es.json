@@ -15,6 +15,7 @@
     "NO": "No",
     "OK": "Entendido",
     "CANCEL": "Cancelar",
+    "SAVE": "Guardar",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
     "VERIFIED": "Verificado",
@@ -393,7 +394,8 @@
     "NO_DESCRIPTION": "Sin descripción",
     "EDIT_BUTTON": "Editar",
     "CO2_ESTIMATIONS_TITLE": "Absorciones CO₂ estimadas",
-    "DELETE_ERROR": "No se puede eliminar la especie porque hay árboles asociados"
+    "DELETE_ERROR": "No se puede eliminar la especie porque hay árboles asociados",
+    "NO_PICTURE": "Sin imagen"
   },
   "MY_TREES": {
     "TITLE": "Mis Árboles",

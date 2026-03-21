@@ -17,8 +17,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AdminTreeSpeciesComponent implements OnInit {
   treeSpecies: any[] = [];
   loading = true;
-  editingSpecies: any = null;
+  private _editingSpecies: any = null;
+  private _originalSpecies: any = null;
   isNew = false;
+
+  get editingSpecies() { return this._editingSpecies; }
+  set editingSpecies(val: any) {
+    this._editingSpecies = val;
+    if (val) document.body.classList.add('modal-open');
+    else document.body.classList.remove('modal-open');
+  }
 
   statusModal = {
     visible: false,
@@ -42,6 +50,10 @@ export class AdminTreeSpeciesComponent implements OnInit {
     this.loadTreeSpecies();
   }
 
+  ngOnDestroy() {
+    document.body.classList.remove('modal-open');
+  }
+
   loadTreeSpecies() {
     this.adminService.getTreeSpecies().subscribe({
       next: (data) => {
@@ -57,6 +69,7 @@ export class AdminTreeSpeciesComponent implements OnInit {
 
   openNew() {
     this.isNew = true;
+    this._originalSpecies = null;
     this.editingSpecies = {
       name: '',
       scientificName: '',
@@ -74,7 +87,14 @@ export class AdminTreeSpeciesComponent implements OnInit {
 
   editSpecies(species: any) {
     this.isNew = false;
+    this._originalSpecies = { ...species };
     this.editingSpecies = { ...species };
+  }
+
+  isModified(): boolean {
+    if (this.isNew) return true;
+    if (!this._originalSpecies || !this.editingSpecies) return false;
+    return JSON.stringify(this.editingSpecies) !== JSON.stringify(this._originalSpecies);
   }
 
   cancelEdit() {

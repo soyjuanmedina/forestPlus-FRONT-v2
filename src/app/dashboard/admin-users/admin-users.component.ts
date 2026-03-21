@@ -18,8 +18,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AdminUsersComponent implements OnInit {
   users: any[] = [];
   loading = true;
-  editingUser: any = null;
+  private _editingUser: any = null;
+  private _originalUser: any = null;
   isNew = false;
+
+  get editingUser() { return this._editingUser; }
+  set editingUser(val: any) {
+    this._editingUser = val;
+    if (val) document.body.classList.add('modal-open');
+    else document.body.classList.remove('modal-open');
+  }
 
   // Modal de estado
   statusModal = {
@@ -57,20 +65,31 @@ export class AdminUsersComponent implements OnInit {
     } );
   }
 
-  openNew () {
+  openNew() {
     this.isNew = true;
+    this._originalUser = null;
     this.editingUser = {
       name: '',
       surname: '',
+      secondSurname: '',
       email: '',
-      password: '', // El backend generará una aleatoria
       role: 'USER',
-      emailVerified: true
+      companyId: null
     };
   }
 
-  editUser ( user: any ) {
-    this.router.navigate( ['/profile', user.id] );
+  editUser(user: any) {
+    this.isNew = false;
+    this._originalUser = { ...user };
+    this.editingUser = { ...user };
+  }
+
+  isModified(): boolean {
+    if (this.isNew) return true;
+    if (!this._originalUser || !this.editingUser) return false;
+    
+    // Comparación simple de estado profundo para detectar cambios
+    return JSON.stringify(this.editingUser) !== JSON.stringify(this._originalUser);
   }
 
   cancelEdit () {
@@ -135,6 +154,10 @@ export class AdminUsersComponent implements OnInit {
 
   cancelDelete () {
     this.confirmModal.visible = false;
+  }
+
+  ngOnDestroy () {
+    document.body.classList.remove('modal-open');
   }
 
   onAvatarError ( user: any ) {
