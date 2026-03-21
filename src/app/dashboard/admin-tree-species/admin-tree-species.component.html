@@ -24,7 +24,7 @@
           <td>{{ s.id }}</td>
           <td>
              <div style="display: flex; align-items: center; gap: 10px;">
-                <img *ngIf="s.picture" [src]="s.picture" alt="img" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
+                <img [src]="s.picture || 'assets/default-tree.png'" alt="img" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);">
                 <span>{{ s.name }}</span>
              </div>
           </td>
@@ -51,7 +51,7 @@
 
   <!-- Formulario Modal -->
   <div *ngIf="editingSpecies" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card scrollable-modal">
       <h3>{{ isNew ? ('TREE_SPECIES.NEW_TITLE' | translate) : ('TREE_SPECIES.EDIT_TITLE' | translate) }}</h3>
       
       <div class="form-group">
@@ -81,8 +81,24 @@
       </div>
 
       <div class="form-group">
-        <label>URL Imagen</label>
-        <input type="text" class="form-control" [(ngModel)]="editingSpecies.picture">
+        <label>{{ 'LAND_MODAL.IMAGE_PREVIEW' | translate }}</label>
+        <div class="image-preview-container" style="margin-bottom: 20px; text-align: center; position: relative;">
+          <!-- Preview de Especie -->
+          <div style="width: 100%; height: 180px; border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); background: #f1f8e9; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">
+            <img *ngIf="editingSpecies.picture" [src]="editingSpecies.picture" style="width: 100%; height: 100%; object-fit: cover;">
+            <div *ngIf="!editingSpecies.picture" style="color: #4caf50; opacity: 0.5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+              <i class="fa-solid fa-seedling" style="font-size: 3rem;"></i>
+              <span style="font-size: 0.8rem; font-weight: 600;">{{ 'TREE_SPECIES.NO_PICTURE' | translate }}</span>
+            </div>
+          </div>
+          
+          <div style="margin-top: 15px;">
+            <input type="file" #fileInputSpecies style="display: none" (change)="onFileSelected($event)" accept="image/*">
+            <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 8px 18px; display: flex; align-items: center; gap: 8px; margin: 0 auto;" (click)="fileInputSpecies.click()">
+              <i class="fas fa-leaf"></i> {{ 'Seleccionar Imagen' }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="modal-actions">

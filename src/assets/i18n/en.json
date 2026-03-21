@@ -1,4 +1,15 @@
 {
+  "COUNTDOWN": {
+    "TITLE": "Coming Soon",
+    "SUBTITLE": "We are planting the seeds of a greener future. Very soon you will be able to access forest+.",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "NOTIFY_ME": "Leave us your email and we will notify you as soon as we open access:",
+    "BUTTON": "I want access",
+    "SUCCESS_MSG": "Thank you! We'll notify you as soon as we open access."
+  },
   "COMMON": {
     "YES": "Yes",
     "NO": "No",
@@ -207,7 +218,9 @@
     "LOCATION_PLACEHOLDER": "Lat, Long or City Name",
     "AREA": "Area (m²)",
     "CAPACITY": "Tree Capacity",
-    "IMAGE_URL": "Image URL",
+    "IMAGE_PREVIEW": "Image Preview",
+    "IMAGE_DATA": "Image Data (Base64)",
+    "IMAGE_PLACEHOLDER": "Paste here the Base64 code of the image or a URL",
     "DESCRIPTION": "Description",
     "CANCEL": "Cancel",
     "SAVE": "Save Changes",
@@ -273,7 +286,12 @@
     "LOGIN_COUNT": "Successful logins",
     "ROLE": "Role",
     "AVATAR_ALT": "Avatar",
-    "COMPANY_LABEL": "Company"
+    "COMPANY_LABEL": "Company",
+    "DELETE_ACCOUNT": "Delete account",
+    "CONFIRM_SELF_DELETE": "Are you sure you want to delete your account? This cannot be undone.",
+    "CONFIRM_ADMIN_DELETE": "Are you sure you want to delete this user? This cannot be undone.",
+    "SUCCESS_DELETE_SELF": "✅ Your account has been deleted.",
+    "SUCCESS_DELETE_USER": "✅ User deleted successfully."
   },
   "REGISTER": {
     "TITLE": "Create account",

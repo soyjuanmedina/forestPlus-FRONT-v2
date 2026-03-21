@@ -63,7 +63,7 @@ export class AdminLandsComponent implements OnInit {
       location: '',
       area: 0,
       maxTrees: 1000,
-      picture: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800'
+      picture: ''
     };
   }
 
@@ -77,6 +77,8 @@ export class AdminLandsComponent implements OnInit {
   }
 
   saveLand() {
+    this.editingLand.picture = this.ensureBase64Prefix(this.editingLand.picture);
+    
     const action = this.isNew 
       ? this.adminService.createLand(this.editingLand)
       : this.adminService.updateLand(this.editingLand.id, this.editingLand);
@@ -129,5 +131,32 @@ export class AdminLandsComponent implements OnInit {
 
   cancelDelete() {
     this.confirmModal.visible = false;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 1 * 1024 * 1024) {
+        this.showStatus('error', 'Error', 'El archivo es demasiado grande (máx 1MB)');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.editingLand.picture = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  private ensureBase64Prefix(picture: string): string {
+    if (!picture || picture.startsWith('http') || picture.startsWith('data:')) {
+      return picture;
+    }
+    // Si parece base64 (sin espacios y de longitud mínima), añadimos el prefijo PNG por defecto
+    if (!picture.includes(' ') && picture.length > 30) {
+      return `data:image/png;base64,${picture}`;
+    }
+    return picture;
   }
 }

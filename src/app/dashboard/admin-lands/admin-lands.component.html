@@ -16,7 +16,9 @@
 
   <div *ngIf="!loading" class="lands-grid">
     <div *ngFor="let land of lands" class="land-card">
-      <div class="land-image" [style.background-image]="'url(' + land.picture + ')'"></div>
+      <div class="land-image">
+         <img [src]="land.picture || 'assets/default-land.png'" style="width: 100%; height: 200px; object-fit: cover;">
+      </div>
       <div class="land-info">
         <h3>{{ land.name }}</h3>
         <p class="location"><i class="fas fa-map-marker-alt"></i> {{ land.location }}</p>
@@ -59,8 +61,24 @@
       </div>
 
       <div class="form-group">
-        <label>{{ 'LAND_MODAL.IMAGE_URL' | translate }}</label>
-        <input [(ngModel)]="editingLand.picture" class="form-control">
+        <label>{{ 'LAND_MODAL.IMAGE_PREVIEW' | translate }}</label>
+        <div class="image-preview-container" style="margin-bottom: 20px; text-align: center; position: relative;">
+          <!-- Preview Real o Placeholder -->
+          <div style="width: 100%; height: 200px; border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); background: #e9edc9; display: flex; align-items: center; justify-content: center;">
+            <img *ngIf="editingLand.picture" [src]="editingLand.picture" style="width: 100%; height: 100%; object-fit: cover;">
+            <div *ngIf="!editingLand.picture" style="color: var(--color-primary); opacity: 0.5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+              <i class="fa-solid fa-image" style="font-size: 3rem;"></i>
+              <span style="font-size: 0.8rem; font-weight: 600;">{{ 'LAND_MODAL.IMAGE_PLACEHOLDER' | translate }}</span>
+            </div>
+          </div>
+          
+          <div style="margin-top: 15px;">
+            <input type="file" #fileInputLand style="display: none" (change)="onFileSelected($event)" accept="image/*">
+            <button type="button" class="btn btn-outline" style="font-size: 0.9rem; padding: 8px 20px; display: flex; align-items: center; gap: 8px; margin: 0 auto;" (click)="fileInputLand.click()">
+              <i class="fas fa-camera"></i> {{ 'Seleccionar Imagen' }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">

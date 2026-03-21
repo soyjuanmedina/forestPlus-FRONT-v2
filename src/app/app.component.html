@@ -1,91 +1,127 @@
-<div [class.dashboard-layout]="authService.currentUser$ | async" *ngIf="authService.currentUser$ | async as user; else guestView">
-  
-  <!-- Sidebar para usuarios logueados -->
-  <aside class="sidebar">
-    <a routerLink="/" class="sidebar-logo">
-      <img src="assets/logo_forestplus_color.png" alt="forest+" style="height: 32px;">
-    </a>
-
-    <nav class="nav-menu">
-      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-        <i class="fa-solid fa-chart-line"></i> {{ 'MENU.HOME' | translate }}
-      </a>
-      <a routerLink="/my-trees" routerLinkActive="active" class="nav-item">
-        <i class="fa-solid fa-tree"></i> {{ 'MENU.MY_TREES' | translate }}
-      </a>
-      <a routerLink="/lands" routerLinkActive="active" class="nav-item">
-        <i class="fa-solid fa-map"></i> {{ 'MENU.LANDS' | translate }}
-      </a>
-      <a routerLink="/tree-species" routerLinkActive="active" class="nav-item">
-        <i class="fa-solid fa-leaf"></i> {{ 'MENU.ADMIN.TREE_SPECIES' | translate }}
-      </a>
-      <div class="nav-divider" style="height: 1px; background: var(--color-border); margin: 1rem 0;"></div>
-      <a routerLink="/profile" routerLinkActive="active" class="nav-item">
-        <i class="fa-solid fa-user"></i> {{ 'MENU.PROFILE' | translate }}
-      </a>
-      <!-- Admin section (solo si es ADMIN o COMPANY_ADMIN) -->
-      <ng-container *ngIf="user.role === 'ADMIN' || user.role === 'COMPANY_ADMIN'">
-        <div class="nav-divider" style="height: 1px; background: var(--color-border); margin: 1rem 0;"></div>
-        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-text-light); letter-spacing: 1px; padding: 0 1rem;">{{ 'MENU.ADMIN.ADMIN' | translate }}</span>
-        <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
-          <i class="fa-solid fa-users-gear"></i> {{ 'MENU.ADMIN.USERS' | translate }}
-        </a>
-        <a routerLink="/admin/lands" routerLinkActive="active" class="nav-item">
-          <i class="fa-solid fa-mountain-sun"></i> {{ 'MENU.ADMIN.LANDS' | translate }}
-        </a>
-        <a routerLink="/admin/tree-species" routerLinkActive="active" class="nav-item">
-          <i class="fa-solid fa-leaf"></i> {{ 'MENU.ADMIN.TREE_SPECIES' | translate }}
-        </a>
-      </ng-container>
-    </nav>
-
-    <div class="sidebar-footer" style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--color-border);">
-      <div class="user-info" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-        <div class="avatar" style="width: 40px; height: 40px; background: var(--color-secondary); color: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
-          {{ user.name[0] }}
-        </div>
-        <div class="details">
-          <div style="font-weight: 600; font-size: 0.9rem;">{{ user.name }}</div>
-          <div *ngIf="user.role === 'ADMIN' || user.role === 'COMPANY_ADMIN'" style="font-size: 0.75rem; color: var(--color-text-light);">{{ user.role }}</div>
-        </div>
-      </div>
-      <button (click)="logout()" class="btn btn-secondary" style="width: 100%; border-radius: 12px; font-size: 14px; padding: 10px;">
-        <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 8px;"></i> {{ 'DASHBOARD.LOGOUT' | translate }}
-      </button>
-    </div>
-  </aside>
-
-  <!-- Contenido principal -->
-  <main class="main-content">
-    <div class="top-bar" style="display: flex; justify-content: flex-end; padding: 1rem 2rem; background: transparent; margin-bottom: 30px;">
-      <div class="lang-selector" style="display: flex; gap: 0.5rem; background: white; padding: 4px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid var(--color-border);">
-        <button (click)="changeLang('es')" [class.active]="currentLang === 'es'" style="border: none; background: transparent; padding: 4px 12px; border-radius: 16px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--color-text-light); transition: all 0.3s;" [style.background]="currentLang === 'es' ? 'var(--color-primary)' : 'transparent'" [style.color]="currentLang === 'es' ? 'white' : 'var(--color-text-light)'">ES</button>
-        <button (click)="changeLang('en')" [class.active]="currentLang === 'en'" style="border: none; background: transparent; padding: 4px 12px; border-radius: 16px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--color-text-light); transition: all 0.3s;" [style.background]="currentLang === 'en' ? 'var(--color-primary)' : 'transparent'" [style.color]="currentLang === 'en' ? 'white' : 'var(--color-text-light)'">EN</button>
-      </div>
-    </div>
-    <router-outlet></router-outlet>
-  </main>
+<!-- BANNER DE ENTORNO -->
+<div *ngIf="showEnvBanner" class="env-banner" [style.backgroundColor]="envColor">
+  <i class="fa-solid fa-triangle-exclamation"></i> ENV: {{ envName | uppercase }} - ENTORNO DE PRUEBAS
 </div>
 
-<!-- Layout para invitados (Login / Registro / Home) -->
-<ng-template #guestView>
-  <nav class="navbar">
-    <div class="nav-container">
-      <a routerLink="/" class="logo">
-        <img src="assets/logo_forestplus_color.png" alt="forest+" style="height: 36px;">
-      </a>
-      <div class="nav-links">
-        <div class="lang-selector" style="display: flex; gap: 0.25rem; background: var(--color-bg-light); padding: 4px; border-radius: 20px; border: 1px solid var(--color-border); margin-right: 1rem;">
-          <button (click)="changeLang('es')" style="border: none; background: transparent; padding: 4px 10px; border-radius: 16px; cursor: pointer; font-size: 11px; font-weight: 700; color: var(--color-text-light); transition: all 0.3s;" [style.background]="currentLang === 'es' ? 'var(--color-primary)' : 'transparent'" [style.color]="currentLang === 'es' ? 'white' : 'var(--color-text-light)'">ES</button>
-          <button (click)="changeLang('en')" style="border: none; background: transparent; padding: 4px 10px; border-radius: 16px; cursor: pointer; font-size: 11px; font-weight: 700; color: var(--color-text-light); transition: all 0.3s;" [style.background]="currentLang === 'en' ? 'var(--color-primary)' : 'transparent'" [style.color]="currentLang === 'en' ? 'white' : 'var(--color-text-light)'">EN</button>
-        </div>
-        <a routerLink="/login" class="nav-link">{{ 'MENU.LOGIN' | translate }}</a>
-        <a routerLink="/register" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">{{ 'MENU.REGISTER' | translate }}</a>
-      </div>
-    </div>
-  </nav>
+<!-- PANTALLA DE LANZAMIENTO (COUNTDOWN) -->
+<app-countdown *ngIf="showCountdown; else appContent" [targetDate]="launchDate"></app-countdown>
 
+<!-- CONTENIDO DE LA APP -->
+<ng-template #appContent>
+  <div [class.dashboard-layout]="authService.currentUser$ | async"
+    *ngIf="authService.currentUser$ | async as user; else guestView">
+
+    <!-- Sidebar para usuarios logueados -->
+    <aside class="sidebar">
+      <a routerLink="/" class="sidebar-logo">
+        <img src="assets/logo_forestplus_color.png" alt="forest+" style="height: 32px;">
+      </a>
+
+      <nav class="nav-menu">
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+          <i class="fa-solid fa-chart-line"></i> {{ 'MENU.HOME' | translate }}
+        </a>
+        <a routerLink="/my-trees" routerLinkActive="active" class="nav-item">
+          <i class="fa-solid fa-tree"></i> {{ 'MENU.MY_TREES' | translate }}
+        </a>
+        <a routerLink="/lands" routerLinkActive="active" class="nav-item">
+          <i class="fa-solid fa-map"></i> {{ 'MENU.LANDS' | translate }}
+        </a>
+        <a routerLink="/tree-species" routerLinkActive="active" class="nav-item">
+          <i class="fa-solid fa-leaf"></i> {{ 'MENU.ADMIN.TREE_SPECIES' | translate }}
+        </a>
+        <div class="nav-divider"
+          style="height: 1px; background: var(--color-border); margin: 1rem 0;"></div>
+        <a routerLink="/profile" routerLinkActive="active" class="nav-item">
+          <i class="fa-solid fa-user"></i> {{ 'MENU.PROFILE' | translate }}
+        </a>
+        <!-- Admin section (solo si es ADMIN o COMPANY_ADMIN) -->
+        <ng-container *ngIf="user.role === 'ADMIN' || user.role === 'COMPANY_ADMIN'">
+          <div class="nav-divider"
+            style="height: 1px; background: var(--color-border); margin: 1rem 0;"></div>
+          <span
+            style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-text-light); letter-spacing: 1px; padding: 0 1rem;">{{
+            'MENU.ADMIN.ADMIN' | translate }}</span>
+          <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
+            <i class="fa-solid fa-users-gear"></i> {{ 'MENU.ADMIN.USERS' | translate }}
+          </a>
+          <a routerLink="/admin/lands" routerLinkActive="active" class="nav-item">
+            <i class="fa-solid fa-mountain-sun"></i> {{ 'MENU.ADMIN.LANDS' | translate }}
+          </a>
+          <a routerLink="/admin/tree-species" routerLinkActive="active" class="nav-item">
+            <i class="fa-solid fa-leaf"></i> {{ 'MENU.ADMIN.TREE_SPECIES' | translate }}
+          </a>
+          <a routerLink="/admin/companies" routerLinkActive="active" class="nav-item">
+            <i class="fa-solid fa-building"></i> {{ 'MENU.ADMIN.COMPANIES' | translate }}
+          </a>
+          <a routerLink="/admin/tree-types" routerLinkActive="active" class="nav-item">
+            <i class="fa-solid fa-seedling"></i> {{ 'MENU.ADMIN.TREE_TYPES' | translate }}
+          </a>
+          <a routerLink="/admin/planned-plantations" routerLinkActive="active" class="nav-item">
+            <i class="fa-solid fa-tree-city"></i> {{ 'MENU.ADMIN.PLANNED_PLANTATIONS' | translate }}
+          </a>
+        </ng-container>
+      </nav>
+
+
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <div class="top-bar">
+        <div class="header-actions">
+          <!-- User Session Info -->
+          <div class="user-profile-nav" (click)="router.navigate(['/profile'])">
+            <div class="user-avatar-mini">
+              <img *ngIf="user.picture" [src]="user.picture" (error)="handleAvatarError(user)" alt="Avatar">
+              <span *ngIf="!user.picture">{{ user.name[0] }}</span>
+            </div>
+            <div class="user-meta-mini">
+              <span class="user-name-mini">{{ user.name }}</span>
+              <span class="user-role-mini" *ngIf="user.role !== 'USER'">{{ user.role }}</span>
+            </div>
+          </div>
+
+          <div class="divider-vertical"></div>
+
+          <!-- Language Selector -->
+          <div class="lang-selector-modern">
+            <button (click)="changeLang('es')" [class.active]="currentLang === 'es'">ES</button>
+            <button (click)="changeLang('en')" [class.active]="currentLang === 'en'">EN</button>
+          </div>
+
+          <div class="divider-vertical"></div>
+
+          <!-- Logout Button -->
+          <button (click)="logout()" class="btn-logout-icon" [title]="'DASHBOARD.LOGOUT' | translate">
+            <i class="fa-solid fa-power-off"></i>
+          </button>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <!-- Layout para invitados (Login / Registro / Home) -->
+  <ng-template #guestView>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a routerLink="/" class="logo">
+          <img src="assets/logo_forestplus_color.png" alt="forest+" style="height: 36px;">
+        </a>
+        <div class="nav-links">
+          <div class="lang-selector-modern" style="margin-right: 1rem;">
+            <button (click)="changeLang('es')" [class.active]="currentLang === 'es'">ES</button>
+            <button (click)="changeLang('en')" [class.active]="currentLang === 'en'">EN</button>
+          </div>
+          <a routerLink="/login" class="nav-link">{{ 'MENU.LOGIN' | translate }}</a>
+          <a routerLink="/register" class="btn btn-primary"
+            style="padding: 8px 16px; font-size: 14px;">{{ 'MENU.REGISTER' | translate }}</a>
+        </div>
+      </div>
+    </nav>
   <main class="app-layout">
     <router-outlet></router-outlet>
   </main>
+</ng-template>
 </ng-template>

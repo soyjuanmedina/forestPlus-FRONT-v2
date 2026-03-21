@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
-    if (this.user?.mustChangePassword) {
+    if (this.user?.forcePasswordChange) {
       this.router.navigate(['/profile'], { queryParams: { mustChange: 'true' } });
     }
   }

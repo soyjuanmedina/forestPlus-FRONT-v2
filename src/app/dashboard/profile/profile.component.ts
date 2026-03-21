@@ -3,26 +3,33 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { AdminService } from '../../services/admin.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
-@Component({
+@Component( {
   selector: 'app-profile',
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule, StatusModalComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
-})
+} )
 export class ProfileComponent implements OnInit {
   user: any;
+  currentUser: any;
   editing = false;
   changingPassword = false;
-  
+  isAdminEditing = false;
+  editingUserId?: number;
+  confirmingDelete = false;
+
   editForm = {
     name: '',
     surname: '',
     secondSurname: '',
+    role: 'USER',
     receiveEmails: false
   };
 
@@ -42,95 +49,185 @@ export class ProfileComponent implements OnInit {
   previewImage: string | null = null;
   selectedFile: File | null = null;
 
-  constructor(
+  constructor (
     private authService: AuthService,
     private userService: UserService,
+    private adminService: AdminService,
     private translate: TranslateService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  ngOnInit() {
-    this.authService.currentUser$.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.editForm = {
-          name: user.name || '',
-          surname: user.surname || '',
-          secondSurname: user.secondSurname || '',
-          receiveEmails: user.receiveEmails || false
-        };
+  ngOnInit () {
+    this.authService.currentUser$.subscribe( user => {
+      if ( !this.isAdminEditing ) {
+        this.populateForm( user );
       }
-    });
+    } );
+    this.route.paramMap.subscribe( paramMap => {
+      const idParam = paramMap.get( 'id' );
+      if ( idParam ) {
+        const id = Number( idParam );
+        if ( !isNaN( id ) ) {
+          this.isAdminEditing = true;
+          this.editingUserId = id;
+          this.loadAdminUser( id );
+        }
+      }
+    } );
 
-    this.route.queryParams.subscribe(params => {
-      if (params['mustChange'] === 'true') {
+    this.route.queryParams.subscribe( params => {
+      if ( params['mustChange'] === 'true' ) {
         this.openChangePassword();
-        this.showStatus('error', 'Seguridad', this.translate.instant('PROFILE.MUST_CHANGE_NOTICE'));
+        this.showStatus( 'error', 'Seguridad', this.translate.instant( 'PROFILE.MUST_CHANGE_NOTICE' ) );
       }
-    });
+    } );
   }
 
-  toggleEdit() {
+  toggleEdit () {
     this.editing = !this.editing;
-    if (!this.editing && this.user) {
+    if ( !this.editing && this.user ) {
       this.editForm = {
         name: this.user.name || '',
         surname: this.user.surname || '',
         secondSurname: this.user.secondSurname || '',
+        role: this.user.role || 'USER',
         receiveEmails: this.user.receiveEmails || false
       };
     }
   }
 
-  saveProfile() {
-    this.userService.updateProfile(this.editForm).subscribe({
+  saveProfile () {
+    const payload = {
+      name: this.editForm.name,
+      surname: this.editForm.surname,
+      secondSurname: this.editForm.secondSurname,
+      role: this.editForm.role as any,
+      receiveEmails: this.editForm.receiveEmails,
+      picture: this.user?.picture
+    };
+
+    if ( this.isAdminEditing && this.user?.id ) {
+      this.adminService.updateUser( this.user.id, payload as any ).subscribe( {
+        next: () => {
+          this.editing = false;
+          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_UPDATE' ) );
+          this.router.navigate( ['/admin/users'] );
+        },
+        error: ( err ) => {
+          this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+        }
+      } );
+      return;
+    }
+
+    this.userService.updateProfile( payload as any ).subscribe( {
       next: () => {
         this.editing = false;
-        this.showStatus('success', 'Success', this.translate.instant('PROFILE.SUCCESS_UPDATE'));
+        this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_UPDATE' ) );
       },
-      error: (err) => {
-        this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING'));
+      error: ( err ) => {
+        this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
       }
-    });
+    } );
   }
 
-  onFileSelected(event: any) {
+  deleteUser () {
+    this.confirmingDelete = true;
+  }
+
+  cancelDelete () {
+    this.confirmingDelete = false;
+  }
+
+  confirmDelete () {
+    if ( !this.user?.id ) {
+      return;
+    }
+
+    this.adminService.deleteUser( this.user.id ).subscribe( {
+      next: () => {
+        this.confirmingDelete = false;
+        if ( this.isAdminEditing ) {
+          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_DELETE_USER' ) );
+          this.router.navigate( ['/admin/users'] );
+        } else {
+          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_DELETE_SELF' ) );
+          this.authService.logout();
+          this.router.navigate( ['/login'] );
+        }
+      },
+      error: ( err ) => {
+        this.confirmingDelete = false;
+        this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+      }
+    } );
+  }
+
+  onFileSelected ( event: any ) {
     const file = event.target.files[0];
-    if (file) {
+    if ( file ) {
       this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () => {
         this.previewImage = reader.result as string;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL( file );
     }
   }
 
-  uploadPicture() {
-    if (this.selectedFile && this.user) {
-      this.userService.updatePicture(this.user.id, this.selectedFile).subscribe({
-        next: () => {
+  uploadPicture () {
+    if ( this.previewImage && this.user ) {
+      this.userService.updatePicture( this.user.id, this.previewImage ).subscribe( {
+        next: ( res ) => {
           this.previewImage = null;
           this.selectedFile = null;
-          this.showStatus('success', 'Success', this.translate.instant('PROFILE.SUCCESS_PICTURE'));
+          // El servicio ya actualiza el authService vía tap()
+          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_PICTURE' ) );
         },
-        error: (err) => {
-          let msg = err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING');
-          if (err.error?.error === 'FILE_TOO_LARGE') {
-            msg = this.translate.instant('PROFILE.FILE_TOO_LARGE');
+        error: ( err ) => {
+          let msg = err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' );
+          if ( err.error?.error === 'FILE_TOO_LARGE' ) {
+            msg = this.translate.instant( 'PROFILE.FILE_TOO_LARGE' );
           }
-          this.showStatus('error', 'Error', msg);
+          this.showStatus( 'error', 'Error', msg );
         }
-      });
+      } );
     }
   }
 
-  cancelPicture() {
+  private loadAdminUser ( id: number ) {
+    this.adminService.getUserById( id ).subscribe( {
+      next: ( user ) => {
+        this.populateForm( user );
+      },
+      error: ( err ) => {
+        console.error( 'Error cargando usuario para edición:', err );
+        this.showStatus( 'error', 'Error', this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+        this.router.navigate( ['/admin/users'] );
+      }
+    } );
+  }
+
+  private populateForm ( user: any ) {
+    this.user = user;
+    if ( user ) {
+      this.editForm = {
+        name: user.name || '',
+        surname: user.surname || '',
+        secondSurname: user.secondSurname || '',
+        role: user.role || 'USER',
+        receiveEmails: user.receiveEmails || false
+      };
+    }
+  }
+
+  cancelPicture () {
     this.previewImage = null;
     this.selectedFile = null;
   }
 
-  openChangePassword() {
+  openChangePassword () {
     this.changingPassword = true;
     this.passwordForm = {
       currentPassword: '',
@@ -139,35 +236,42 @@ export class ProfileComponent implements OnInit {
     };
   }
 
-  closeChangePassword() {
+  closeChangePassword () {
     this.changingPassword = false;
   }
 
-  submitPassword() {
-    if (this.passwordForm.newPassword !== this.passwordForm.confirmPassword) {
-      this.showStatus('error', 'Error', this.translate.instant('PROFILE.PASSWORD_MISMATCH'));
+  submitPassword () {
+    if ( this.passwordForm.newPassword !== this.passwordForm.confirmPassword ) {
+      this.showStatus( 'error', 'Error', this.translate.instant( 'PROFILE.PASSWORD_MISMATCH' ) );
       return;
     }
 
-    this.userService.changePassword({
+    this.userService.changePassword( {
       currentPassword: this.passwordForm.currentPassword,
       newPassword: this.passwordForm.newPassword
-    }).subscribe({
+    } ).subscribe( {
       next: () => {
         this.changingPassword = false;
-        this.showStatus('success', 'Success', this.translate.instant('PROFILE.SUCCESS_PASSWORD'));
+        this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_PASSWORD' ) );
       },
-      error: (err) => {
-        this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING'));
+      error: ( err ) => {
+        this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
       }
-    });
+    } );
   }
 
-  showStatus(type: 'success' | 'error', title: string, message: string) {
+  onProfileAvatarError () {
+    this.previewImage = null;
+    if ( this.user ) {
+      this.user.picture = '';
+    }
+  }
+
+  showStatus ( type: 'success' | 'error', title: string, message: string ) {
     this.statusModal = { visible: true, type, title, message };
   }
 
-  closeStatus() {
+  closeStatus () {
     this.statusModal.visible = false;
   }
 }

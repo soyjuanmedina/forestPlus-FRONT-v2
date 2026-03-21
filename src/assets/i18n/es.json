@@ -1,4 +1,15 @@
 {
+  "COUNTDOWN": {
+    "TITLE": "Próximamente",
+    "SUBTITLE": "Estamos plantando las semillas de un futuro más verde. Muy pronto podrás acceder a forest+.",
+    "DAYS": "Días",
+    "HOURS": "Horas",
+    "MINUTES": "Minutos",
+    "SECONDS": "Segundos",
+    "NOTIFY_ME": "Déjanos tu email y te avisaremos en cuanto abramos acceso:",
+    "BUTTON": "Quiero acceso",
+    "SUCCESS_MSG": "¡Gracias! Te avisaremos en cuanto abramos el acceso."
+  },
   "COMMON": {
     "YES": "Sí",
     "NO": "No",
@@ -30,30 +41,30 @@
       "TITLE": "Súmate al cambio",
       "DESC": "Descubre cómo tu bosque digital puede regenerar territorio, cuidar del clima y ayudarte a tomar decisiones sostenibles cada mes.",
       "BENEFITS": {
-         "B1": {
-            "TITLE": "Creas tu propio bosque",
-            "DESC": "Cada pago se traduce en árboles plantados en proyectos reales, con especies y ubicaciones pensadas para regenerar clima, agua y suelo."
-         },
-         "B2": {
-            "TITLE": "Ves tu impacto, no solo números",
-            "DESC": "Tu bosque digital te muestra árboles, CO₂ compensado e historias de regeneración, para que sientas que cada mes estás moviendo la aguja."
-         },
-         "B3": {
-             "TITLE": "Acompañamiento",
-             "DESC": "Respondemos dudas, explicamos los proyectos y damos contexto para que cada decisión se tome con información y conciencia ambiental."
-         },
-         "B4": {
-             "TITLE": "Impacto corporativo",
-             "DESC": "Los árboles de tu bosque generan certificados y reportes útiles para comunicación, ESG y cumplimiento normativo cuando lo necesites."
-         },
-         "B5": {
-             "TITLE": "Valores claros",
-             "DESC": "forest+ nace para cuidar el territorio y a quienes lo habitan, priorizando siempre la salud de los ecosistemas sobre cualquier otro interés."
-         },
-         "B6": {
-             "TITLE": "Participas en algo colectivo",
-             "DESC": "Cada árbol que sumas se integra en proyectos compartidos con ayuntamientos y otras personas, amplificando tu impacto."
-         }
+        "B1": {
+          "TITLE": "Creas tu propio bosque",
+          "DESC": "Cada pago se traduce en árboles plantados en proyectos reales, con especies y ubicaciones pensadas para regenerar clima, agua y suelo."
+        },
+        "B2": {
+          "TITLE": "Ves tu impacto, no solo números",
+          "DESC": "Tu bosque digital te muestra árboles, CO₂ compensado e historias de regeneración, para que sientas que cada mes estás moviendo la aguja."
+        },
+        "B3": {
+          "TITLE": "Acompañamiento",
+          "DESC": "Respondemos dudas, explicamos los proyectos y damos contexto para que cada decisión se tome con información y conciencia ambiental."
+        },
+        "B4": {
+          "TITLE": "Impacto corporativo",
+          "DESC": "Los árboles de tu bosque generan certificados y reportes útiles para comunicación, ESG y cumplimiento normativo cuando lo necesites."
+        },
+        "B5": {
+          "TITLE": "Valores claros",
+          "DESC": "forest+ nace para cuidar el territorio y a quienes lo habitan, priorizando siempre la salud de los ecosistemas sobre cualquier otro interés."
+        },
+        "B6": {
+          "TITLE": "Participas en algo colectivo",
+          "DESC": "Cada árbol que sumas se integra en proyectos compartidos con ayuntamientos y otras personas, amplificando tu impacto."
+        }
       }
     },
     "TESTIMONIALS": {
@@ -207,7 +218,9 @@
     "LOCATION_PLACEHOLDER": "Lat, Long o Nombre Ciudad",
     "AREA": "Área (m²)",
     "CAPACITY": "Capacidad Árboles",
-    "IMAGE_URL": "URL de la imagen",
+    "IMAGE_PREVIEW": "Vista previa de la imagen",
+    "IMAGE_DATA": "Datos de la imagen (Base64)",
+    "IMAGE_PLACEHOLDER": "Pega aquí el código Base64 de la imagen o una URL",
     "DESCRIPTION": "Descripción",
     "CANCEL": "Cancelar",
     "SAVE": "Guardar Cambios",
@@ -269,6 +282,14 @@
     "PASSWORD_MISMATCH": "❌ Las contraseñas no coinciden",
     "FILE_TOO_LARGE": "❌ La imagen es demasiado grande. Máximo 10MB.",
     "MUST_CHANGE_NOTICE": "⚠️ Por seguridad, debes cambiar tu contraseña temporal antes de continuar.",
+    "DELETE_ACCOUNT": "Eliminar cuenta",
+    "DELETE_ACCOUNT_DESC": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate de que realmente quieres hacerlo.",
+    "DELETE_CONFIRM_TITLE": "Confirmar eliminación",
+    "CONFIRM_DELETE": "Eliminar definitivamente",
+    "CONFIRM_SELF_DELETE": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.",
+    "CONFIRM_ADMIN_DELETE": "¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.",
+    "SUCCESS_DELETE_SELF": "✅ Tu cuenta ha sido eliminada.",
+    "SUCCESS_DELETE_USER": "✅ Usuario eliminado correctamente.",
     "LAST_LOGIN": "Último login",
     "LOGIN_COUNT": "Logins exitosos",
     "ROLE": "Rol",

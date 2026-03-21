@@ -1,45 +1,47 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from './auth.service';
+import { 
+  UserControllerService, 
+  UserResponseDto, 
+  RegisterUserRequestDto,
+  ResetPasswordRequestDto,
+  AuthControllerService
+} from '../api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/users';
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(
+    private userApi: UserControllerService,
+    private authApi: AuthControllerService,
+    private authService: AuthService
+  ) { }
 
-  private getHeaders() {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  }
-
-  updateProfile(data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/profile`, data, { headers: this.getHeaders() }).pipe(
-      tap((res: any) => {
-        if (res.user) {
-          this.authService.updateCurrentUser(res.user);
-        }
+  updateProfile(data: RegisterUserRequestDto): Observable<UserResponseDto> {
+    const userId = this.authService.getUserId();
+    if (!userId) throw new Error('Usuario no identificado');
+    
+    return this.userApi.updateUser(userId, data).pipe(
+      tap((user: UserResponseDto) => {
+        this.authService.updateCurrentUser(user);
       })
     );
   }
 
-  changePassword(data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/change-password`, data, { headers: this.getHeaders() });
+  changePassword(data: ResetPasswordRequestDto): Observable<any> {
+    const token = localStorage.getItem('forestPlus_token');
+    return this.authApi.resetPassword(token || '', data);
   }
 
-  updatePicture(userId: number, file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file);
-    return this.http.put(`${this.apiUrl}/${userId}/picture`, formData, { headers: this.getHeaders() }).pipe(
-      tap((res: any) => {
-        // Si el usuario actualizado es el actual, actualizamos authService
+  updatePicture(userId: number, pictureBase64: string): Observable<UserResponseDto> {
+    return this.userApi.updateUserPicture(userId, { picture: pictureBase64 }).pipe(
+      tap((user: UserResponseDto) => {
         const currentUser = this.authService.getCurrentUser();
-        if (currentUser && currentUser.id === userId && res.picture) {
-          currentUser.picture = res.picture;
-          this.authService.updateCurrentUser(currentUser);
+        if (currentUser && currentUser.id === userId) {
+          this.authService.updateCurrentUser(user);
         }
       })
     );

@@ -48,6 +48,19 @@
   border-radius: 50%;
 }
 
+.profile-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d6f0d7 0%, #89d9a9 100%);
+  color: #145f3c;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
 .avatar-edit {
   position: absolute;
   bottom: 5px;
@@ -341,6 +354,93 @@ input:checked + .slider:before { transform: translateX(22px); }
   .profile-summary { padding: 90px 30px 30px; text-align: center; }
   .profile-avatar-wrapper { left: 50%; transform: translateX(-50%); }
   .form-grid { grid-template-columns: 1fr; }
+}
+
+.security-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.danger-zone {
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px dashed #eee;
+}
+
+.danger-desc {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.btn-danger-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid #ff4757;
+  color: #ff4757;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.btn-danger-outline:hover {
+  background: #ff4757;
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Modal Peligro */
+.danger-modal {
+  border-top: 6px solid #ff4757 !important;
+  text-align: center;
+}
+
+.modal-icon {
+  font-size: 3.5rem;
+  color: #ff4757;
+  margin-bottom: 1.5rem;
+}
+
+.danger-modal h3 {
+  color: #ff4757;
+  margin-bottom: 1rem;
+}
+
+.danger-modal p {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.modal-actions.full-width {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+}
+
+.btn-danger {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background: #ff3333;
+  transform: scale(1.02);
 }
 
 @keyframes fadeIn {

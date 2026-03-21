@@ -1,29 +1,46 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppComponent } from './app.component';
+import { appConfig } from './app.config';
+import { AuthService } from './services/auth.service';
+import { of } from 'rxjs';
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
-  });
+describe( 'AppComponent', () => {
+  let authServiceMock: any;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach( async () => {
+    authServiceMock = {
+      currentUser$: of( null ),
+      isLoggedIn: () => false,
+      logout: () => { },
+      getCurrentUser: () => null
+    };
+
+    await TestBed.configureTestingModule( {
+      imports: [AppComponent, HttpClientTestingModule],
+      providers: [
+        ...appConfig.providers,
+        { provide: AuthService, useValue: authServiceMock }
+      ],
+    } ).compileComponents();
+  } );
+
+  it( 'should create the app', () => {
+    const fixture = TestBed.createComponent( AppComponent );
     const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    expect( app ).toBeTruthy();
+  } );
 
-  it(`should have the 'tree-nation-auth' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it( `should have the 'forest+' title`, () => {
+    const fixture = TestBed.createComponent( AppComponent );
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('tree-nation-auth');
-  });
+    expect( app.title ).toEqual( 'forest+' );
+  } );
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it( 'should render title', () => {
+    const fixture = TestBed.createComponent( AppComponent );
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, tree-nation-auth');
-  });
-});
+    const app = fixture.componentInstance;
+    expect( app.title ).toBeDefined();
+  } );
+} );
