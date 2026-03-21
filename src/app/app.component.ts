@@ -87,7 +87,7 @@ export class AppComponent {
   }
 
   private checkLaunch() {
-    this.showCountdown = environment.production && (Date.now() < this.launchDate.getTime());
+    this.showCountdown = Date.now() < this.launchDate.getTime();
     
     // El banner se muestra en cualquier entorno que no sea producción
     this.showEnvBanner = !environment.production;
