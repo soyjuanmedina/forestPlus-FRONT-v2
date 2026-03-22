@@ -2,10 +2,10 @@
   <div class="page-header d-flex justify-content-between align-items-center">
     <div>
       <h1>{{ 'MENU.ADMIN.TREE_SPECIES' | translate }}</h1>
-      <p>{{ 'Maneja las diferentes especies de árboles disponibles' }}</p>
+      <p>{{ 'TREE_SPECIES.SUBTITLE' | translate }}</p>
     </div>
     <button (click)="openNew()" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Nueva Especie
+       {{ 'TREE_SPECIES.NEW_TITLE' | translate }}
     </button>
   </div>
 
@@ -17,7 +17,7 @@
   <div class="species-grid" *ngIf="!loading">
     <div *ngFor="let s of treeSpecies" class="species-card">
       <div class="species-image" [style.backgroundImage]="s.picture ? 'url(' + s.picture + ')' : ''" 
-           style="display: flex; align-items: center; justify-content: center;">
+           style="display: flex; align-items: center; justify-content: center; height: 180px; background-size: cover; background-position: center;">
         <i *ngIf="!s.picture" class="fa-solid fa-image" style="font-size: 3rem; color: var(--color-primary); opacity: 0.2;"></i>
       </div>
       <div class="species-info">
@@ -31,10 +31,10 @@
 
         <div class="card-actions">
           <button (click)="editSpecies(s)" class="btn btn-secondary btn-sm">
-            <i class="fas fa-edit"></i> {{ 'COMMON.EDIT' | translate }}
+            {{ 'COMMON.EDIT' | translate }}
           </button>
           <button (click)="deleteSpecies(s.id)" class="btn btn-danger btn-sm">
-            <i class="fas fa-trash"></i> {{ 'COMMON.DELETE' | translate }}
+            {{ 'COMMON.DELETE' | translate }}
           </button>
         </div>
       </div>
@@ -43,7 +43,7 @@
     <!-- Empty State -->
     <div *ngIf="treeSpecies.length === 0" class="glass-card text-center" style="grid-column: 1 / -1; padding: 4rem;">
       <i class="fa-solid fa-seedling" style="font-size: 3rem; color: var(--color-primary); opacity: 0.3; margin-bottom: 1rem;"></i>
-      <p>No hay especies registradas en este rincón del bosque.</p>
+      <p>{{ 'TREE_SPECIES.EMPTY_LIST' | translate }}</p>
     </div>
   </div>
 
@@ -93,7 +93,7 @@
           <div style="margin-top: 15px;">
             <input type="file" #fileInputSpecies style="display: none" (change)="onFileSelected($event)" accept="image/*">
             <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 8px 18px; display: flex; align-items: center; gap: 8px; margin: 0 auto;" (click)="fileInputSpecies.click()">
-              <i class="fas fa-leaf"></i> {{ 'Seleccionar Imagen' }}
+               {{ 'USER.SELECT_IMAGE' | translate }}
             </button>
           </div>
         </div>

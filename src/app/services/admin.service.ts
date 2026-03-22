@@ -5,6 +5,7 @@ import {
   UserControllerService, 
   LandControllerService, 
   TreeTypeControllerService,
+  PlannedPlantationControllerService,
   UserResponseDto,
   RegisterUserByAdminRequestDto,
   LandResponseDto,
@@ -12,7 +13,10 @@ import {
   LandUpdateRequestDto,
   TreeTypeResponseDto,
   TreeTypeRequestDto,
-  TreeTypeUpdateRequestDto
+  TreeTypeUpdateRequestDto,
+  PlannedPlantationResponseDto,
+  PlannedPlantationRequestDto,
+  PlannedPlantationUpdateRequestDto
 } from '../api';
 
 @Injectable( {
@@ -23,7 +27,8 @@ export class AdminService {
   constructor ( 
     private userApi: UserControllerService,
     private landApi: LandControllerService,
-    private treeTypeApi: TreeTypeControllerService
+    private treeTypeApi: TreeTypeControllerService,
+    private plannedPlantationApi: PlannedPlantationControllerService
   ) { }
 
   // Usuarios
@@ -79,5 +84,27 @@ export class AdminService {
 
   deleteTreeSpecies ( id: number ): Observable<any> {
     return this.treeTypeApi.deleteTreeType( id );
+  }
+
+  // Plantaciones Previstas
+  getPlannedPlantations (): Observable<PlannedPlantationResponseDto[]> {
+    return this.plannedPlantationApi.getAll();
+  }
+
+  // Método para obtener plantaciones por terreno (accesible por usuarios autenticados)
+  getPlannedPlantationsByLand ( landId: number ): Observable<PlannedPlantationResponseDto[]> {
+    return this.plannedPlantationApi.getByLand( landId );
+  }
+
+  createPlannedPlantation ( data: PlannedPlantationRequestDto ): Observable<PlannedPlantationResponseDto> {
+    return this.plannedPlantationApi.create( data );
+  }
+
+  updatePlannedPlantation ( id: number, data: PlannedPlantationUpdateRequestDto ): Observable<PlannedPlantationResponseDto> {
+    return this.plannedPlantationApi.update( id, data );
+  }
+
+  deletePlannedPlantation ( id: number ): Observable<any> {
+    return this.plannedPlantationApi._delete( id );
   }
 }

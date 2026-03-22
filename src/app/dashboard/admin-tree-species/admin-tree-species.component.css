@@ -72,18 +72,36 @@
   gap: 10px;
   padding-top: 15px;
   border-top: 1px solid rgba(0,0,0,0.05);
+  justify-content: flex-end; /* Alineados a la derecha */
 }
 
 .btn-sm {
-  padding: 6px 14px;
+  padding: 6px 20px;
   font-size: 0.8rem;
-  flex: 1;
+  border-radius: 50px; /* Redondeados */
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary {
+    background: rgba(105, 210, 145, 0.08);
+    color: var(--color-primary);
+    border: 1px solid rgba(105, 210, 145, 0.4);
+}
+
+.btn-secondary:hover {
+    background: var(--color-primary);
+    color: #fff;
 }
 
 .btn-danger {
   background: rgba(255,71,87,0.08);
   color: #ff4757;
-  border: 1px solid rgba(255,71,87,0.3);
+  border: 1px solid rgba(255,71,87,0.4);
 }
 
 .btn-danger:hover {
@@ -107,7 +125,7 @@
 
 .modal-card {
   width: 100%;
-  max-width: 650px; /* Igual que Usuarios */
+  max-width: 650px;
   padding: 35px;
   background: #fff;
   border-radius: 24px;

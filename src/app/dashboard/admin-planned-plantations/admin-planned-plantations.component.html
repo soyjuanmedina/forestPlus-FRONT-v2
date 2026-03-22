@@ -1,0 +1,118 @@
+<div class="admin-page animate-fade-in">
+  <div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+      <h1>{{ 'ADMIN_PLANNED_PLANTATIONS.TITLE' | translate }}</h1>
+      <p>{{ 'ADMIN_PLANNED_PLANTATIONS.SUBTITLE' | translate }}</p>
+    </div>
+    <button (click)="openNew()" class="btn btn-primary">
+      <i class="fas fa-plus"></i> {{ 'ADMIN_PLANNED_PLANTATIONS.ADD_BUTTON' | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
+  </div>
+
+  <div *ngIf="!loading" class="lands-grid">
+    <div *ngFor="let pp of plantations" class="land-card">
+      <div class="land-image" [style.backgroundImage]="pp.land?.picture ? 'url(' + pp.land.picture + ')' : ''" 
+           style="height: 180px; background-size: cover; background-position: center; display: flex; align-items: flex-start; justify-content: flex-end; position: relative; background-color: #f1f8e9;">
+        <div class="card-status" *ngIf="pp.isActive" style="padding: 10px;">
+            <span class="badge badge-active">{{ 'PLANNED_PLANTATION.ACTIVE' | translate }}</span>
+        </div>
+        <i *ngIf="!pp.land?.picture" class="fa-solid fa-cloud-sun" style="font-size: 3rem; color: var(--color-primary); opacity: 0.2; margin: auto;"></i>
+      </div>
+      
+      <div class="land-info">
+        <h3>{{ pp.land?.name || ('PLANNED_PLANTATION.NO_NAME_LAND' | translate) }}</h3>
+        
+        <p class="location">
+            <i class="fas fa-calendar-check"></i> 
+            {{ pp.plannedDate ? (pp.plannedDate | date:'dd/MM/yyyy') : '—' }}
+        </p>
+
+        <div class="stats" style="flex-wrap: wrap; margin-bottom: 20px;">
+          <span><strong>Min:</strong> {{ pp.minTrees ?? 0 }}</span>
+          <span><strong>Opt:</strong> {{ pp.optimalTrees ?? 0 }}</span>
+          <span><strong>Max:</strong> {{ pp.maxTrees ?? 0 }}</span>
+        </div>
+
+        <div class="card-actions">
+           <button (click)="editPlantation(pp)" class="btn btn-secondary btn-sm">{{ 'COMMON.EDIT' | translate }}</button>
+           <button (click)="deletePlantation(pp.id)" class="btn btn-danger btn-sm">{{ 'COMMON.DELETE' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="plantations.length === 0 && !loading" class="empty-state">
+      <i class="fas fa-seedling"></i>
+      <p>{{ 'PLANNED_PLANTATION.SEARCH_NOT_FOUND' | translate }}</p>
+  </div>
+
+  <!-- Modal de Edición/Creación -->
+  <div *ngIf="editingPlantation" class="modal-overlay">
+    <div class="modal-card scrollable-modal glass">
+      <h3>
+        <i class="fa-solid" [ngClass]="isNew ? 'fa-circle-plus' : 'fa-pen-to-square'" style="color: var(--color-primary);"></i>
+        {{ isNew ? ('PLANNED_PLANTATION.NEW_TITLE' | translate) : ('PLANNED_PLANTATION.EDIT_TITLE' | translate) }}
+      </h3>
+
+      <div class="form-group">
+        <label>{{ 'PLANNED_PLANTATION.ASSOCIATED_LAND' | translate }}</label>
+        <select [(ngModel)]="editingPlantation.landId" class="form-control">
+          <option [ngValue]="null">{{ 'PLANNED_PLANTATION.SELECT_LAND' | translate }}</option>
+          <option *ngFor="let land of lands" [value]="land.id">{{ land.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+          <div class="form-group half">
+            <label>{{ 'PLANNED_PLANTATION.PLANNED_DATE' | translate }}</label>
+            <input type="date" [(ngModel)]="editingPlantation.plannedDate" class="form-control">
+          </div>
+          <div class="form-group half">
+            <label>{{ 'PLANNED_PLANTATION.EFFECTIVE_DATE' | translate }} ({{ 'COMMON.OPTIONAL' | translate }})</label>
+            <input type="date" [(ngModel)]="editingPlantation.effectiveDate" class="form-control">
+          </div>
+      </div>
+
+      <div class="trees-form-container" style="display:flex; gap: 10px; margin-bottom: 20px; background: rgba(0,0,0,0.02); padding: 15px; border-radius: 12px;">
+          <div class="form-group" style="flex:1; margin-bottom: 0;">
+            <label style="font-size: 0.75rem;">{{ 'PLANNED_PLANTATION.MIN_TREES' | translate }}</label>
+            <input type="number" [(ngModel)]="editingPlantation.minTrees" class="form-control">
+          </div>
+          <div class="form-group" style="flex:1; margin-bottom: 0;">
+            <label style="font-size: 0.75rem;">{{ 'PLANNED_PLANTATION.OPTIMAL_TREES' | translate }}</label>
+            <input type="number" [(ngModel)]="editingPlantation.optimalTrees" class="form-control">
+          </div>
+          <div class="form-group" style="flex:1; margin-bottom: 0;">
+            <label style="font-size: 0.75rem;">{{ 'PLANNED_PLANTATION.MAX_TREES' | translate }}</label>
+            <input type="number" [(ngModel)]="editingPlantation.maxTrees" class="form-control">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 20px;">
+        <label class="toggle-switch" style="display:flex; align-items:center; gap: 10px; cursor:pointer;">
+            <input type="checkbox" [(ngModel)]="editingPlantation.isActive" style="width: 20px; height: 20px;">
+            <span style="font-weight: 700;">{{ 'PLANNED_PLANTATION.ACTIVE' | translate }}</span>
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button (click)="cancelEdit()" class="btn btn-secondary" style="padding: 12px 30px;">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="savePlantation()" class="btn btn-primary" [disabled]="!isModified()" style="padding: 12px 40px; font-weight: 800; box-shadow: 0 10px 20px rgba(var(--color-primary-rgb), 0.3);">
+          {{ isNew ? ('PLANNED_PLANTATION.CREATE' | translate) : ('COMMON.SAVE' | translate) }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-status-modal [visible]="statusModal.visible" [type]="statusModal.type"
+    [title]="statusModal.title" [message]="statusModal.message"
+    (close)="closeStatus()"></app-status-modal>
+
+  <app-confirm-modal [visible]="confirmModal.visible" [message]="confirmModal.message"
+    (confirm)="confirmDelete()" (cancel)="cancelDelete()"></app-confirm-modal>
+</div>

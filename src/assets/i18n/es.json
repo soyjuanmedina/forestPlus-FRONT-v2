@@ -24,7 +24,9 @@
     "SUCCESS_DELETE": "✅ Eliminado correctamente",
     "ERROR_DELETE": "❌ No se pudo eliminar el elemento",
     "ERROR_PROCESSING": "❌ Hubo un problema al procesar la solicitud",
-    "EMAIL_VERIFIED": "Correo verificado"
+    "EMAIL_VERIFIED": "Correo verificado",
+    "CLEAR": "Limpiar",
+    "OPTIONAL": "opcional"
   },
   "HOME": {
     "TITLE": "Gestiona tu bosque digital Mide tu impacto real",
@@ -449,5 +451,31 @@
       "MESSAGE": "¿Estás seguro de que quieres eliminar a {{name}}?"
     },
     "ADD_BUTTON": "Nuevo Usuario"
+  },
+  "ADMIN_PLANNED_PLANTATIONS": {
+    "TITLE": "Plantaciones Previstas",
+    "SUBTITLE": "Gestiona el calendario y los objetivos de reforestación",
+    "ADD_BUTTON": "Nueva Plantación"
+  },
+  "PLANNED_PLANTATION": {
+    "ACTIVE": "Activa",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre de terreno...",
+    "PLANNED_DATE": "Fecha prevista",
+    "EFFECTIVE_DATE": "Fecha efectiva",
+    "MIN_TREES": "Mínimo",
+    "OPTIMAL_TREES": "Óptimo",
+    "MAX_TREES": "Máximo",
+    "TREES_TITLE": "Objetivo de Árboles",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Siguiente",
+    "NEW_TITLE": "Nueva Plantación",
+    "EDIT_TITLE": "Editar Plantación",
+    "PAGE": "Página",
+    "OF": "de",
+    "SEARCH_NOT_FOUND": "No se encontraron plantaciones previstas.",
+    "SELECT_LAND": "--- Seleccionar Terreno ---",
+    "ASSOCIATED_LAND": "Terreno Asociado",
+    "NO_NAME_LAND": "Terreno sin nombre",
+    "CREATE": "Crear Plantación"
   }
 }

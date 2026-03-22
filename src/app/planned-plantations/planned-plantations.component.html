@@ -1,0 +1,60 @@
+<div class="page-header" style="margin-bottom: 2rem;">
+  <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ 'PLANNED_PLANTATION.TITLE' | translate }} 🌳</h1>
+  <p style="color: var(--color-text-light);">{{ 'PLANNED_PLANTATION.SUBTITLE' | translate }}</p>
+</div>
+
+<div class="plantations-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;">
+  <!-- Loader -->
+  <div *ngIf="loading" class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+    <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1rem;"></i>
+    <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
+  </div>
+
+  <div *ngFor="let pp of plantations" class="glass-card plantation-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+    <div class="land-image" style="height: 200px; background: #f1f8e9; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+      <img *ngIf="pp.land?.picture" [src]="pp.land.picture" style="width: 100%; height: 100%; object-fit: cover;">
+      <div *ngIf="!pp.land?.picture" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--color-primary); opacity: 0.5;">
+        <i class="fa-solid fa-tree-city" style="font-size: 3rem;"></i>
+      </div>
+      <div class="status-badge" style="position: absolute; top: 1rem; right: 1rem; background: var(--color-primary); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+        {{ 'PLANNED_PLANTATION.ACTIVE' | translate }}
+      </div>
+    </div>
+
+    <div style="padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;">
+      <h3 style="margin-bottom: 0.5rem;">{{ pp.land?.name || ('PLANNED_PLANTATION.NO_NAME_LAND' | translate) }}</h3>
+      
+      <div class="date-info" style="display: flex; align-items: center; gap: 8px; color: var(--color-text-light); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        <i class="fa-regular fa-calendar-check" style="color: var(--color-primary);"></i>
+        <span>{{ 'PLANNED_PLANTATION.PLANNED_DATE' | translate }}: {{ pp.plannedDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+
+      <div class="trees-info" style="margin-top: auto;">
+        <span style="display: block; font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">{{ 'PLANNED_PLANTATION.TREES_TITLE' | translate }}</span>
+        <div class="stats-row" style="display: flex; justify-content: space-between; gap: 10px;">
+           <div class="stat-bubble" style="flex:1; text-align: center; background: rgba(0,0,0,0.03); padding: 8px; border-radius: 12px;">
+              <span style="display: block; font-size: 0.9rem; font-weight: 700;">{{ pp.minTrees }}</span>
+              <span style="display: block; font-size: 0.6rem; color: var(--color-text-light); text-transform: uppercase;">{{ 'PLANNED_PLANTATION.MIN_TREES' | translate }}</span>
+           </div>
+           <div class="stat-bubble optimal" style="flex:1; text-align: center; background: rgba(var(--color-primary-rgb), 0.1); border: 1px solid rgba(var(--color-primary-rgb), 0.3); padding: 8px; border-radius: 12px;">
+              <span style="display: block; font-size: 0.9rem; font-weight: 700; color: var(--color-primary);">{{ pp.optimalTrees }}</span>
+              <span style="display: block; font-size: 0.6rem; color: var(--color-primary); text-transform: uppercase; font-weight: 800;">{{ 'PLANNED_PLANTATION.OPTIMAL_TREES' | translate }}</span>
+           </div>
+           <div class="stat-bubble" style="flex:1; text-align: center; background: rgba(0,0,0,0.03); padding: 8px; border-radius: 12px;">
+              <span style="display: block; font-size: 0.9rem; font-weight: 700;">{{ pp.maxTrees }}</span>
+              <span style="display: block; font-size: 0.6rem; color: var(--color-text-light); text-transform: uppercase;">{{ 'PLANNED_PLANTATION.MAX_TREES' | translate }}</span>
+           </div>
+        </div>
+      </div>
+
+      <button [routerLink]="['/lands', pp.land?.id]" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; border-radius: 12px; font-size: 14px; font-weight: 700;">
+        {{ 'LANDS.PLANT_HERE' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="plantations.length === 0 && !loading" class="glass-card text-center" style="grid-column: 1 / -1; padding: 4rem;">
+    <i class="fa-solid fa-seedling" style="font-size: 3rem; color: var(--color-primary); opacity: 0.3; margin-bottom: 1rem;"></i>
+    <p>{{ 'PLANNED_PLANTATION.EMPTY_LIST' | translate }}</p>
+  </div>
+</div>

@@ -24,7 +24,9 @@
     "SUCCESS_DELETE": "✅ Deleted successfully",
     "ERROR_DELETE": "❌ Could not delete the item",
     "ERROR_PROCESSING": "❌ There was a problem processing the request",
-    "EMAIL_VERIFIED": "Email verified"
+    "EMAIL_VERIFIED": "Email verified",
+    "CLEAR": "Clear",
+    "OPTIONAL": "optional"
   },
   "HOME": {
     "TITLE": "Manage your digital forest, measure your real impact",
@@ -446,5 +448,31 @@
       "MESSAGE": "Are you sure you want to delete {{name}}?"
     },
     "ADD_BUTTON": "New User"
+  },
+  "ADMIN_PLANNED_PLANTATIONS": {
+    "TITLE": "Planned Plantations",
+    "SUBTITLE": "Manage the reforestation schedule and goals",
+    "ADD_BUTTON": "New Plantation"
+  },
+  "PLANNED_PLANTATION": {
+    "ACTIVE": "Active",
+    "SEARCH_PLACEHOLDER": "Search by land name...",
+    "PLANNED_DATE": "Planned date",
+    "EFFECTIVE_DATE": "Effective date",
+    "MIN_TREES": "Minimum",
+    "OPTIMAL_TREES": "Optimal",
+    "MAX_TREES": "Maximum",
+    "TREES_TITLE": "Tree Target",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "NEW_TITLE": "New Plantation",
+    "EDIT_TITLE": "Edit Plantation",
+    "PAGE": "Page",
+    "OF": "of",
+    "SEARCH_NOT_FOUND": "No planned plantations found.",
+    "SELECT_LAND": "--- Select Land ---",
+    "ASSOCIATED_LAND": "Associated Land",
+    "NO_NAME_LAND": "Unnamed land",
+    "CREATE": "Create Plantation"
   }
 }
