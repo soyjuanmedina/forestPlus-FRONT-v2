@@ -14,6 +14,7 @@ export interface HomeDashboardKpiResponseDto {
     plantedTrees?: number;
     pendingTreesCount?: number;
     annualCo2Compensated?: number;
+    globalPlantedTrees?: number;
+    globalAnnualCo2Compensated?: number;
     plannedPlantations?: Array<PlannedPlantationKpiResponseDto>;
 }
-

@@ -125,13 +125,21 @@
     "PANEL": "Este es tu panel personal en forest+.",
     "LOGOUT": "Cerrar sesión",
     "STATS": {
-      "TASKS": "Tareas completadas",
-      "POINTS": "Puntos obtenidos"
+      "YOUR_CONTRIBUTION": "Tu Contribución",
+      "OUR_PROJECT": "Nuestro Proyecto",
+      "NEXT_PLANTATION": "Próxima Plantación",
+      "ENVIRONMENTAL_IMPACT": "Impacto Ambiental",
+      "CONGRATS_PERSONAL": "Enhorabuena, con tu actuación estás contribuyendo a compensar el CO₂ producido por:",
+      "CONGRATS_GLOBAL": "Cuando realicemos nuestro proyecto estaremos contribuyendo a compensar el CO₂ producido por:",
+      "PLANTED": "Árboles Plantados",
+      "PENDING": "Pendientes de Plantar",
+      "CO2": "CO₂ Compensado Anual",
+      "UPCOMING": "Próximas Reforestaciones"
     },
     "STEPS": {
-      "TITLE": "Próximos pasos",
-      "DESCRIPTION": "Aquí puedes empezar a desarrollar las funcionalidades de tu nuevo proyecto.",
-      "CTA": "Crear nuevo elemento"
+      "TITLE": "¿Cómo seguir?",
+      "DESCRIPTION": "Sigue contribuyendo a la regeneración de nuestros ecosistemas.",
+      "CTA": "Ver Terrenos Disponibles"
     }
   },
   "LOGIN": {

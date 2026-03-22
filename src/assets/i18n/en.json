@@ -125,13 +125,15 @@
     "PANEL": "This is your personal dashboard on forest+.",
     "LOGOUT": "Log out",
     "STATS": {
-      "TASKS": "Completed tasks",
-      "POINTS": "Points earned"
+      "PLANTED": "Planted Trees",
+      "PENDING": "Pending Planting",
+      "CO2": "Annual CO₂ Offset",
+      "UPCOMING": "Next Reforestations"
     },
     "STEPS": {
-      "TITLE": "Next steps",
-      "DESCRIPTION": "Here you can start developing the features of your new project.",
-      "CTA": "Create new item"
+      "TITLE": "What next?",
+      "DESCRIPTION": "Continue contributing to the regeneration of our ecosystems.",
+      "CTA": "View Available Lands"
     }
   },
   "LOGIN": {
