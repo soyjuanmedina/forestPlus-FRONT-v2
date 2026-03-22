@@ -18,3 +18,4 @@ export interface HomeDashboardKpiResponseDto {
     globalAnnualCo2Compensated?: number;
     plannedPlantations?: Array<PlannedPlantationKpiResponseDto>;
 }
+

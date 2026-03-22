@@ -33,6 +33,9 @@
         </p>
 
         <div class="stats" style="flex-wrap: wrap; margin-bottom: 20px;">
+          <span style="width: 100%; margin-bottom: 5px; color: var(--color-primary);">
+            <i class="fa-solid fa-tree"></i> {{ pp.treeTypeName || '—' }}
+          </span>
           <span><strong>Min:</strong> {{ pp.minTrees ?? 0 }}</span>
           <span><strong>Opt:</strong> {{ pp.optimalTrees ?? 0 }}</span>
           <span><strong>Max:</strong> {{ pp.maxTrees ?? 0 }}</span>
@@ -59,12 +62,21 @@
         {{ isNew ? ('PLANNED_PLANTATION.NEW_TITLE' | translate) : ('PLANNED_PLANTATION.EDIT_TITLE' | translate) }}
       </h3>
 
-      <div class="form-group">
-        <label>{{ 'PLANNED_PLANTATION.ASSOCIATED_LAND' | translate }}</label>
-        <select [(ngModel)]="editingPlantation.landId" class="form-control">
-          <option [ngValue]="null">{{ 'PLANNED_PLANTATION.SELECT_LAND' | translate }}</option>
-          <option *ngFor="let land of lands" [value]="land.id">{{ land.name }}</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group half">
+          <label>{{ 'PLANNED_PLANTATION.ASSOCIATED_LAND' | translate }}</label>
+          <select [(ngModel)]="editingPlantation.landId" class="form-control">
+            <option [ngValue]="null">{{ 'PLANNED_PLANTATION.SELECT_LAND' | translate }}</option>
+            <option *ngFor="let land of lands" [ngValue]="land.id">{{ land.name }}</option>
+          </select>
+        </div>
+        <div class="form-group half">
+          <label>{{ 'PLANNED_PLANTATION.TREE_TYPE' | translate }} *</label>
+          <select [(ngModel)]="editingPlantation.treeTypeId" class="form-control" required>
+            <option [ngValue]="null">{{ 'PLANNED_PLANTATION.SELECT_TREE_TYPE' | translate }}</option>
+            <option *ngFor="let type of treeTypes" [ngValue]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-row">

@@ -476,5 +476,32 @@
     "ASSOCIATED_LAND": "Associated Land",
     "NO_NAME_LAND": "Unnamed land",
     "CREATE": "Create Plantation"
+  },
+  "PURCHASE": {
+    "TITLE": "Acquire Tree",
+    "SUBTITLE": "Complete the steps to add life to the planet.",
+    "STEPS": {
+      "PLANTATION": "Plantation",
+      "SPECIES": "Species",
+      "QUANTITY": "Quantity",
+      "CONFIRM": "Confirm"
+    },
+    "SELECT_PLANTATION": "Choose the plantation",
+    "SELECT_SPECIES": "Select the species",
+    "ENTER_QUANTITY": "How many trees do you want to plant?",
+    "SUMMARY": "Purchase Summary",
+    "FLIGHT_DATE": "Plantation flight date",
+    "UNIT_PRICE": "Unit price",
+    "TOTAL": "Total",
+    "PROCEED_PAYMENT": "Proceed to payment",
+    "SUCCESS": "Purchase completed successfully!",
+    "ERROR": "There was an error processing your purchase",
+    "CO2_IMPACT": "Estimated CO₂ impact",
+    "REDSYS_REDIRECT": "We are redirecting you to the secure payment gateway...",
+    "NEXT": "Next",
+    "BACK": "Back",
+    "TREES_LABEL": "trees",
+    "AVAILABLE": "Available",
+    "GOAL": "Goal"
   }
 }

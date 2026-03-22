@@ -1,6 +1,11 @@
-<div class="page-header" style="margin-bottom: 2rem;">
-  <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ 'MY_TREES.TITLE' | translate }} 🌳</h1>
-  <p style="color: var(--color-text-light);">{{ 'MY_TREES.SUBTITLE' | translate }}</p>
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <div>
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ 'MY_TREES.TITLE' | translate }} 🌳</h1>
+    <p style="color: var(--color-text-light);">{{ 'MY_TREES.SUBTITLE' | translate }}</p>
+  </div>
+  <button class="btn btn-primary" [routerLink]="['/my-trees/purchase']" style="display: flex; align-items: center; gap: 0.5rem;">
+    <i class="fa-solid fa-plus"></i> {{ 'MY_TREES.EMPTY.CTA' | translate }}
+  </button>
 </div>
 
 <div class="stats-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
@@ -26,7 +31,7 @@
     <div style="font-size: 4rem; margin-bottom: 1rem;">🌱</div>
     <h2 style="margin-bottom: 1rem;">{{ 'MY_TREES.EMPTY.TITLE' | translate }}</h2>
     <p style="margin-bottom: 2rem; color: var(--color-text-light);">{{ 'MY_TREES.EMPTY.SUBTITLE' | translate }}</p>
-    <button class="btn btn-primary">{{ 'MY_TREES.EMPTY.CTA' | translate }}</button>
+    <button class="btn btn-primary" [routerLink]="['/my-trees/purchase']">{{ 'MY_TREES.EMPTY.CTA' | translate }}</button>
   </div>
 
   <!-- Tree Cards -->

@@ -18,6 +18,8 @@
     "SAVE": "Guardar",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
+    "SUCCESS": "Éxito",
+    "ERROR": "Error",
     "VERIFIED": "Verificado",
     "ACTIONS": "Acciones",
     "CONFIRM_DELETE": "¿Estás seguro de que deseas eliminar este elemento?",
@@ -483,7 +485,39 @@
     "SEARCH_NOT_FOUND": "No se encontraron plantaciones previstas.",
     "SELECT_LAND": "--- Seleccionar Terreno ---",
     "ASSOCIATED_LAND": "Terreno Asociado",
+    "TREE_TYPE": "Tipo de Árbol",
+    "SELECT_TREE_TYPE": "--- Seleccionar Tipo de Árbol ---",
     "NO_NAME_LAND": "Terreno sin nombre",
-    "CREATE": "Crear Plantación"
+    "CREATE": "Crear Plantación",
+    "SUCCESS_CREATE": "✅ Plantación creada con éxito",
+    "SUCCESS_EDIT": "✅ Plantación actualizada con éxito",
+    "SUCCESS_DELETE": "✅ Plantación eliminada con éxito"
+  },
+  "PURCHASE": {
+    "TITLE": "Completa tu compra",
+    "SUBTITLE": "Haz tu elección para sumar vida al planeta.",
+    "STEPS": {
+      "PLANTATION": "Plantación",
+      "SPECIES": "Especie",
+      "QUANTITY": "Cantidad",
+      "CONFIRM": "Confirmar"
+    },
+    "SELECT_PLANTATION": "Elige la plantación",
+    "SELECT_SPECIES": "Selecciona la especie",
+    "ENTER_QUANTITY": "¿Cuántos árboles quieres plantar?",
+    "SUMMARY": "Resumen de compra",
+    "FLIGHT_DATE": "Fecha prevista",
+    "UNIT_PRICE": "Precio unitario",
+    "TOTAL": "Total",
+    "PROCEED_PAYMENT": "Proceder al pago",
+    "SUCCESS": "¡Compra realizada con éxito!",
+    "ERROR": "Hubo un error al procesar tu compra",
+    "CO2_IMPACT": "Impacto estimado CO₂",
+    "REDSYS_REDIRECT": "Te estamos redirigiendo a la pasarela de pago segura...",
+    "NEXT": "Siguiente",
+    "BACK": "Atrás",
+    "TREES_LABEL": "árboles",
+    "AVAILABLE": "Disponible",
+    "GOAL": "Objetivo"
   }
 }

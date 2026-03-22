@@ -1,0 +1,164 @@
+<div class="purchase-container animate-fade-in">
+  <div class="page-header" style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ 'PURCHASE.TITLE' | translate }} 🌍</h1>
+    <p style="color: var(--color-text-light);">{{ 'PURCHASE.SUBTITLE' | translate }}</p>
+  </div>
+
+  <div class="purchase-stepper-v2" style="background: none; border-radius: 0;">
+    <!-- STEP INDICATORS FULL WIDTH -->
+    <div class="stepper-header" style="padding: 0; margin-bottom: 3rem;">
+      <div class="step-dot" style="flex: 1" [class.active]="step >= 1" [class.completed]="step > 1">
+        <span class="number">1</span>
+        <span class="label">{{ 'PURCHASE.STEPS.PLANTATION' | translate }}</span>
+      </div>
+      <div class="step-line" [class.active]="step > 1"></div>
+      <div class="step-dot" style="flex: 1" [class.active]="step >= 2" [class.completed]="step > 2">
+        <span class="number">2</span>
+        <span class="label">{{ 'PURCHASE.STEPS.QUANTITY' | translate }}</span>
+      </div>
+      <div class="step-line" [class.active]="step > 2"></div>
+      <div class="step-dot" style="flex: 1" [class.active]="step >= 3" [class.completed]="step > 3">
+        <span class="number">3</span>
+        <span class="label">{{ 'PURCHASE.STEPS.CONFIRM' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- STEP CONTENT -->
+    <div class="step-content glass mt-8">
+      
+      <!-- STEP 1: PLANTATION SELECTION -->
+      <div *ngIf="step === 1" class="animate-slide-up">
+        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">{{ 'PURCHASE.SELECT_PLANTATION' | translate }}</h2>
+        <div class="grid-selection" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;">
+          <div *ngFor="let plantation of plantations" 
+               class="glass-card land-card selection-card" 
+               style="padding: 0; overflow: hidden; display: flex; flex-direction: column;"
+               [class.selected]="selectedPlantation?.id === plantation.id"
+               (click)="selectPlantation(plantation)">
+            
+            <div class="land-image" style="height: 180px; position: relative; overflow: hidden;">
+              <img *ngIf="plantation.land?.picture" [src]="plantation.land?.picture" style="width: 100%; height: 100%; object-fit: cover;">
+              <div *ngIf="!plantation.land?.picture" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #e9edc9; color: var(--color-primary); opacity: 0.5;">
+                <i class="fa-solid fa-image" style="font-size: 2rem;"></i>
+              </div>
+              <div class="status-badge" style="position: absolute; top: 1rem; right: 1rem; background: var(--color-primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">
+                <i class="fa-solid fa-calendar"></i> {{ plantation.plannedDate | date:'MMM yyyy' }}
+              </div>
+            </div>
+
+            <div style="padding: 1.5rem; flex-grow: 1;">
+              <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">{{ plantation.landName }}</h3>
+              <p style="color: var(--color-text-light); font-size: 0.9rem; margin-bottom: 1rem;">{{ 'PURCHASE.FLIGHT_DATE' | translate }}: {{ plantation.plannedDate || 'TBD' }}</p>
+              
+              <div class="plantation-stats" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 0.8rem;">
+                <!-- Fila 1: Disponible -->
+                <div style="text-align: center;">
+                  <span style="display: block; color: var(--color-text-light); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; font-weight: 700; margin-bottom: 2px;">{{ 'PURCHASE.AVAILABLE' | translate }}</span>
+                  <span style="font-weight: 800; font-size: 1.3rem; color: #2C3E50;">{{ ((plantation.optimalTrees || 0) - (plantation.purchasedTrees || 0)) }} / {{ plantation.optimalTrees || 0 }}</span>
+                </div>
+
+                <!-- Fila 2: Barra -->
+                <div class="progress-container" style="height: 14px; background: rgba(0,0,0,0.05); border-radius: 20px; overflow: hidden; width: 100%; position: relative; border: 1px solid rgba(0,0,0,0.03);">
+                  <div class="progress-bar" 
+                       [style.width.%]="(plantation.optimalTrees ? ((plantation.purchasedTrees || 0) / plantation.optimalTrees * 100) : 0)"
+                       style="height: 100%; background: linear-gradient(90deg, #2ecc71, #27ae60); border-radius: 20px; transition: width 1s ease-out; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);">
+                  </div>
+                </div>
+
+                <!-- Fila 3: Adquiridos -->
+                <div style="text-align: center; font-size: 0.8rem; color: var(--color-text-light); font-weight: 600;">
+                  <i class="fa-solid fa-seedling" style="color: var(--color-primary); margin-right: 5px;"></i>
+                  {{ (plantation.purchasedTrees || 0) }} {{ 'PURCHASE.TREES_LABEL' | translate }} adquiridos
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: QUANTITY SELECTION -->
+      <div *ngIf="step === 2" class="animate-slide-up">
+        <h2>{{ 'PURCHASE.ENTER_QUANTITY' | translate }}</h2>
+        
+        <div class="quantity-picker">
+          <button type="button" (click)="changeQuantity(-1)" [disabled]="quantity <= 1" class="btn-circle" aria-label="Decrease quantity">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <div class="quantity-display">
+            <span class="value">{{ quantity }}</span>
+            <span class="label">{{ 'PURCHASE.TREES_LABEL' | translate }}</span>
+          </div>
+          <button type="button" (click)="changeQuantity(1)" class="btn-circle" aria-label="Increase quantity">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="impact-preview glass-dark">
+          <div class="impact-item">
+            <span class="icon">💨</span>
+            <div class="details">
+              <span class="val">{{ estimatedCo2 | number:'1.1-2' }} kg CO₂</span>
+              <span class="lbl">{{ 'PURCHASE.CO2_IMPACT' | translate }}</span>
+            </div>
+          </div>
+          <div class="impact-item">
+            <span class="icon">💰</span>
+            <div class="details">
+              <span class="val">{{ totalPrice | number:'1.2-2' }} €</span>
+              <span class="lbl">{{ 'PURCHASE.TOTAL' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: SUMMARY & CONFIRM -->
+      <div *ngIf="step === 3" class="animate-slide-up">
+        <h2>{{ 'PURCHASE.SUMMARY' | translate }}</h2>
+        
+        <div class="summary-details" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="summary-row" style="display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.8rem;">
+            <span style="font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">{{ 'PURCHASE.STEPS.PLANTATION' | translate }}</span>
+            <div style="display: flex; flex-direction: column;">
+              <strong style="font-size: 1.2rem; color: var(--color-text-dark);">{{ selectedPlantation?.landName }}</strong>
+              <small style="color: var(--color-primary); font-weight: 600;">{{ selectedPlantation?.plannedDate }}</small>
+            </div>
+          </div>
+          
+          <div class="summary-row" style="display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.8rem;">
+            <span style="font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">{{ 'PURCHASE.STEPS.SPECIES' | translate }}</span>
+            <strong style="font-size: 1.2rem; color: var(--color-text-dark);">{{ selectedTreeType?.name }}</strong>
+          </div>
+
+          <div class="summary-row" style="display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.8rem;">
+             <span style="font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">{{ 'PURCHASE.STEPS.QUANTITY' | translate }}</span>
+             <strong style="font-size: 1.2rem; color: var(--color-text-dark);">{{ quantity }} {{ 'PURCHASE.TREES_LABEL' | translate }}</strong>
+          </div>
+
+          <div class="summary-row total" style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 1rem; background: var(--color-secondary); padding: 1.5rem; border-radius: 12px;">
+            <span style="font-size: 1.1rem; color: var(--color-primary); font-weight: 800; text-transform: uppercase;">{{ 'PURCHASE.TOTAL' | translate }}</span>
+            <strong style="font-size: 2.2rem; color: var(--color-primary);">{{ totalPrice | number:'1.2-2' }} €</strong>
+          </div>
+        </div>
+
+        <div *ngIf="isProcessing" class="processing-overlay">
+          <div class="spinner"></div>
+          <p>{{ 'PURCHASE.REDSYS_REDIRECT' | translate }}</p>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="step-actions mt-10">
+        <button *ngIf="step > 1" (click)="prevStep()" class="btn btn-secondary">
+          <i class="fa-solid fa-arrow-left"></i> {{ 'PURCHASE.BACK' | translate }}
+        </button>
+        <div class="spacer"></div>
+        <button *ngIf="step < 3" (click)="nextStep()" [disabled]="!isStepValid()" class="btn btn-primary">
+          {{ 'PURCHASE.NEXT' | translate }} <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <button *ngIf="step === 3" (click)="confirmPurchase()" [disabled]="isProcessing" class="btn btn-cta" style="display: inline-flex; align-items: center; gap: 0.8rem;">
+           {{ 'PURCHASE.PROCEED_PAYMENT' | translate }} <i class="fa-solid fa-credit-card"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

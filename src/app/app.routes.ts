@@ -22,6 +22,7 @@ export const routes: Routes = [
   { path: 'profile', loadComponent: () => import( './dashboard/profile/profile.component' ).then( c => c.ProfileComponent ), canActivate: [authGuard] },
   { path: 'profile/:id', loadComponent: () => import( './dashboard/profile/profile.component' ).then( c => c.ProfileComponent ), canActivate: [authGuard, adminGuard] },
   { path: 'my-trees', component: MyTreesComponent, canActivate: [authGuard] },
+  { path: 'my-trees/purchase', loadComponent: () => import( './my-trees/purchase/purchase.component' ).then( c => c.PurchaseComponent ), canActivate: [authGuard] },
   { path: 'lands', component: LandsComponent, canActivate: [authGuard] },
   { path: 'lands/:id', loadComponent: () => import( './lands/land-detail/land-detail.component' ).then( c => c.LandDetailComponent ), canActivate: [authGuard] },
   { path: 'tree-species', loadComponent: () => import( './tree-species/tree-species.component' ).then( c => c.TreeSpeciesComponent ), canActivate: [authGuard] },

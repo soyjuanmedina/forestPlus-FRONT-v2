@@ -36,21 +36,21 @@ export class LoopsControllerService extends BaseService {
     }
 
     /**
-     * @param email 
+     * @param arg0 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTestUuid(email: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<{ [key: string]: string; }>;
-    public getTestUuid(email: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<{ [key: string]: string; }>>;
-    public getTestUuid(email: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<{ [key: string]: string; }>>;
-    public getTestUuid(email: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (email === null || email === undefined) {
-            throw new Error('Required parameter email was null or undefined when calling getTestUuid.');
+    public getTestUuid(arg0: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<{ [key: string]: string; }>;
+    public getTestUuid(arg0: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<{ [key: string]: string; }>>;
+    public getTestUuid(arg0: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<{ [key: string]: string; }>>;
+    public getTestUuid(arg0: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (arg0 === null || arg0 === undefined) {
+            throw new Error('Required parameter arg0 was null or undefined when calling getTestUuid.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>email, 'email');
+          <any>arg0, 'arg0');
 
         let localVarHeaders = this.defaultHeaders;
 

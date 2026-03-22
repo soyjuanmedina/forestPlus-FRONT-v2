@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TreeTypeResponseDto } from './treeTypeResponse';
 import { LandResponseDto } from './landResponse';
 
 
@@ -15,6 +16,9 @@ export interface PlannedPlantationResponseDto {
     landId?: number;
     landName?: string;
     land?: LandResponseDto;
+    treeTypeId?: number;
+    treeTypeName?: string;
+    treeType?: TreeTypeResponseDto;
     /**
      * Fecha prevista de la plantación
      */
@@ -35,6 +39,10 @@ export interface PlannedPlantationResponseDto {
      * Cantidad máxima de árboles a plantar (opcional)
      */
     maxTrees?: number;
+    /**
+     * Cantidad de árboles ya comprados/asignados a esta plantación
+     */
+    purchasedTrees?: number;
     isActive?: boolean;
 }
 

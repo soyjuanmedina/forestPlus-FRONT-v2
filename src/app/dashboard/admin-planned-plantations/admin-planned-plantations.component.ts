@@ -16,6 +16,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
   plantations: any[] = [];
   lands: any[] = [];
+  treeTypes: any[] = [];
   loading = true;
   private _editingPlantation: any = null;
   private _originalPlantation: any = null;
@@ -59,7 +60,16 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
     this.adminService.getLands().subscribe({
       next: (lands) => {
         this.lands = lands;
-        this.loadPlantations();
+        this.adminService.getTreeSpecies().subscribe({
+          next: (types) => {
+            this.treeTypes = types;
+            this.loadPlantations();
+          },
+          error: (err) => {
+            console.error(err);
+            this.loading = false;
+          }
+        });
       },
       error: (err) => {
         console.error(err);
@@ -86,6 +96,7 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
     this._originalPlantation = null;
     this.editingPlantation = {
       landId: null,
+      treeTypeId: null,
       plannedDate: new Date().toISOString().split('T')[0],
       effectiveDate: null,
       minTrees: 0,
@@ -99,7 +110,8 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
     this.isNew = false;
     const formObj = {
       ...plantation,
-      landId: plantation.land?.id || plantation.landId
+      landId: plantation.landId || plantation.land?.id,
+      treeTypeId: plantation.treeTypeId || plantation.treeType?.id
     };
     this._originalPlantation = { ...formObj };
     this.editingPlantation = { ...formObj };
@@ -124,10 +136,10 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
       next: () => {
         this.loadPlantations();
         this.editingPlantation = null;
-        this.showStatus('success', 'Success', this.translate.instant('PLANNED_PLANTATION.SUCCESS_' + (this.isNew ? 'CREATE' : 'EDIT')));
+        this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('PLANNED_PLANTATION.SUCCESS_' + (this.isNew ? 'CREATE' : 'EDIT')));
       },
       error: (err) => {
-        this.showStatus('error', 'Error', err.error?.message || this.translate.instant('PLANNED_PLANTATION.ERROR'));
+        this.showStatus('error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant('PLANNED_PLANTATION.ERROR'));
         console.error(err);
       }
     });
@@ -156,10 +168,10 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
       this.adminService.deletePlannedPlantation(id).subscribe({
         next: () => {
           this.loadPlantations();
-          this.showStatus('success', 'Success', this.translate.instant('COMMON.SUCCESS_DELETE'));
+          this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('PLANNED_PLANTATION.SUCCESS_DELETE'));
         },
         error: (err) => {
-          this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_DELETE'));
+          this.showStatus('error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant('COMMON.ERROR_DELETE'));
           console.error(err);
         }
       });

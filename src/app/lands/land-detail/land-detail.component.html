@@ -88,6 +88,14 @@
                     <span style="font-size: 1.6rem; font-weight: 800; color: #2C3E50; display: block;">{{ pp.plannedDate | date:'MMMM yyyy' | titlecase }}</span>
                   </div>
 
+                  <div *ngIf="pp.treeTypeName" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; padding: 12px; background: #f8fafc; border-radius: 12px;">
+                    <i class="fa-solid fa-tree-deciduous" style="color: var(--color-primary); font-size: 1.2rem;"></i>
+                    <div style="display: flex; flex-direction: column;">
+                      <span style="font-size: 0.65rem; color: var(--color-text-light); text-transform: uppercase; font-weight: 700;">{{ 'PLANNED_PLANTATION.TREE_TYPE' | translate }}</span>
+                      <span style="font-size: 1rem; font-weight: 700; color: #2C3E50;">{{ pp.treeTypeName }}</span>
+                    </div>
+                  </div>
+
                   <div class="target-stats" style="margin-bottom: 2rem;">
                      <span style="display: block; font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; font-weight: 700;">{{ 'PLANNED_PLANTATION.TREES_TITLE' | translate }}</span>
                      <div class="stats-row" style="display: flex; justify-content: space-between; gap: 10px;">
@@ -106,9 +114,9 @@
                      </div>
                   </div>
 
-                  <button class="btn btn-primary" style="width: 100%; padding: 1.2rem; font-size: 1rem; border-radius: 16px; font-weight: 700; box-shadow: 0 10px 25px rgba(var(--color-primary-rgb), 0.3);">
+                  <a [routerLink]="['/my-trees/purchase']" [queryParams]="{ plantationId: pp.id }" class="btn btn-primary" style="width: 100%; padding: 1.2rem; font-size: 1rem; border-radius: 16px; font-weight: 700; box-shadow: 0 10px 25px rgba(var(--color-primary-rgb), 0.3); text-decoration: none; display: block; text-align: center;">
                       {{ 'LANDS.PLANT_HERE' | translate }}
-                  </button>
+                  </a>
                </div>
             </div>
           </section>

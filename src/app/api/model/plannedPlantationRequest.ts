@@ -15,6 +15,10 @@ export interface PlannedPlantationRequestDto {
      */
     landId?: number;
     /**
+     * ID del tipo de árbol a plantar
+     */
+    treeTypeId?: number;
+    /**
      * Fecha prevista de la plantación
      */
     plannedDate: string;
