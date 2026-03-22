@@ -23,6 +23,8 @@ import { RegisterUserByAdminRequestDto } from '../model/registerUserByAdminReque
 // @ts-ignore
 import { RegisterUserRequestDto } from '../model/registerUserRequest';
 // @ts-ignore
+import { UpdateUserPictureRequestDto } from '../model/updateUserPictureRequest';
+// @ts-ignore
 import { UserResponseDto } from '../model/userResponse';
 
 // @ts-ignore
@@ -152,22 +154,25 @@ export class UserControllerService extends BaseService {
      * Obtener usuarios con filtros, paginación y orden
      * @param role 
      * @param companyId 
+     * @param search 
      * @param page 
      * @param size 
      * @param sort 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUsers(role?: string, companyId?: number, page?: number, size?: number, sort?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageUserResponseDto>;
-    public getUsers(role?: string, companyId?: number, page?: number, size?: number, sort?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageUserResponseDto>>;
-    public getUsers(role?: string, companyId?: number, page?: number, size?: number, sort?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageUserResponseDto>>;
-    public getUsers(role?: string, companyId?: number, page?: number, size?: number, sort?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getUsers(role?: string, companyId?: number, search?: string, page?: number, size?: number, sort?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageUserResponseDto>;
+    public getUsers(role?: string, companyId?: number, search?: string, page?: number, size?: number, sort?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageUserResponseDto>>;
+    public getUsers(role?: string, companyId?: number, search?: string, page?: number, size?: number, sort?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageUserResponseDto>>;
+    public getUsers(role?: string, companyId?: number, search?: string, page?: number, size?: number, sort?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>role, 'role');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>companyId, 'companyId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>search, 'search');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>page, 'page');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -417,7 +422,7 @@ export class UserControllerService extends BaseService {
     }
 
     /**
-     * Actualizar la imagen de perfil del usuario
+     * Actualizar imagen de perfil (Compatible con v1 - Multipart)
      * Recibe un JSON con el campo \&#39;picture\&#39; conteniendo la imagen en formato Base64
      * @param id 
      * @param requestBody 
@@ -451,7 +456,8 @@ export class UserControllerService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
+            'application/json',
+            'multipart/form-data'
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected !== undefined) {

@@ -9,6 +9,17 @@
     </button>
   </div>
 
+  <div class="search-container glass">
+    <div class="search-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()" 
+             [placeholder]="'Buscar por nombre, apellidos o email...'" class="search-input">
+      <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-btn" title="Limpiar búsqueda">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
   <div *ngIf="loading" class="loading-state">
     <div class="spinner"></div>
     <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
@@ -63,6 +74,20 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination-container" *ngIf="totalPages > 1">
+      <div class="page-info">
+        {{ 'Página' }} {{ currentPage + 1 }} {{ 'de' }} {{ totalPages }} ({{ totalElements }} {{ 'usuarios' }})
+      </div>
+      <div class="pagination-controls">
+        <button class="pagination-btn" [disabled]="currentPage === 0" (click)="goToPage(currentPage - 1)">
+          <i class="fas fa-chevron-left"></i> {{ 'Anterior' }}
+        </button>
+        <button class="pagination-btn" [disabled]="currentPage === totalPages - 1" (click)="goToPage(currentPage + 1)">
+          {{ 'Siguiente' }} <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Modal de Edición/Creación -->

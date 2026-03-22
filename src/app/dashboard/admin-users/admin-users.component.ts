@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
 import { Router } from '@angular/router';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -15,13 +16,21 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.css'
 } )
-export class AdminUsersComponent implements OnInit {
+export class AdminUsersComponent implements OnInit, OnDestroy {
   users: any[] = [];
   loading = true;
+  currentPage = 0;
+  pageSize = 10;
+  totalPages = 0;
+  totalElements = 0;
+  
+  searchQuery = '';
+  private searchSubject = new Subject<string>();
+  
   private _editingUser: any = null;
   private _originalUser: any = null;
   isNew = false;
-
+  
   get editingUser() { return this._editingUser; }
   set editingUser(val: any) {
     this._editingUser = val;
@@ -48,21 +57,50 @@ export class AdminUsersComponent implements OnInit {
     private adminService: AdminService,
     private router: Router,
     private translate: TranslateService
-  ) { }
+  ) { 
+    this.searchSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      this.currentPage = 0;
+      this.loadUsers();
+    });
+  }
 
   ngOnInit () {
     this.loadUsers();
   }
 
   loadUsers () {
-    this.adminService.getUsers().subscribe( {
+    this.loading = true;
+    this.adminService.getUsers(this.currentPage, this.pageSize, undefined, undefined, this.searchQuery).subscribe( {
       next: ( data ) => {
-        // El backend devuelve un Page, los datos están en 'content'
-        this.users = data || [];
+        this.users = data.content || [];
+        this.totalPages = data.totalPages || 0;
+        this.totalElements = data.totalElements || 0;
         this.loading = false;
       },
-      error: ( err ) => console.error( err )
+      error: ( err ) => {
+        console.error( err );
+        this.loading = false;
+      }
     } );
+  }
+
+  onSearch() {
+    this.searchSubject.next(this.searchQuery);
+  }
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.onSearch();
+  }
+
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadUsers();
+    }
   }
 
   openNew() {
@@ -158,6 +196,7 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnDestroy () {
     document.body.classList.remove('modal-open');
+    this.searchSubject.complete();
   }
 
   onAvatarError ( user: any ) {

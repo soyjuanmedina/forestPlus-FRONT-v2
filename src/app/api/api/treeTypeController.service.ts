@@ -22,6 +22,8 @@ import { TreeTypeRequestDto } from '../model/treeTypeRequest';
 import { TreeTypeResponseDto } from '../model/treeTypeResponse';
 // @ts-ignore
 import { TreeTypeUpdateRequestDto } from '../model/treeTypeUpdateRequest';
+// @ts-ignore
+import { UpdateUserPictureRequestDto } from '../model/updateUserPictureRequest';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -324,7 +326,7 @@ export class TreeTypeControllerService extends BaseService {
     }
 
     /**
-     * Actualizar la imagen del tipo de árbol
+     * Actualizar imagen del tipo de árbol (Compatible con v1 - Multipart)
      * Recibe un JSON con el campo \&#39;picture\&#39; conteniendo la imagen en formato Base64
      * @param id 
      * @param requestBody 
@@ -358,7 +360,8 @@ export class TreeTypeControllerService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
+            'application/json',
+            'multipart/form-data'
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected !== undefined) {

@@ -27,10 +27,8 @@ export class AdminService {
   ) { }
 
   // Usuarios
-  getUsers (): Observable<UserResponseDto[]> {
-    return this.userApi.getUsers().pipe(
-      map( response => response.content || [] )
-    );
+  getUsers ( page: number = 0, size: number = 10, role: string | undefined = undefined, companyId: number | undefined = undefined, search: string | undefined = undefined, sort: string | undefined = undefined ): Observable<any> {
+    return this.userApi.getUsers( role, companyId, search, page, size, sort );
   }
 
   getUserById ( id: number ): Observable<UserResponseDto> {

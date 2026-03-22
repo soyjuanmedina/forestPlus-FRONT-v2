@@ -20,5 +20,6 @@ export interface TreeTypeRequestDto {
     co2AbsorptionAt40?: number;
     typicalHeight?: number;
     lifespanYears?: number;
+    picture?: string;
 }
 
