@@ -16,5 +16,6 @@ export interface LandUpdateRequestDto {
     area?: number;
     picture?: string;
     maxTrees?: number;
+    coordinates?: Array<any>;
 }
 

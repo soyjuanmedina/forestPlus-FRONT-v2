@@ -26,6 +26,12 @@
         <div class="stats">
           <span><i class="fas fa-expand-arrows-alt"></i> {{ land.area }}m²</span>
           <span><i class="fas fa-tree"></i> {{ land.maxTrees }} máx.</span>
+          <span *ngIf="land.coordinates?.length > 0" class="badge-success">
+            <i class="fas fa-map-marked-alt"></i> {{ 'LAND_DETAIL.COORDINATES' | translate }} ({{ land.coordinates.length }})
+          </span>
+          <span *ngIf="!land.coordinates?.length" class="badge-warning">
+            <i class="fas fa-map"></i> {{ 'LAND_DETAIL.NO_COORDINATES' | translate }}
+          </span>
         </div>
         <div class="card-actions">
           <button (click)="editLand(land)" class="btn btn-secondary btn-sm">{{ 'COMMON.EDIT' | translate }}</button>
@@ -79,6 +85,29 @@
               <i class="fas fa-camera"></i> {{ 'Seleccionar Imagen' }}
             </button>
           </div>
+        </div>
+      </div>
+
+      <div class="form-group coordinades-section">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <label style="margin-bottom: 0;">{{ 'LAND_MODAL.COORDINATES' | translate }}</label>
+          <button type="button" class="btn btn-outline btn-sm" (click)="addCoordinate()" style="padding: 4px 12px; font-size: 0.75rem;">
+            <i class="fas fa-plus"></i> {{ 'LAND_MODAL.ADD_COORD' | translate }}
+          </button>
+        </div>
+        
+        <div *ngFor="let coord of editingLand.coordinates; let i = index" class="coordinate-row animate-fade-in">
+          <div class="coord-input">
+            <span>{{ 'LAND_MODAL.LATITUDE' | translate }}</span>
+            <input type="number" [(ngModel)]="coord.latitude" class="form-control sm">
+          </div>
+          <div class="coord-input">
+            <span>{{ 'LAND_MODAL.LONGITUDE' | translate }}</span>
+            <input type="number" [(ngModel)]="coord.longitude" class="form-control sm">
+          </div>
+          <button (click)="removeCoordinate(i)" class="btn-icon-danger">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
       </div>
 

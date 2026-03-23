@@ -76,14 +76,15 @@ export class AdminLandsComponent implements OnInit {
       location: '',
       area: 0,
       maxTrees: 1000,
-      picture: ''
+      picture: '',
+      coordinates: []
     };
   }
 
   editLand(land: any) {
     this.isNew = false;
-    this._originalLand = { ...land };
-    this.editingLand = { ...land };
+    this._originalLand = { ...land, coordinates: [...(land.coordinates || [])] };
+    this.editingLand = { ...land, coordinates: [...(land.coordinates || [])] };
   }
 
   isModified(): boolean {
@@ -178,5 +179,16 @@ export class AdminLandsComponent implements OnInit {
       return `data:image/png;base64,${picture}`;
     }
     return picture;
+  }
+ 
+  addCoordinate() {
+    if (!this.editingLand.coordinates) {
+      this.editingLand.coordinates = [];
+    }
+    this.editingLand.coordinates.push({ latitude: 0, longitude: 0 });
+  }
+ 
+  removeCoordinate(index: number) {
+    this.editingLand.coordinates.splice(index, 1);
   }
 }

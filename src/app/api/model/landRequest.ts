@@ -18,5 +18,6 @@ export interface LandRequestDto {
     companyIds?: Array<number>;
     picture?: string;
     maxTrees?: number;
+    coordinates?: Array<any>;
 }
 

@@ -70,6 +70,16 @@
         
         <!-- COLUMNA DERECHA: PLANTACIONES PREVISTAS -->
         <div class="side-info">
+          <!-- CARD DE LOCALIZACIÓN (MAPA) -->
+          <section *ngIf="land.coordinates && land.coordinates.length >= 3" style="margin-bottom: 3rem;">
+            <h2 style="color: #2C3E50; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 1.6rem; font-weight: 700;">
+              <i class="fa-solid fa-map" style="color: var(--color-primary);"></i> {{ 'LAND_DETAIL.LOCATION_MAP' | translate }}
+            </h2>
+            <div class="glass-card" style="padding: 0; overflow: hidden; height: 350px; border-radius: 20px;">
+              <div id="map" style="height: 100%; width: 100%; z-index: 1;"></div>
+            </div>
+          </section>
+
           <section *ngIf="plannedPlantations.length > 0" style="position: sticky; top: 2rem;">
             <h2 style="color: #2C3E50; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 1.6rem; font-weight: 700;">
               <i class="fa-solid fa-calendar-check" style="color: var(--color-primary);"></i> {{ 'ADMIN_PLANNED_PLANTATIONS.TITLE' | translate }}

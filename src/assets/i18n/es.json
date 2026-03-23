@@ -203,6 +203,7 @@
     "PLANTED_TREES": "Árboles plantados en este terreno",
     "PLANTED_TREES_BY_USER": "Árboles plantados por el usuario",
     "COORDINATES_SHORT": "Coordinadas",
+    "LOCATION_MAP": "Localización",
     "NO_PLANTED_TREES_IN_LAND": "Aun no se han plantado árboles en este terreno",
     "NO_PLANTED_TREES_BY_USER": "Este usuario aun no ha plantado ningún árbol"
   },
@@ -235,6 +236,10 @@
     "IMAGE_DATA": "Datos de la imagen (Base64)",
     "IMAGE_PLACEHOLDER": "Pega aquí el código Base64 de la imagen o una URL",
     "DESCRIPTION": "Descripción",
+    "COORDINATES": "Coordenadas (Polígono)",
+    "ADD_COORD": "Añadir Punto",
+    "LATITUDE": "Latitud",
+    "LONGITUDE": "Longitud",
     "CANCEL": "Cancelar",
     "SAVE": "Guardar Cambios",
     "CREATE": "Crear Terreno",

@@ -20,5 +20,6 @@ export interface LandResponseDto {
     createdAt?: string;
     userIds?: Array<number>;
     companyIds?: Array<number>;
+    coordinates?: Array<any>;
 }
 
