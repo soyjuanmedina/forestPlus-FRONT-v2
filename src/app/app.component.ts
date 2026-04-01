@@ -24,7 +24,7 @@ export class AppComponent {
   envName: string = environment.name || 'development';
   envColor: string = (environment as any).envColor || '#ff9800';
   launchDate: Date = new Date(environment.launchDate);
-  sidebarCollapsed: boolean = false;
+  sidebarCollapsed: boolean = true;
 
   constructor (
     public authService: AuthService,

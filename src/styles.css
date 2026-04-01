@@ -145,15 +145,40 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #c8e6c9;
 }
 
+/* Global Viewport Management */
+.app-viewport {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.env-banner {
+  flex-shrink: 0;
+  height: 28px;
+  /* ... rest of banner styles are already there */
+}
+
+.app-content-area {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+  min-height: 0;
+}
+
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
 .alert-error {
   background-color: #fdeaea;
   color: var(--color-danger);
   border: 1px solid #facccc;
-}
-/* Dashbord Layout */
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
 }
 
 .sidebar {
@@ -161,20 +186,21 @@ h1, h2, h3, h4, h5, h6 {
   flex: 0 0 280px;
   background: white;
   border-right: 1px solid var(--color-border);
-  padding: 1.2rem 1rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
+  height: 100%;
+  min-height: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  z-index: 100;
+  position: relative;
 }
 
 .sidebar.collapsed {
   width: 80px;
   flex: 0 0 80px;
-  padding: 2rem 0.75rem;
+  padding: 0;
 }
 
 .sidebar-logo {
@@ -186,9 +212,10 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 1.5rem; /* Reducido para acercar el Inicio */
+  margin-bottom: 2rem;
   overflow: hidden;
   flex-shrink: 0;
+  padding: 1.5rem 1rem;
 }
 
 .nav-menu {
@@ -196,6 +223,34 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: 0.5rem;
   flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 1rem 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(105, 210, 145, 0.3) transparent;
+}
+
+.sidebar.collapsed .nav-menu {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background: white;
+  z-index: 101;
+}
+
+.nav-menu::-webkit-scrollbar {
+  width: 5px;
+}
+
+.nav-menu::-webkit-scrollbar-thumb {
+  background: rgba(105, 210, 145, 0.3);
+  border-radius: 10px;
 }
 
 .nav-item {
@@ -210,6 +265,37 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   transition: all 0.2s ease;
   white-space: nowrap;
+  position: relative;
+}
+
+/* Custom Tooltip for Sidebar */
+.sidebar.collapsed .nav-item::after,
+.sidebar.collapsed .sidebar-toggle-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 90%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #222;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.15s ease;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.sidebar.collapsed .nav-item:hover::after,
+.sidebar.collapsed .sidebar-toggle-btn:hover::after {
+  opacity: 1;
+  visibility: visible;
+  left: 110%;
 }
 
 .sidebar.collapsed .nav-item {
@@ -228,15 +314,66 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar-toggle-btn {
   border: none;
-  background: rgba(105, 210, 145, 0.1);
+  background: white;
   color: var(--color-primary);
   margin-top: auto;
   cursor: pointer;
+  flex-shrink: 0;
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
 }
 
 .sidebar-toggle-btn:hover {
-  background: var(--color-primary) !important;
-  color: white !important;
+  background: #f8f9fa;
+  color: var(--color-primary-hover);
+}
+
+.admin-label-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-text-light);
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  height: 40px;
+}
+
+.sidebar.collapsed .admin-label-container {
+  justify-content: center;
+  padding: 0;
+}
+
+.sidebar.collapsed .admin-label-container::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 90%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #222;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.15s ease;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.sidebar.collapsed .admin-label-container:hover::after {
+  opacity: 1;
+  visibility: visible;
+  left: 110%;
 }
 
 .main-content {
