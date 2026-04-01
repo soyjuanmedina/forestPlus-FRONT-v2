@@ -39,8 +39,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.id }}</td>
+        <tr *ngFor="let user of users" [ngStyle]="user.pendingTreesCount > 0 ? {'background-color': 'rgba(245, 158, 11, 0.1)', 'border-left': '4px solid var(--warning)'} : {}">
+          <td>
+            {{ user.id }}
+            <span *ngIf="user.pendingTreesCount > 0" class="badge" style="background: var(--warning); color: #000; margin-left: 5px;" title="Árboles pendientes">{{ user.pendingTreesCount }} <i class="fas fa-tree"></i></span>
+          </td>
           <td>
             <div class="avatar-cell">
               <img *ngIf="user.picture" [src]="user.picture" (error)="onAvatarError(user)"
@@ -62,9 +65,9 @@
           </td>
           <td>
             <div class="action-buttons">
-              <button (click)="editUser(user)" class="btn-icon" [title]="'COMMON.EDIT' | translate">
+              <a [routerLink]="['/profile', user.id]" class="btn-icon" style="color: var(--color-primary);" [title]="'COMMON.EDIT' | translate">
                 <i class="fas fa-edit"></i>
-              </button>
+              </a>
               <button (click)="deleteUser(user.id)" class="btn-icon btn-delete"
                 [title]="'COMMON.DELETE' | translate">
                 <i class="fas fa-trash"></i>
@@ -90,10 +93,12 @@
     </div>
   </div>
 
-  <!-- Modal de Edición/Creación -->
-  <div *ngIf="editingUser" class="modal-overlay">
-    <div class="modal-card scrollable-modal">
-      <h3>{{ isNew ? ('USER.NEW_TITLE' | translate) : ('USER.EDIT_TITLE' | translate) }}</h3>
+  <!-- Modal de Creación -->
+  <div *ngIf="editingUser && isNew" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>{{ 'ADMIN_USERS.ADD_BUTTON' | translate }}</h2>
+      </div>
 
       <div class="form-group">
         <label>{{ 'USER.NAME_LABEL' | translate }}</label>

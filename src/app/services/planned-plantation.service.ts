@@ -14,8 +14,12 @@ export class PlannedPlantationService {
 
   constructor ( private plannedApi: PlannedPlantationControllerService ) { }
 
-  getAll (): Observable<PlannedPlantationResponseDto[]> {
+  getAll(): Observable<PlannedPlantationResponseDto[]> {
     return this.plannedApi.getAll();
+  }
+
+  getByLand(landId: number): Observable<PlannedPlantationResponseDto[]> {
+    return this.plannedApi.getByLand(landId);
   }
 
   getById ( id: number ): Observable<PlannedPlantationResponseDto> {

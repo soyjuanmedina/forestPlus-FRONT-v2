@@ -27,8 +27,16 @@
     </div>
     <div class="profile-summary">
       <h1>{{ user?.name }} {{ user?.surname }}</h1>
-      <p class="user-role-badge" [ngClass]="'role-' + user?.role?.toLowerCase()">{{ 'AUTH.' +
-        user?.role | translate }}</p>
+      <p class="user-role-badge" [ngClass]="'role-' + user?.role?.toLowerCase()">{{ 'AUTH.' + user?.role | translate }}</p>
+      
+      <div *ngIf="isAdminEditing || currentUser?.role === 'ADMIN'" style="margin-top: 1rem; display: flex; gap: 1rem; align-items: center; justify-content: center;">
+        <span *ngIf="user?.pendingTreesCount > 0" class="badge" style="background: #f59e0b; color: #000; font-size: 1rem; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">
+          {{ user?.pendingTreesCount }} Árboles pendientes
+        </span>
+        <button class="btn btn-primary" (click)="openAssignModal()">
+          <i class="fa-solid fa-tree"></i> {{ 'ASSIGN_TREES.ASSIGN' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 
@@ -37,7 +45,7 @@
     <div class="info-card glass-card">
       <div class="card-header">
         <h2><i class="fa-solid fa-user-gear"></i> {{ 'PROFILE.INFO_TITLE' | translate }}</h2>
-        <button class="btn-edit-toggle" (click)="toggleEdit()">
+        <button class="btn btn-primary" (click)="toggleEdit()">
           <i class="fa-solid" [ngClass]="editing ? 'fa-xmark' : 'fa-pen'"></i>
           {{ (editing ? 'COMMON.CANCEL' : 'PROFILE.EDIT_BUTTON') | translate }}
         </button>
@@ -134,9 +142,10 @@
       <div class="card-body">
         <p class="security-desc">{{ 'PROFILE.SECURITY_DESC' | translate }}</p>
         <div class="security-actions">
-          <button class="btn btn-outline" (click)="openChangePassword()">
+          <button class="btn btn-primary" (click)="openChangePassword()">
             <i class="fa-solid fa-key"></i> {{ 'PROFILE.CHANGE_PASSWORD' | translate }}
           </button>
+
           <div class="danger-zone">
             <p class="danger-desc">{{ 'PROFILE.DELETE_ACCOUNT_DESC' | translate }}</p>
             <button class="btn btn-danger-outline" (click)="deleteUser()">
@@ -201,3 +210,11 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Asignar Árboles -->
+<app-assign-trees-modal 
+  *ngIf="showingAssignModal"
+  [userId]="editingUserId"
+  (close)="closeAssignModal()"
+  (assigned)="onTreesAssigned($event)">
+</app-assign-trees-modal>

@@ -1,27 +1,48 @@
-# TreeNationAuth
+# ForestPlus V2 - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
+Este es el repositorio del frontend moderno (V2) de ForestPlus, desarrollado con **Angular 17+**. Proporciona una interfaz de usuario premium, rápida y responsive para la gestión de plantaciones, monitorización de impacto ambiental y administración de usuarios.
 
-## Development server
+## 🚀 Tecnologías Principales
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular 17+**: Framework principal (Standalone Components).
+- **TypeScript**: Tipado estático y mejores prácticas.
+- **Vanilla CSS**: Sistema de diseño a medida (sin frameworks de utilidad como Tailwind, para máximo control).
+- **i18next**: Soporte multi-idioma (Español/Inglés).
+- **OpenAPI Generator**: Cliente de API autogenerado para sincronización perfecta con el Backend.
 
-## Code scaffolding
+## 🛠️ Instalación y Configuración
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Requisitos Previos
 
-## Build
+- **Node.js** (v18 o superior recomendado)
+- **NPM** (incluido con Node.js)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Pasos para arrancar en local
 
-## Running unit tests
+1. Instalar dependencias:
+   ```bash
+   npm install
+   ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2. Arrancar el servidor de desarrollo:
+   ```bash
+   npm run start
+   ```
+   La aplicación estará disponible en `http://localhost:4200`.
 
-## Running end-to-end tests
+## 📁 Estructura del Proyecto
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- `src/app/api`: Modelos y servicios autogenerados desde el Swagger del Backend.
+- `src/app/dashboard`: Componentes principales del panel de control (Home, Perfil, Usuarios).
+- `src/app/modals`: Componentes de ventana emergente reutilizables.
+- `src/app/services`: Lógica de negocio y servicios manuales (Auth, Tree, Admin).
+- `src/assets/i18n`: Archivos de traducción JSON.
 
-## Further help
+## 📖 Guía para Usuarios y Administradores
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Para una explicación detallada de cómo usar la aplicación, las funciones de administrador y la lógica de asignación de árboles, consulta el siguiente manual:
+
+👉 **[MANUAL_USUARIO.md](./MANUAL_USUARIO.md)**
+
+---
+Developed for ForestPlus.

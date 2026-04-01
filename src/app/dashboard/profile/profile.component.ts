@@ -6,13 +6,15 @@ import { UserService } from '../../services/user.service';
 import { AdminService } from '../../services/admin.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
+import { AssignTreesModalComponent } from '../../modals/assign-trees-modal/assign-trees-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { TreeService } from '../../services/tree.service';
 
 @Component( {
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, StatusModalComponent],
+  imports: [CommonModule, FormsModule, TranslateModule, StatusModalComponent, AssignTreesModalComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 } )
@@ -48,11 +50,14 @@ export class ProfileComponent implements OnInit {
 
   previewImage: string | null = null;
   selectedFile: File | null = null;
+  
+  showingAssignModal = false;
 
   constructor (
     private authService: AuthService,
     private userService: UserService,
     private adminService: AdminService,
+    private treeService: TreeService,
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router
@@ -60,6 +65,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit () {
     this.authService.currentUser$.subscribe( user => {
+      this.currentUser = user;
       if ( !this.isAdminEditing ) {
         this.populateForm( user );
       }
@@ -273,5 +279,28 @@ export class ProfileComponent implements OnInit {
 
   closeStatus () {
     this.statusModal.visible = false;
+  }
+
+  openAssignModal() {
+    this.showingAssignModal = true;
+  }
+
+  closeAssignModal() {
+    this.showingAssignModal = false;
+  }
+
+  onTreesAssigned(payload: any) {
+    this.treeService.plantTreeBatch(payload).subscribe({
+      next: () => {
+        this.showingAssignModal = false;
+        this.showStatus('success', 'Success', this.translate.instant('ASSIGN_TREES.SUCCESS'));
+        if (this.editingUserId) {
+          this.loadAdminUser(this.editingUserId);
+        }
+      },
+      error: (err) => {
+        this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING'));
+      }
+    });
   }
 }

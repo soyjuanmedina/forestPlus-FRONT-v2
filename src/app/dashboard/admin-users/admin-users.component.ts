@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 
 @Component( {
   selector: 'app-admin-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, StatusModalComponent, ConfirmModalComponent, TranslateModule],
+  imports: [CommonModule, FormsModule, StatusModalComponent, ConfirmModalComponent, TranslateModule, RouterModule],
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.css'
 } )

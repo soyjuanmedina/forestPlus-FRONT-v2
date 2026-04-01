@@ -1,0 +1,98 @@
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <div>
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;" *ngIf="tree">
+      {{ 'PROFILE.EDIT_BUTTON' | translate }}: {{ tree.customName || tree.treeType?.name || ('TREE.ARBOL_SIN_TIPO' | translate) }}
+    </h1>
+    <p style="color: var(--color-text-light);">{{ 'MY_TREES.VIEW_DETAILS' | translate }}</p>
+  </div>
+</div>
+
+<div *ngIf="loading" class="glass-card" style="text-align: center; padding: 3rem;">
+  <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1rem;"></i>
+  <p>{{ 'MY_TREES.LOADING' | translate }}</p>
+</div>
+
+<div class="glass-card" *ngIf="!loading && tree">
+  <form [formGroup]="treeForm" (ngSubmit)="save()" style="display: flex; flex-direction: column; gap: 1.5rem;">
+    
+    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE.NOMBRE_PERSONALIZADO' | translate }}</label>
+        <input type="text" formControlName="customName" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+      
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE.SPICE' | translate }}</label>
+        <input type="text" formControlName="treeTypeName" readonly style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; background: rgba(0,0,0,0.05); color: #666; cursor: not-allowed;">
+      </div>
+
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE_SPECIES.SCIENTIFIC_NAME' | translate }}</label>
+        <input type="text" formControlName="scientificName" readonly style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; background: rgba(0,0,0,0.05); color: #666; cursor: not-allowed;">
+      </div>
+
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE.PLANTADO_EL' | translate }}</label>
+        <input type="date" formControlName="plantedAt" [readonly]="!isAdmin" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE.TERRENO' | translate }}</label>
+        <input type="text" formControlName="landName" readonly style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; background: rgba(0,0,0,0.05); color: #666; cursor: not-allowed;">
+      </div>
+
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE.PROPIETARIO' | translate }}</label>
+        <input type="text" formControlName="ownerName" readonly style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; background: rgba(0,0,0,0.05); color: #666; cursor: not-allowed;">
+      </div>
+
+      <div class="input-modern" style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE.PLANTACION_PLANIFICADA' | translate }}</label>
+        <select formControlName="plannedPlantationId" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+          <option [ngValue]="null">{{ 'COMMON.NONE' | translate }}</option>
+          <option *ngFor="let plantation of plannedPlantations" [ngValue]="plantation.id">
+            {{ plantation.landName || ('TREE.SIN_ASIGNAR' | translate) }} -
+            {{ plantation.plannedDate | date:'dd/MM/yyyy' }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1.5rem; font-size: 1.25rem;">
+      {{ 'TREE.CO2_ABSORBIDO' | translate }} <span *ngIf="!isAdmin" style="font-size: 0.8rem; font-weight: normal; color: var(--color-text-light);">({{ 'COMMON.READ_ONLY' | translate }})</span>
+    </h3>
+    
+    <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE_SPECIES.CO2_AT_20_LABEL' | translate }}</label>
+        <input type="number" formControlName="co2AbsorptionAt20" [readonly]="!isAdmin" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE_SPECIES.CO2_AT_25_LABEL' | translate }}</label>
+        <input type="number" formControlName="co2AbsorptionAt25" [readonly]="!isAdmin" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE_SPECIES.CO2_AT_30_LABEL' | translate }}</label>
+        <input type="number" formControlName="co2AbsorptionAt30" [readonly]="!isAdmin" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE_SPECIES.CO2_AT_35_LABEL' | translate }}</label>
+        <input type="number" formControlName="co2AbsorptionAt35" [readonly]="!isAdmin" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+      <div class="input-modern" style="display: flex; flex-direction: column;">
+        <label style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">{{ 'TREE_SPECIES.CO2_AT_40_LABEL' | translate }}</label>
+        <input type="number" formControlName="co2AbsorptionAt40" [readonly]="!isAdmin" [ngStyle]="{'background': isAdmin ? 'transparent' : 'rgba(0,0,0,0.05)', 'color': isAdmin ? 'inherit' : '#666', 'cursor': isAdmin ? 'auto' : 'not-allowed'}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.2s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(0,0,0,0.1)'">
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="!treeForm.valid" [ngStyle]="{'opacity': !treeForm.valid ? '0.5' : '1', 'cursor': !treeForm.valid ? 'not-allowed' : 'pointer'}">
+        <i class="fa-solid fa-save" style="margin-right: 8px;"></i> {{ 'COMMON.SAVE_CHANGES' | translate }}
+      </button>
+    </div>
+
+  </form>
+</div>

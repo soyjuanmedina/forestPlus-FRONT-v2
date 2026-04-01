@@ -7,7 +7,8 @@ import {
   TreeResponseDto,
   LandResponseDto,
   TreeTypeResponseDto,
-  LandTreeSummaryResponseDto
+  LandTreeSummaryResponseDto,
+  TreeBatchPlantRequestDto
 } from '../api';
 
 @Injectable({
@@ -21,8 +22,20 @@ export class TreeService {
     private treeTypeApi: TreeTypeControllerService
   ) { }
 
-  getMyTrees(): Observable<LandTreeSummaryResponseDto[]> {
-    return this.treeApi.getTreesByOwner();
+  getMyTrees(): Observable<TreeResponseDto[]> {
+    return this.treeApi.getAllTreesByOwner();
+  }
+
+  getTreeById(id: number): Observable<TreeResponseDto> {
+    return this.treeApi.getTreeById(id);
+  }
+
+  updateTree(id: number, dto: any): Observable<TreeResponseDto> {
+    return this.treeApi.updateTree(id, dto);
+  }
+
+  plantTreeBatch(request: TreeBatchPlantRequestDto): Observable<any> {
+    return this.treeApi.plantTreeBatch(request);
   }
 
   getLands(): Observable<LandResponseDto[]> {

@@ -28,9 +28,16 @@ import { Router, RouterModule } from '@angular/router';
     <div class="impact-section animate-slide-up delay-1">
       <h2 class="impact-title">{{ 'DASHBOARD.STATS.YOUR_CONTRIBUTION' | translate | uppercase }}</h2>
       <div class="main-card glass primary-border">
-        <div class="main-stat">
-          <span class="value">{{ kpis.plantedTrees || 0 }}</span>
-          <span class="label">{{ 'DASHBOARD.STATS.PLANTED' | translate }}</span>
+        <div class="main-stat" style="display: flex; gap: 4rem; align-items: flex-start; justify-content: flex-start;">
+          <div style="display: flex; flex-direction: column;">
+            <span class="value">{{ kpis.plantedTrees || 0 }}</span>
+            <span class="label">{{ 'DASHBOARD.STATS.PLANTED' | translate }}</span>
+          </div>
+
+          <div *ngIf="kpis.pendingTreesCount" style="color: #f59e0b; display: flex; flex-direction: column;">
+            <span class="value" style="color: inherit;">{{ kpis.pendingTreesCount }}</span>
+            <span class="label" style="opacity: 0.9; font-size: 0.85rem; font-weight: 600;">{{ 'DASHBOARD.PENDING_TREES_ALERT_TITLE' | translate }}</span>
+          </div>
         </div>
         
         <div class="impact-stats">

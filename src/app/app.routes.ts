@@ -40,5 +40,7 @@ export const routes: Routes = [
   { path: 'tree-type/form/:id', loadComponent: () => import( './dashboard/tree-type/tree-form/tree-form.component' ).then( c => c.TreeFormComponent ), canActivate: [authGuard] },
   { path: 'planned-plantation/:id', loadComponent: () => import( './dashboard/planned-plantation/planned-plantation.component' ).then( c => c.PlannedPlantationComponent ), canActivate: [authGuard] },
   { path: 'planned-plantation/form/:id', loadComponent: () => import( './dashboard/planned-plantation/planned-plantation-form/planned-plantation-form.component' ).then( c => c.PlannedPlantationFormComponent ), canActivate: [authGuard] },
+  { path: 'tree/:id', loadComponent: () => import( './my-trees/tree-detail/tree-detail.component' ).then( c => c.TreeDetailComponent ), canActivate: [authGuard] },
+  { path: 'tree/form/:id', loadComponent: () => import( './my-trees/tree-form/tree-form.component' ).then( c => c.TreeFormComponent ), canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];
