@@ -160,7 +160,7 @@ export class ProfileComponent implements OnInit {
         } else {
           this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_DELETE_SELF' ) );
           this.authService.logout();
-          this.router.navigate( ['/login'] );
+          this.router.navigate( ['/'] );
         }
       },
       error: ( err ) => {
