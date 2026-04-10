@@ -4,9 +4,18 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-local": "ng serve --configuration local",
+    "start-dev": "ng serve --configuration development",
+    "start-prod": "ng serve --configuration production",
     "build": "ng build",
+    "build:prod": "ng build --configuration production --base-href /",
+    "prod-to-back": "npm run build:prod && robocopy dist\\forest-frontend\\browser d:\\CasaMedina\\Desktop\\Proyectos\\ForestPlusApp\\forestPlus-BACK\\src\\main\\resources\\static /MIR /NFL /NDL /NJH /NJS /NP",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "gen-api": "openapi-generator-cli generate -i http://localhost:8080/v3/api-docs -g typescript-angular -o ./src/app/api --additional-properties=ngVersion=17,modelSuffix=Dto",
+    "test": "ng test",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +29,9 @@
     "@angular/router": "^17.2.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "@types/leaflet": "^1.9.21",
+    "flatpickr": "^4.6.13",
+    "leaflet": "^1.9.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -29,6 +41,7 @@
     "@angular/cli": "^17.2.3",
     "@angular/compiler-cli": "^17.2.0",
     "@types/jasmine": "~5.1.0",
+    "cypress": "^15.12.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

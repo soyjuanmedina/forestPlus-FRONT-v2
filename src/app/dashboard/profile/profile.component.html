@@ -3,11 +3,18 @@
     <div class="profile-cover"></div>
     <div class="profile-avatar-wrapper">
       <div class="profile-avatar">
-        <img [src]="previewImage || user?.picture || 'https://ui-avatars.com/api/?name=' + user?.name + '&background=69D291&color=fff&size=200'" alt="Profile">
+        <ng-container *ngIf="previewImage || user?.picture; else profileAvatarPlaceholder">
+          <img [src]="previewImage || user?.picture" (error)="onProfileAvatarError()" alt="Profile">
+        </ng-container>
+        <ng-template #profileAvatarPlaceholder>
+          <div class="profile-avatar-placeholder">{{ user?.name?.charAt(0)?.toUpperCase() || 'U' }}
+          </div>
+        </ng-template>
         <label class="avatar-edit" for="avatar-input">
           <i class="fa-solid fa-camera"></i>
         </label>
-        <input type="file" id="avatar-input" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        <input type="file" id="avatar-input" (change)="onFileSelected($event)" accept="image/*"
+          style="display: none;">
       </div>
       <div class="avatar-actions" *ngIf="previewImage">
         <button class="btn-save-img" (click)="uploadPicture()">
@@ -21,6 +28,15 @@
     <div class="profile-summary">
       <h1>{{ user?.name }} {{ user?.surname }}</h1>
       <p class="user-role-badge" [ngClass]="'role-' + user?.role?.toLowerCase()">{{ 'AUTH.' + user?.role | translate }}</p>
+      
+      <div *ngIf="isAdminEditing || currentUser?.role === 'ADMIN'" style="margin-top: 1rem; display: flex; gap: 1rem; align-items: center; justify-content: center;">
+        <span *ngIf="user?.pendingTreesCount > 0" class="badge" style="background: #f59e0b; color: #000; font-size: 1rem; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">
+          {{ user?.pendingTreesCount }} Árboles pendientes
+        </span>
+        <button class="btn btn-primary" (click)="openAssignModal()">
+          <i class="fa-solid fa-tree"></i> {{ 'ASSIGN_TREES.ASSIGN' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 
@@ -29,7 +45,7 @@
     <div class="info-card glass-card">
       <div class="card-header">
         <h2><i class="fa-solid fa-user-gear"></i> {{ 'PROFILE.INFO_TITLE' | translate }}</h2>
-        <button class="btn-edit-toggle" (click)="toggleEdit()">
+        <button class="btn btn-primary" (click)="toggleEdit()">
           <i class="fa-solid" [ngClass]="editing ? 'fa-xmark' : 'fa-pen'"></i>
           {{ (editing ? 'COMMON.CANCEL' : 'PROFILE.EDIT_BUTTON') | translate }}
         </button>
@@ -40,18 +56,29 @@
           <div class="form-grid">
             <div class="form-group">
               <label>{{ 'PROFILE.NAME' | translate }}</label>
-              <input type="text" name="name" [(ngModel)]="editForm.name" required class="form-control">
+              <input type="text" name="name" [(ngModel)]="editForm.name" required
+                class="form-control">
             </div>
             <div class="form-group">
               <label>{{ 'PROFILE.SURNAME' | translate }}</label>
               <input type="text" name="surname" [(ngModel)]="editForm.surname" class="form-control">
             </div>
-            <div class="form-group">
-              <label>{{ 'PROFILE.SECOND_SURNAME' | translate }}</label>
-              <input type="text" name="secondSurname" [(ngModel)]="editForm.secondSurname" class="form-control">
+            <div class="form-group" *ngIf="isAdminEditing">
+              <label>{{ 'USER.ROLE_LABEL' | translate }}</label>
+              <select name="role" [(ngModel)]="editForm.role" class="form-control">
+                <option value="USER">USER</option>
+                <option value="COMPANY_ADMIN">COMPANY_ADMIN</option>
+                <option value="ADMIN">ADMIN</option>
+              </select>
             </div>
             <div class="form-group">
-              <label>{{ 'PROFILE.EMAIL' | translate }} ({{ 'PROFILE.NOT_EDITABLE' | translate }})</label>
+              <label>{{ 'PROFILE.SECOND_SURNAME' | translate }}</label>
+              <input type="text" name="secondSurname" [(ngModel)]="editForm.secondSurname"
+                class="form-control">
+            </div>
+            <div class="form-group">
+              <label>{{ 'PROFILE.EMAIL' | translate }} ({{ 'PROFILE.NOT_EDITABLE' | translate
+                }})</label>
               <input type="text" [value]="user?.email" disabled class="form-control disabled">
             </div>
           </div>
@@ -89,10 +116,15 @@
               <span class="label">{{ 'PROFILE.EMAIL' | translate }}</span>
               <span class="value">{{ user?.email }}</span>
             </div>
+            <div class="detail-item" *ngIf="isAdminEditing">
+              <span class="label">{{ 'USER.ROLE_LABEL' | translate }}</span>
+              <span class="value">{{ user?.role }}</span>
+            </div>
             <div class="detail-item">
               <span class="label">{{ 'PROFILE.RECEIVE_EMAILS' | translate }}</span>
               <span class="value">
-                <i class="fa-solid" [ngClass]="user?.receiveEmails ? 'fa-check text-success' : 'fa-xmark text-danger'"></i>
+                <i class="fa-solid"
+                  [ngClass]="user?.receiveEmails ? 'fa-check text-success' : 'fa-xmark text-danger'"></i>
                 {{ (user?.receiveEmails ? 'COMMON.YES' : 'COMMON.NO') | translate }}
               </span>
             </div>
@@ -104,13 +136,23 @@
     <!-- Security Card -->
     <div class="info-card glass-card">
       <div class="card-header">
-        <h2><i class="fa-solid fa-shield-halved"></i> {{ 'PROFILE.SECURITY_TITLE' | translate }}</h2>
+        <h2><i class="fa-solid fa-shield-halved"></i> {{ 'PROFILE.SECURITY_TITLE' | translate }}
+        </h2>
       </div>
       <div class="card-body">
         <p class="security-desc">{{ 'PROFILE.SECURITY_DESC' | translate }}</p>
-        <button class="btn btn-outline" (click)="openChangePassword()">
-          <i class="fa-solid fa-key"></i> {{ 'PROFILE.CHANGE_PASSWORD' | translate }}
-        </button>
+        <div class="security-actions">
+          <button class="btn btn-primary" (click)="openChangePassword()">
+            <i class="fa-solid fa-key"></i> {{ 'PROFILE.CHANGE_PASSWORD' | translate }}
+          </button>
+
+          <div class="danger-zone">
+            <p class="danger-desc">{{ 'PROFILE.DELETE_ACCOUNT_DESC' | translate }}</p>
+            <button class="btn btn-danger-outline" (click)="deleteUser()">
+              <i class="fa-solid fa-trash-can"></i> {{ 'PROFILE.DELETE_ACCOUNT' | translate }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -123,28 +165,56 @@
     <form (ngSubmit)="submitPassword()">
       <div class="form-group">
         <label>{{ 'PROFILE.CURRENT_PASSWORD' | translate }}</label>
-        <input type="password" name="currentPassword" [(ngModel)]="passwordForm.currentPassword" required class="form-control">
+        <input type="password" name="currentPassword" [(ngModel)]="passwordForm.currentPassword"
+          required class="form-control">
       </div>
       <div class="form-group">
         <label>{{ 'PROFILE.NEW_PASSWORD' | translate }}</label>
-        <input type="password" name="newPassword" [(ngModel)]="passwordForm.newPassword" required minlength="6" class="form-control">
+        <input type="password" name="newPassword" [(ngModel)]="passwordForm.newPassword" required
+          minlength="6" class="form-control">
       </div>
       <div class="form-group">
         <label>{{ 'PROFILE.CONFIRM_PASSWORD' | translate }}</label>
-        <input type="password" name="confirmPassword" [(ngModel)]="passwordForm.confirmPassword" required class="form-control">
+        <input type="password" name="confirmPassword" [(ngModel)]="passwordForm.confirmPassword"
+          required class="form-control">
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-secondary" (click)="closeChangePassword()" *ngIf="!user?.mustChangePassword">{{ 'COMMON.CANCEL' | translate }}</button>
-        <button type="submit" class="btn btn-primary">{{ 'PROFILE.UPDATE_PASSWORD' | translate }}</button>
+        <button type="button" class="btn btn-secondary" (click)="closeChangePassword()"
+          *ngIf="!user?.forcePasswordChange">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'PROFILE.UPDATE_PASSWORD' | translate
+          }}</button>
       </div>
     </form>
   </div>
 </div>
 
-<app-status-modal
-  [visible]="statusModal.visible"
-  [type]="statusModal.type"
-  [title]="statusModal.title"
-  [message]="statusModal.message"
-  (close)="closeStatus()"
-></app-status-modal>
+<app-status-modal [visible]="statusModal.visible" [type]="statusModal.type"
+  [title]="statusModal.title" [message]="statusModal.message" (close)="closeStatus()"></app-status-modal>
+
+<!-- Modal Confirmación Borrado -->
+<div class="modal-overlay" *ngIf="confirmingDelete">
+  <div class="modal-card danger-modal">
+    <div class="modal-icon">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+    <h3>{{ 'PROFILE.DELETE_CONFIRM_TITLE' | translate }}</h3>
+    <p>{{ (isAdminEditing ? 'PROFILE.CONFIRM_ADMIN_DELETE' : 'PROFILE.CONFIRM_SELF_DELETE') | translate }}</p>
+
+    <div class="modal-actions full-width">
+      <button type="button" class="btn btn-secondary" (click)="cancelDelete()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+        {{ 'PROFILE.CONFIRM_DELETE' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Asignar Árboles -->
+<app-assign-trees-modal 
+  *ngIf="showingAssignModal"
+  [userId]="editingUserId"
+  (close)="closeAssignModal()"
+  (assigned)="onTreesAssigned($event)">
+</app-assign-trees-modal>

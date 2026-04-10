@@ -9,6 +9,17 @@
     </button>
   </div>
 
+  <div class="search-container glass">
+    <div class="search-wrapper">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()" 
+             [placeholder]="'Buscar por nombre, apellidos o email...'" class="search-input">
+      <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-btn" title="Limpiar búsqueda">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
   <div *ngIf="loading" class="loading-state">
     <div class="spinner"></div>
     <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
@@ -19,6 +30,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>{{ 'PROFILE.AVATAR_ALT' | translate }}</th>
           <th>{{ 'USER.NAME_LABEL' | translate }}</th>
           <th>{{ 'USER.EMAIL_LABEL' | translate }}</th>
           <th>{{ 'USER.ROLE_LABEL' | translate }}</th>
@@ -27,8 +39,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.id }}</td>
+        <tr *ngFor="let user of users" [ngStyle]="user.pendingTreesCount > 0 ? {'background-color': 'rgba(245, 158, 11, 0.1)', 'border-left': '4px solid var(--warning)'} : {}">
+          <td>
+            {{ user.id }}
+            <span *ngIf="user.pendingTreesCount > 0" class="badge" style="background: var(--warning); color: #000; margin-left: 5px;" title="Árboles pendientes">{{ user.pendingTreesCount }} <i class="fas fa-tree"></i></span>
+          </td>
+          <td>
+            <div class="avatar-cell">
+              <img *ngIf="user.picture" [src]="user.picture" (error)="onAvatarError(user)"
+                class="avatar-img">
+              <div *ngIf="!user.picture" class="avatar-placeholder">{{
+                user.name?.charAt(0)?.toUpperCase() || 'U' }}</div>
+            </div>
+          </td>
           <td>{{ user.name }} {{ user.surname }}</td>
           <td>{{ user.email }}</td>
           <td>
@@ -42,10 +65,11 @@
           </td>
           <td>
             <div class="action-buttons">
-              <button (click)="editUser(user)" class="btn-icon" [title]="'COMMON.EDIT' | translate">
+              <a [routerLink]="['/profile', user.id]" class="btn-icon" style="color: var(--color-primary);" [title]="'COMMON.EDIT' | translate">
                 <i class="fas fa-edit"></i>
-              </button>
-              <button (click)="deleteUser(user.id)" class="btn-icon btn-delete" [title]="'COMMON.DELETE' | translate">
+              </a>
+              <button (click)="deleteUser(user.id)" class="btn-icon btn-delete"
+                [title]="'COMMON.DELETE' | translate">
                 <i class="fas fa-trash"></i>
               </button>
             </div>
@@ -53,26 +77,45 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination-container" *ngIf="totalPages > 1">
+      <div class="page-info">
+        {{ 'Página' }} {{ currentPage + 1 }} {{ 'de' }} {{ totalPages }} ({{ totalElements }} {{ 'usuarios' }})
+      </div>
+      <div class="pagination-controls">
+        <button class="pagination-btn" [disabled]="currentPage === 0" (click)="goToPage(currentPage - 1)">
+          <i class="fas fa-chevron-left"></i> {{ 'Anterior' }}
+        </button>
+        <button class="pagination-btn" [disabled]="currentPage === totalPages - 1" (click)="goToPage(currentPage + 1)">
+          {{ 'Siguiente' }} <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- Modal de Edición/Creación -->
-  <div *ngIf="editingUser" class="modal-overlay">
+  <!-- Modal de Creación -->
+  <div *ngIf="editingUser && isNew" class="modal-overlay">
     <div class="modal-card">
-      <h3>{{ isNew ? ('USER.NEW_TITLE' | translate) : ('USER.EDIT_TITLE' | translate) }}</h3>
-      
+      <div class="modal-header">
+        <h2>{{ 'ADMIN_USERS.ADD_BUTTON' | translate }}</h2>
+      </div>
+
       <div class="form-group">
         <label>{{ 'USER.NAME_LABEL' | translate }}</label>
-        <input [(ngModel)]="editingUser.name" class="form-control" [placeholder]="'USER.NAME_PLACEHOLDER' | translate">
+        <input [(ngModel)]="editingUser.name" class="form-control"
+          [placeholder]="'USER.NAME_PLACEHOLDER' | translate">
       </div>
-      
+
       <div class="form-group">
         <label>{{ 'USER.SURNAME_LABEL' | translate }}</label>
-        <input [(ngModel)]="editingUser.surname" class="form-control" [placeholder]="'USER.SURNAME_PLACEHOLDER' | translate">
+        <input [(ngModel)]="editingUser.surname" class="form-control"
+          [placeholder]="'USER.SURNAME_PLACEHOLDER' | translate">
       </div>
 
       <div *ngIf="isNew" class="form-group">
         <label>{{ 'USER.EMAIL_LABEL' | translate }}</label>
-        <input [(ngModel)]="editingUser.email" class="form-control" [placeholder]="'USER.EMAIL_PLACEHOLDER' | translate">
+        <input [(ngModel)]="editingUser.email" class="form-control"
+          [placeholder]="'USER.EMAIL_PLACEHOLDER' | translate">
       </div>
 
       <div *ngIf="isNew" class="form-group notice-box">
@@ -88,6 +131,34 @@
         </select>
       </div>
 
+      <div class="form-group">
+        <label>{{ 'LAND_MODAL.IMAGE_PREVIEW' | translate }}</label>
+        <div class="image-preview-container"
+          style="margin-bottom: 20px; text-align: center; position: relative;">
+          <!-- Avatar circular preview -->
+          <div
+            style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 2px solid var(--color-primary); background: var(--color-secondary); color: var(--color-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img *ngIf="editingUser.picture" [src]="editingUser.picture"
+              (error)="onAvatarError(editingUser)"
+              style="width: 100%; height: 100%; object-fit: cover;">
+            <div *ngIf="!editingUser.picture"
+              style="display: flex; flex-direction: column; align-items: center; opacity: 0.6;">
+              <i class="fa-solid fa-user-circle" style="font-size: 4rem;"></i>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px;">
+            <input type="file" #fileInputUser style="display: none"
+              (change)="onFileSelected($event)" accept="image/*">
+            <button type="button" class="btn btn-outline"
+              style="font-size: 0.8rem; padding: 8px 18px; display: flex; align-items: center; gap: 8px; margin: 0 auto;"
+              (click)="fileInputUser.click()">
+              <i class="fas fa-camera"></i> {{ 'Seleccionar Foto' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group checkbox-group">
         <label>
           <input type="checkbox" [(ngModel)]="editingUser.emailVerified">
@@ -96,26 +167,19 @@
       </div>
 
       <div class="modal-actions">
-        <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'COMMON.CANCEL' | translate }}</button>
-        <button (click)="saveUser()" class="btn btn-primary">
-          {{ isNew ? ('USER.CREATE_BUTTON' | translate) : ('USER.EDIT_BUTTON' | translate) }}
+        <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'COMMON.CANCEL' | translate
+          }}</button>
+        <button (click)="saveUser()" class="btn btn-primary" [disabled]="!isModified()">
+          {{ isNew ? ('USER.CREATE_BUTTON' | translate) : ('COMMON.SAVE' | translate) }}
         </button>
       </div>
     </div>
   </div>
 
-  <app-status-modal
-    [visible]="statusModal.visible"
-    [type]="statusModal.type"
-    [title]="statusModal.title"
-    [message]="statusModal.message"
-    (close)="closeStatus()"
-  ></app-status-modal>
+  <app-status-modal [visible]="statusModal.visible" [type]="statusModal.type"
+    [title]="statusModal.title" [message]="statusModal.message"
+    (close)="closeStatus()"></app-status-modal>
 
-  <app-confirm-modal
-    [visible]="confirmModal.visible"
-    [message]="confirmModal.message"
-    (confirm)="confirmDeleteUser()"
-    (cancel)="cancelDelete()"
-  ></app-confirm-modal>
+  <app-confirm-modal [visible]="confirmModal.visible" [message]="confirmModal.message"
+    (confirm)="confirmDeleteUser()" (cancel)="cancelDelete()"></app-confirm-modal>
 </div>

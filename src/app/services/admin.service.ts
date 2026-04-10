@@ -1,71 +1,110 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { 
+  UserControllerService, 
+  LandControllerService, 
+  TreeTypeControllerService,
+  PlannedPlantationControllerService,
+  UserResponseDto,
+  RegisterUserByAdminRequestDto,
+  LandResponseDto,
+  LandRequestDto,
+  LandUpdateRequestDto,
+  TreeTypeResponseDto,
+  TreeTypeRequestDto,
+  TreeTypeUpdateRequestDto,
+  PlannedPlantationResponseDto,
+  PlannedPlantationRequestDto,
+  PlannedPlantationUpdateRequestDto
+} from '../api';
 
-@Injectable({
+@Injectable( {
   providedIn: 'root'
-})
+} )
 export class AdminService {
-  private apiUrl = 'http://localhost:3000/api/admin';
 
-  constructor(private http: HttpClient) { }
-
-  private getHeaders() {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  }
+  constructor ( 
+    private userApi: UserControllerService,
+    private landApi: LandControllerService,
+    private treeTypeApi: TreeTypeControllerService,
+    private plannedPlantationApi: PlannedPlantationControllerService
+  ) { }
 
   // Usuarios
-  getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/users`, { headers: this.getHeaders() });
+  getUsers ( page: number = 0, size: number = 10, role: string | undefined = undefined, companyId: number | undefined = undefined, search: string | undefined = undefined, sort: string | undefined = undefined ): Observable<any> {
+    return this.userApi.getUsers( role, companyId, search, page, size, sort );
   }
 
-  createUser(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users`, data, { headers: this.getHeaders() });
+  getUserById ( id: number ): Observable<UserResponseDto> {
+    return this.userApi.getUserById( id );
   }
 
-  updateUser(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/${id}`, data, { headers: this.getHeaders() });
+  createUser ( data: RegisterUserByAdminRequestDto ): Observable<UserResponseDto> {
+    return this.userApi.registerUserByAdmin( data );
   }
 
-  deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/users/${id}`, { headers: this.getHeaders() });
+  updateUser ( id: number, data: RegisterUserByAdminRequestDto ): Observable<UserResponseDto> {
+    return this.userApi.updateUserByAdmin( id, data );
+  }
+
+  deleteUser ( id: number ): Observable<any> {
+    return this.userApi.deleteUser( id );
   }
 
   // Terrenos
-  getLands(): Observable<any[]> {
-    // Usamos el endpoint público de terrenos
-    return this.http.get<any[]>('http://localhost:3000/api/forest/lands');
+  getLands (): Observable<LandResponseDto[]> {
+    return this.landApi.getAllLands();
   }
 
-  createLand(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/lands`, data, { headers: this.getHeaders() });
+  createLand ( data: LandRequestDto ): Observable<LandResponseDto> {
+    return this.landApi.createLand( data );
   }
 
-  updateLand(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/lands/${id}`, data, { headers: this.getHeaders() });
+  updateLand ( id: number, data: LandUpdateRequestDto ): Observable<LandResponseDto> {
+    return this.landApi.updateLand( id, data );
   }
 
-  deleteLand(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/lands/${id}`, { headers: this.getHeaders() });
+  deleteLand ( id: number ): Observable<any> {
+    return this.landApi.deleteLand( id );
   }
 
   // Especies de Árboles
-  getTreeSpecies(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/tree-species`, { headers: this.getHeaders() });
+  getTreeSpecies (): Observable<TreeTypeResponseDto[]> {
+    return this.treeTypeApi.getAllTreeTypes();
   }
 
-  createTreeSpecies(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/tree-species`, data, { headers: this.getHeaders() });
+  createTreeSpecies ( data: TreeTypeRequestDto ): Observable<TreeTypeResponseDto> {
+    return this.treeTypeApi.createTreeType( data );
   }
 
-  updateTreeSpecies(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/tree-species/${id}`, data, { headers: this.getHeaders() });
+  updateTreeSpecies ( id: number, data: TreeTypeUpdateRequestDto ): Observable<TreeTypeResponseDto> {
+    return this.treeTypeApi.updateTreeType( id, data );
   }
 
-  deleteTreeSpecies(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/tree-species/${id}`, { headers: this.getHeaders() });
+  deleteTreeSpecies ( id: number ): Observable<any> {
+    return this.treeTypeApi.deleteTreeType( id );
+  }
+
+  // Plantaciones Previstas
+  getPlannedPlantations (): Observable<PlannedPlantationResponseDto[]> {
+    return this.plannedPlantationApi.getAll();
+  }
+
+  // Método para obtener plantaciones por terreno (accesible por usuarios autenticados)
+  getPlannedPlantationsByLand ( landId: number ): Observable<PlannedPlantationResponseDto[]> {
+    return this.plannedPlantationApi.getByLand( landId );
+  }
+
+  createPlannedPlantation ( data: PlannedPlantationRequestDto ): Observable<PlannedPlantationResponseDto> {
+    return this.plannedPlantationApi.create( data );
+  }
+
+  updatePlannedPlantation ( id: number, data: PlannedPlantationUpdateRequestDto ): Observable<PlannedPlantationResponseDto> {
+    return this.plannedPlantationApi.update( id, data );
+  }
+
+  deletePlannedPlantation ( id: number ): Observable<any> {
+    return this.plannedPlantationApi._delete( id );
   }
 }

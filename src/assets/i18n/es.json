@@ -1,18 +1,37 @@
 {
+  "COUNTDOWN": {
+    "TITLE": "Próximamente",
+    "SUBTITLE": "Estamos plantando las semillas de un futuro más verde. Muy pronto podrás acceder a forest+.",
+    "DAYS": "Días",
+    "HOURS": "Horas",
+    "MINUTES": "Minutos",
+    "SECONDS": "Segundos",
+    "NOTIFY_ME": "Déjanos tu email y te avisaremos en cuanto abramos acceso:",
+    "BUTTON": "Quiero acceso",
+    "SUCCESS_MSG": "¡Gracias! Te avisaremos en cuanto abramos el acceso."
+  },
   "COMMON": {
     "YES": "Sí",
     "NO": "No",
     "OK": "Entendido",
     "CANCEL": "Cancelar",
+    "BACK": "Atrás",
+    "SAVE": "Guardar",
+    "SAVE_CHANGES": "Guardar Cambios",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
+    "READ_ONLY": "Solo lectura",
+    "SUCCESS": "Éxito",
+    "ERROR": "Error",
     "VERIFIED": "Verificado",
     "ACTIONS": "Acciones",
     "CONFIRM_DELETE": "¿Estás seguro de que deseas eliminar este elemento?",
     "SUCCESS_DELETE": "✅ Eliminado correctamente",
     "ERROR_DELETE": "❌ No se pudo eliminar el elemento",
     "ERROR_PROCESSING": "❌ Hubo un problema al procesar la solicitud",
-    "EMAIL_VERIFIED": "Correo verificado"
+    "EMAIL_VERIFIED": "Correo verificado",
+    "CLEAR": "Limpiar",
+    "OPTIONAL": "opcional"
   },
   "HOME": {
     "TITLE": "Gestiona tu bosque digital Mide tu impacto real",
@@ -30,30 +49,30 @@
       "TITLE": "Súmate al cambio",
       "DESC": "Descubre cómo tu bosque digital puede regenerar territorio, cuidar del clima y ayudarte a tomar decisiones sostenibles cada mes.",
       "BENEFITS": {
-         "B1": {
-            "TITLE": "Creas tu propio bosque",
-            "DESC": "Cada pago se traduce en árboles plantados en proyectos reales, con especies y ubicaciones pensadas para regenerar clima, agua y suelo."
-         },
-         "B2": {
-            "TITLE": "Ves tu impacto, no solo números",
-            "DESC": "Tu bosque digital te muestra árboles, CO₂ compensado e historias de regeneración, para que sientas que cada mes estás moviendo la aguja."
-         },
-         "B3": {
-             "TITLE": "Acompañamiento",
-             "DESC": "Respondemos dudas, explicamos los proyectos y damos contexto para que cada decisión se tome con información y conciencia ambiental."
-         },
-         "B4": {
-             "TITLE": "Impacto corporativo",
-             "DESC": "Los árboles de tu bosque generan certificados y reportes útiles para comunicación, ESG y cumplimiento normativo cuando lo necesites."
-         },
-         "B5": {
-             "TITLE": "Valores claros",
-             "DESC": "forest+ nace para cuidar el territorio y a quienes lo habitan, priorizando siempre la salud de los ecosistemas sobre cualquier otro interés."
-         },
-         "B6": {
-             "TITLE": "Participas en algo colectivo",
-             "DESC": "Cada árbol que sumas se integra en proyectos compartidos con ayuntamientos y otras personas, amplificando tu impacto."
-         }
+        "B1": {
+          "TITLE": "Creas tu propio bosque",
+          "DESC": "Cada pago se traduce en árboles plantados en proyectos reales, con especies y ubicaciones pensadas para regenerar clima, agua y suelo."
+        },
+        "B2": {
+          "TITLE": "Ves tu impacto, no solo números",
+          "DESC": "Tu bosque digital te muestra árboles, CO₂ compensado e historias de regeneración, para que sientas que cada mes estás moviendo la aguja."
+        },
+        "B3": {
+          "TITLE": "Acompañamiento",
+          "DESC": "Respondemos dudas, explicamos los proyectos y damos contexto para que cada decisión se tome con información y conciencia ambiental."
+        },
+        "B4": {
+          "TITLE": "Impacto corporativo",
+          "DESC": "Los árboles de tu bosque generan certificados y reportes útiles para comunicación, ESG y cumplimiento normativo cuando lo necesites."
+        },
+        "B5": {
+          "TITLE": "Valores claros",
+          "DESC": "forest+ nace para cuidar el territorio y a quienes lo habitan, priorizando siempre la salud de los ecosistemas sobre cualquier otro interés."
+        },
+        "B6": {
+          "TITLE": "Participas en algo colectivo",
+          "DESC": "Cada árbol que sumas se integra en proyectos compartidos con ayuntamientos y otras personas, amplificando tu impacto."
+        }
       }
     },
     "TESTIMONIALS": {
@@ -110,14 +129,25 @@
     "WELCOME": "¡Bienvenido/a, {{name}}!",
     "PANEL": "Este es tu panel personal en forest+.",
     "LOGOUT": "Cerrar sesión",
+    "PENDING_TREES_ALERT_TITLE": "Árboles pendientes de plantar",
+    "PENDING_ONE": "Tienes 1 árbol pendiente de plantar. Pronto te lo asignaremos a un terreno real.",
+    "PENDING_MULTIPLE": "Tienes {{count}} árboles pendientes de plantar. Pronto los asignaremos a un terreno real.",
     "STATS": {
-      "TASKS": "Tareas completadas",
-      "POINTS": "Puntos obtenidos"
+      "YOUR_CONTRIBUTION": "Tu Contribución",
+      "OUR_PROJECT": "Nuestro Proyecto",
+      "NEXT_PLANTATION": "Próxima Plantación",
+      "ENVIRONMENTAL_IMPACT": "Impacto Ambiental",
+      "CONGRATS_PERSONAL": "Enhorabuena, con tu actuación estás contribuyendo a compensar el CO₂ producido por:",
+      "CONGRATS_GLOBAL": "Cuando realicemos nuestro proyecto estaremos contribuyendo a compensar el CO₂ producido por:",
+      "PLANTED": "Árboles Plantados",
+      "PENDING": "Pendientes de Plantar",
+      "CO2": "CO₂ Compensado Anual",
+      "UPCOMING": "Próximas Reforestaciones"
     },
     "STEPS": {
-      "TITLE": "Próximos pasos",
-      "DESCRIPTION": "Aquí puedes empezar a desarrollar las funcionalidades de tu nuevo proyecto.",
-      "CTA": "Crear nuevo elemento"
+      "TITLE": "¿Cómo seguir?",
+      "DESCRIPTION": "Sigue contribuyendo a la regeneración de nuestros ecosistemas.",
+      "CTA": "Ver Terrenos Disponibles"
     }
   },
   "LOGIN": {
@@ -179,6 +209,7 @@
     "PLANTED_TREES": "Árboles plantados en este terreno",
     "PLANTED_TREES_BY_USER": "Árboles plantados por el usuario",
     "COORDINATES_SHORT": "Coordinadas",
+    "LOCATION_MAP": "Localización",
     "NO_PLANTED_TREES_IN_LAND": "Aun no se han plantado árboles en este terreno",
     "NO_PLANTED_TREES_BY_USER": "Este usuario aun no ha plantado ningún árbol"
   },
@@ -196,7 +227,10 @@
     "EMPTY_LIST": "No hay árboles para asignar",
     "SUCCESS": "Árbol asignado con éxito",
     "ERROR": "Error al asignar árbol",
-    "CLOSE_BUTTON": "Cerrar"
+    "CLOSE_BUTTON": "Cerrar",
+    "LAND": "Terreno",
+    "QUANTITY": "Cantidad",
+    "ASSIGN": "Asignar Árboles"
   },
   "LAND_MODAL": {
     "NEW_TITLE": "Nuevo Terreno",
@@ -207,8 +241,14 @@
     "LOCATION_PLACEHOLDER": "Lat, Long o Nombre Ciudad",
     "AREA": "Área (m²)",
     "CAPACITY": "Capacidad Árboles",
-    "IMAGE_URL": "URL de la imagen",
+    "IMAGE_PREVIEW": "Vista previa de la imagen",
+    "IMAGE_DATA": "Datos de la imagen (Base64)",
+    "IMAGE_PLACEHOLDER": "Pega aquí el código Base64 de la imagen o una URL",
     "DESCRIPTION": "Descripción",
+    "COORDINATES": "Coordenadas (Polígono)",
+    "ADD_COORD": "Añadir Punto",
+    "LATITUDE": "Latitud",
+    "LONGITUDE": "Longitud",
     "CANCEL": "Cancelar",
     "SAVE": "Guardar Cambios",
     "CREATE": "Crear Terreno",
@@ -269,6 +309,14 @@
     "PASSWORD_MISMATCH": "❌ Las contraseñas no coinciden",
     "FILE_TOO_LARGE": "❌ La imagen es demasiado grande. Máximo 10MB.",
     "MUST_CHANGE_NOTICE": "⚠️ Por seguridad, debes cambiar tu contraseña temporal antes de continuar.",
+    "DELETE_ACCOUNT": "Eliminar cuenta",
+    "DELETE_ACCOUNT_DESC": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate de que realmente quieres hacerlo.",
+    "DELETE_CONFIRM_TITLE": "Confirmar eliminación",
+    "CONFIRM_DELETE": "Eliminar definitivamente",
+    "CONFIRM_SELF_DELETE": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.",
+    "CONFIRM_ADMIN_DELETE": "¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.",
+    "SUCCESS_DELETE_SELF": "✅ Tu cuenta ha sido eliminada.",
+    "SUCCESS_DELETE_USER": "✅ Usuario eliminado correctamente.",
     "LAST_LOGIN": "Último login",
     "LOGIN_COUNT": "Logins exitosos",
     "ROLE": "Rol",
@@ -341,6 +389,30 @@
     "CANCEL_BUTTON": "Cancelar",
     "SELECT_IMAGE": "Seleccionar imagen"
   },
+  "TREE": {
+    "ARBOL_SIN_TIPO": "Árbol sin tipo",
+    "ID_ARBOL": "ID Árbol",
+    "SPICE": "Especie",
+    "ESPECIE_NO_DEFINIDA": "Especie no definida",
+    "PLANTADO_EL": "Plantado el",
+    "TERRENO": "Terreno",
+    "SIN_ASIGNAR": "Sin asignar",
+    "PROPIETARIO": "Propietario",
+    "CO2_ABSORBIDO": "CO₂ Absorbido",
+    "NOMBRE_PERSONALIZADO": "Nombre Personalizado",
+    "TIPO": "Tipo de Árbol",
+    "PLANTACION_PLANIFICADA": "Plantación Planificada",
+    "INFORMACION_TIPO_ARBOL": "Información del Tipo de Árbol",
+    "DESCRIPCION": "Descripción",
+    "CO2_ABSORCION_TIPO": "Absorción de CO₂",
+    "ALTURA_TIPICA": "Altura típica",
+    "VIDA_UTIL": "Esperanza de vida",
+    "INFORMACION_TERRENO": "Información del Terreno",
+    "NOMBRE": "Nombre",
+    "UBICACION": "Ubicación",
+    "AREA": "Área",
+    "MAX_ARBOLES": "Capacidad máxima"
+  },
   "TREE_SPECIES": {
     "EDIT_TITLE": "Editar Especie de Árbol",
     "NEW_TITLE": "Nueva Especie de Árbol",
@@ -372,7 +444,8 @@
     "NO_DESCRIPTION": "Sin descripción",
     "EDIT_BUTTON": "Editar",
     "CO2_ESTIMATIONS_TITLE": "Absorciones CO₂ estimadas",
-    "DELETE_ERROR": "No se puede eliminar la especie porque hay árboles asociados"
+    "DELETE_ERROR": "No se puede eliminar la especie porque hay árboles asociados",
+    "NO_PICTURE": "Sin imagen"
   },
   "MY_TREES": {
     "TITLE": "Mis Árboles",
@@ -426,5 +499,63 @@
       "MESSAGE": "¿Estás seguro de que quieres eliminar a {{name}}?"
     },
     "ADD_BUTTON": "Nuevo Usuario"
+  },
+  "ADMIN_PLANNED_PLANTATIONS": {
+    "TITLE": "Plantaciones Previstas",
+    "SUBTITLE": "Gestiona el calendario y los objetivos de reforestación",
+    "ADD_BUTTON": "Nueva Plantación"
+  },
+  "PLANNED_PLANTATION": {
+    "ACTIVE": "Activa",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre de terreno...",
+    "PLANNED_DATE": "Fecha prevista",
+    "EFFECTIVE_DATE": "Fecha efectiva",
+    "MIN_TREES": "Mínimo",
+    "OPTIMAL_TREES": "Óptimo",
+    "MAX_TREES": "Máximo",
+    "TREES_TITLE": "Objetivo de Árboles",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Siguiente",
+    "NEW_TITLE": "Nueva Plantación",
+    "EDIT_TITLE": "Editar Plantación",
+    "PAGE": "Página",
+    "OF": "de",
+    "SEARCH_NOT_FOUND": "No se encontraron plantaciones previstas.",
+    "SELECT_LAND": "--- Seleccionar Terreno ---",
+    "ASSOCIATED_LAND": "Terreno Asociado",
+    "TREE_TYPE": "Tipo de Árbol",
+    "SELECT_TREE_TYPE": "--- Seleccionar Tipo de Árbol ---",
+    "NO_NAME_LAND": "Terreno sin nombre",
+    "CREATE": "Crear Plantación",
+    "SUCCESS_CREATE": "✅ Plantación creada con éxito",
+    "SUCCESS_EDIT": "✅ Plantación actualizada con éxito",
+    "SUCCESS_DELETE": "✅ Plantación eliminada con éxito"
+  },
+  "PURCHASE": {
+    "TITLE": "Completa tu compra",
+    "SUBTITLE": "Haz tu elección para sumar vida al planeta.",
+    "STEPS": {
+      "PLANTATION": "Plantación",
+      "SPECIES": "Especie",
+      "QUANTITY": "Cantidad",
+      "CONFIRM": "Confirmar"
+    },
+    "SELECT_PLANTATION": "Elige la plantación",
+    "SELECT_SPECIES": "Selecciona la especie",
+    "ENTER_QUANTITY": "¿Cuántos árboles quieres plantar?",
+    "SUMMARY": "Resumen de compra",
+    "FLIGHT_DATE": "Fecha prevista",
+    "UNIT_PRICE": "Precio unitario",
+    "TOTAL": "Total",
+    "PROCEED_PAYMENT": "Proceder al pago",
+    "SUCCESS": "¡Compra realizada con éxito!",
+    "ERROR": "Hubo un error al procesar tu compra",
+    "CO2_IMPACT": "Impacto estimado CO₂",
+    "REDSYS_REDIRECT": "Te estamos redirigiendo a la pasarela de pago segura...",
+    "NEXT": "Siguiente",
+    "BACK": "Atrás",
+    "TREES_LABEL": "árboles",
+    "AVAILABLE": "Disponible",
+    "GOAL": "Objetivo"
   }
 }

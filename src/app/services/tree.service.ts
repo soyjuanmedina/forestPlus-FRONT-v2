@@ -1,39 +1,56 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { 
+  TreeControllerService, 
+  LandControllerService, 
+  TreeTypeControllerService,
+  TreeResponseDto,
+  LandResponseDto,
+  TreeTypeResponseDto,
+  LandTreeSummaryResponseDto,
+  TreeBatchPlantRequestDto
+} from '../api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TreeService {
-  private apiUrl = 'http://localhost:3000/api/forest';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private treeApi: TreeControllerService,
+    private landApi: LandControllerService,
+    private treeTypeApi: TreeTypeControllerService
+  ) { }
 
-  private getHeaders() {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+  getMyTrees(): Observable<TreeResponseDto[]> {
+    return this.treeApi.getAllTreesByOwner();
   }
 
-  getMyTrees(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/my-trees`, { headers: this.getHeaders() });
+  getTreeById(id: number): Observable<TreeResponseDto> {
+    return this.treeApi.getTreeById(id);
   }
 
-  getLands(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/lands`, { headers: this.getHeaders() });
+  updateTree(id: number, dto: any): Observable<TreeResponseDto> {
+    return this.treeApi.updateTree(id, dto);
   }
 
-  getLand(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/lands/${id}`, { headers: this.getHeaders() });
+  plantTreeBatch(request: TreeBatchPlantRequestDto): Observable<any> {
+    return this.treeApi.plantTreeBatch(request);
   }
 
-  getTreeSpecies(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/api/tree-species`, { headers: this.getHeaders() });
+  getLands(): Observable<LandResponseDto[]> {
+    return this.landApi.getAllLands();
   }
 
-  getTreeSpeciesById(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:3000/api/tree-species/${id}`, { headers: this.getHeaders() });
+  getLand(id: number): Observable<LandResponseDto> {
+    return this.landApi.getLandById(id);
+  }
+
+  getTreeSpecies(): Observable<TreeTypeResponseDto[]> {
+    return this.treeTypeApi.getAllTreeTypes();
+  }
+
+  getTreeSpeciesById(id: number): Observable<TreeTypeResponseDto> {
+    return this.treeTypeApi.getTreeTypeById(id);
   }
 }

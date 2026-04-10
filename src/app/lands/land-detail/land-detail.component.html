@@ -17,53 +17,124 @@
 
 <div *ngIf="land && !loading" class="land-detail-container animate-fade-in">
   <div class="glass-card detail-card" style="padding: 0; overflow: hidden;">
+    <!-- HERO -->
     <div class="land-hero" style="height: 400px; position: relative; background: #ccd5ae;">
       <img [src]="land.picture || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1200&auto=format&fit=crop'" style="width: 100%; height: 100%; object-fit: cover;">
       <div class="land-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); display: flex; align-items: flex-end; padding: 2rem;">
         <div>
-          <h1 style="color: white; font-size: 3rem; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">{{ land.name }}</h1>
-          <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin: 0.5rem 0 0 0; display: flex; align-items: center; gap: 0.5rem;">
-            <i class="fa-solid fa-location-dot"></i> {{ land.location || ('LANDS.UNKNOWN_LOCATION' | translate) }}
+          <h1 style="color: white; font-size: 3.5rem; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5); font-weight: 800;">{{ land.name }}</h1>
+          <p style="color: rgba(255,255,255,0.95); font-size: 1.3rem; margin: 0.5rem 0 0 0; display: flex; align-items: center; gap: 0.8rem; font-weight: 500;">
+            <i class="fa-solid fa-location-dot" style="color: var(--color-primary);"></i> {{ land.location || ('LANDS.UNKNOWN_LOCATION' | translate) }}
           </p>
         </div>
       </div>
     </div>
     
-    <div class="detail-content" style="padding: 3rem;">
-      <div class="detail-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+    <div class="detail-content" style="padding: clamp(2rem, 5vw, 4rem);">
+      <div class="detail-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: clamp(2rem, 4vw, 4rem);">
         
+        <!-- COLUMNA IZQUIERDA: INFORMACIÓN Y ESTADÍSTICAS ABAJO -->
         <div class="main-info">
-          <h2 style="color: var(--color-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-            <i class="fa-solid fa-leaf"></i> {{ 'LANDS.ABOUT_LAND' | translate }}
-          </h2>
-          <!-- Aquí se renderiza el HTML provisto por el admin -->
-          <div class="html-description" [innerHTML]="land.description || ('LANDS.NO_DESCRIPTION' | translate)"></div>
-        </div>
-        
-        <div class="side-info">
-          <div class="stats-card" style="background: rgba(105, 210, 145, 0.05); border: 1px solid rgba(105, 210, 145, 0.2); border-radius: 16px; padding: 2rem;">
-            <h3 style="margin-top: 0; margin-bottom: 1.5rem; text-align: center; color: var(--color-text-dark);">
-              {{ 'LANDS.LAND_STATS' | translate }}
+          <!-- Descripción -->
+          <section style="margin-bottom: 4rem;">
+            <h2 style="color: #2C3E50; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 2rem; font-weight: 700;">
+                <i class="fa-solid fa-leaf" style="color: var(--color-primary);"></i> {{ 'LANDS.ABOUT_LAND' | translate }}
+            </h2>
+            <div class="html-content" style="font-size: 1.1rem; line-height: 1.8; color: #4a5568;" [innerHTML]="land.description || ('LANDS.NO_DESCRIPTION' | translate)"></div>
+          </section>
+
+          <!-- ESTADÍSTICAS DEL TERRENO (ABAJO) -->
+          <section style="background: #f8fafc; border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(0,0,0,0.05);">
+            <h3 style="margin-top: 0; margin-bottom: 2rem; color: var(--color-text-dark); font-weight: 700; font-size: 1.6rem; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-chart-simple" style="color: var(--color-primary);"></i>{{ 'LANDS.LAND_STATS' | translate }}
             </h3>
             
-            <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="color: var(--color-text-light);"><i class="fa-solid fa-ruler-combined"></i> {{ 'LANDS.AREA' | translate }}</span>
-              <span style="font-weight: bold; font-size: 1.1rem;">{{ land.area }} m²</span>
+            <div class="stats-horizontal-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                <div class="stat-item" style="display: flex; flex-direction: column; gap: 8px; padding: 1.5rem; border-radius: 16px; background: white; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+                  <span style="color: #64748b; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fa-solid fa-ruler-combined"></i> {{ 'LANDS.AREA' | translate }}</span>
+                  <span style="font-weight: 800; font-size: 1.5rem; color: #1e293b;">{{ land.area }} m²</span>
+                </div>
+                
+                <div class="stat-item" style="display: flex; flex-direction: column; gap: 8px; padding: 1.5rem; border-radius: 16px; background: white; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+                  <span style="color: #64748b; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fa-solid fa-tree"></i> {{ 'LANDS.CAPACITY' | translate }}</span>
+                  <span style="font-weight: 800; font-size: 1.5rem; color: #1e293b;">{{ land.maxTrees }} {{ 'LANDS.TREES' | translate }}</span>
+                </div>
+                
+                <div class="stat-item" style="display: flex; flex-direction: column; gap: 8px; padding: 1.5rem; border-radius: 16px; background: white; border: 1px solid rgba(var(--color-primary-rgb), 0.1); box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.05);">
+                  <span style="color: #64748b; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fa-solid fa-seedling"></i> {{ 'LANDS.PLANTED' | translate }}</span>
+                  <span style="font-weight: 800; font-size: 1.5rem; color: var(--color-primary);">{{ land.trees?.length || 0 }} {{ 'LANDS.TREES' | translate }}</span>
+                </div>
             </div>
-            
-            <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="color: var(--color-text-light);"><i class="fa-solid fa-tree"></i> {{ 'LANDS.CAPACITY' | translate }}</span>
-              <span style="font-weight: bold; font-size: 1.1rem;">{{ land.maxTrees }} {{ 'LANDS.TREES' | translate }}</span>
+          </section>
+        </div>
+        
+        <!-- COLUMNA DERECHA: PLANTACIONES PREVISTAS -->
+        <div class="side-info">
+          <!-- CARD DE LOCALIZACIÓN (MAPA) -->
+          <section *ngIf="land.coordinates && land.coordinates.length >= 3" style="margin-bottom: 3rem;">
+            <h2 style="color: #2C3E50; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 1.6rem; font-weight: 700;">
+              <i class="fa-solid fa-map" style="color: var(--color-primary);"></i> {{ 'LAND_DETAIL.LOCATION_MAP' | translate }}
+            </h2>
+            <div class="glass-card" style="padding: 0; overflow: hidden; height: 350px; border-radius: 20px;">
+              <div id="map" style="height: 100%; width: 100%; z-index: 1;"></div>
             </div>
+          </section>
+
+          <section *ngIf="plannedPlantations.length > 0" style="position: sticky; top: 2rem;">
+            <h2 style="color: #2C3E50; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 1.6rem; font-weight: 700;">
+              <i class="fa-solid fa-calendar-check" style="color: var(--color-primary);"></i> {{ 'ADMIN_PLANNED_PLANTATIONS.TITLE' | translate }}
+            </h2>
             
-            <div class="stat-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-              <span style="color: var(--color-text-light);"><i class="fa-solid fa-seedling"></i> {{ 'LANDS.PLANTED' | translate }}</span>
-              <span style="font-weight: bold; font-size: 1.1rem; color: var(--color-primary);">{{ land.trees?.length || 0 }} {{ 'LANDS.TREES' | translate }}</span>
+            <div class="planned-plantations-stack" style="display: flex; flex-direction: column; gap: 1.5rem;">
+               <div *ngFor="let pp of plannedPlantations" class="pp-card" style="background: white; border-radius: 20px; border: 1px solid rgba(0,0,0,0.08); padding: 1.8rem; box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: all 0.3s ease;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div style="background: rgba(var(--color-primary-rgb), 0.1); color: var(--color-primary); padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+                        {{ 'PLANNED_PLANTATION.ACTIVE' | translate }}
+                    </div>
+                  </div>
+
+                  <div style="margin-bottom: 1.5rem;">
+                    <span style="display: block; font-size: 0.9rem; color: var(--color-text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 600;">{{ 'PLANNED_PLANTATION.PLANNED_DATE' | translate }}</span>
+                    <span style="font-size: 1.6rem; font-weight: 800; color: #2C3E50; display: block;">{{ pp.plannedDate | date:'MMMM yyyy' | titlecase }}</span>
+                  </div>
+
+                  <div *ngIf="pp.treeTypeName" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; padding: 12px; background: #f8fafc; border-radius: 12px;">
+                    <i class="fa-solid fa-tree-deciduous" style="color: var(--color-primary); font-size: 1.2rem;"></i>
+                    <div style="display: flex; flex-direction: column;">
+                      <span style="font-size: 0.65rem; color: var(--color-text-light); text-transform: uppercase; font-weight: 700;">{{ 'PLANNED_PLANTATION.TREE_TYPE' | translate }}</span>
+                      <span style="font-size: 1rem; font-weight: 700; color: #2C3E50;">{{ pp.treeTypeName }}</span>
+                    </div>
+                  </div>
+
+                  <div class="target-stats" style="margin-bottom: 2rem;">
+                     <span style="display: block; font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; font-weight: 700;">{{ 'PLANNED_PLANTATION.TREES_TITLE' | translate }}</span>
+                     <div class="stats-row" style="display: flex; justify-content: space-between; gap: 10px;">
+                        <div style="flex:1; background: #f8fafc; padding: 12px 5px; border-radius: 12px; text-align: center;">
+                            <span style="display: block; font-size: 1.1rem; font-weight: 700;">{{ pp.minTrees }}</span>
+                            <span style="display: block; font-size: 0.6rem; color: var(--color-text-light); text-transform: uppercase;">{{ 'PLANNED_PLANTATION.MIN_TREES' | translate }}</span>
+                        </div>
+                        <div style="flex:1; background: rgba(var(--color-primary-rgb), 0.08); border: 1px solid rgba(var(--color-primary-rgb), 0.2); padding: 12px 5px; border-radius: 12px; text-align: center;">
+                            <span style="display: block; font-size: 1.1rem; font-weight: 800; color: var(--color-primary);">{{ pp.optimalTrees }}</span>
+                            <span style="display: block; font-size: 0.6rem; color: var(--color-primary); text-transform: uppercase; font-weight: 700;">{{ 'PLANNED_PLANTATION.OPTIMAL_TREES' | translate }}</span>
+                        </div>
+                        <div style="flex:1; background: #f8fafc; padding: 12px 5px; border-radius: 12px; text-align: center;">
+                            <span style="display: block; font-size: 1.1rem; font-weight: 700;">{{ pp.maxTrees }}</span>
+                            <span style="display: block; font-size: 0.6rem; color: var(--color-text-light); text-transform: uppercase;">{{ 'PLANNED_PLANTATION.MAX_TREES' | translate }}</span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <a [routerLink]="['/my-trees/purchase']" [queryParams]="{ plantationId: pp.id }" class="btn btn-primary" style="width: 100%; padding: 1.2rem; font-size: 1rem; border-radius: 16px; font-weight: 700; box-shadow: 0 10px 25px rgba(var(--color-primary-rgb), 0.3); text-decoration: none; display: block; text-align: center;">
+                      {{ 'LANDS.PLANT_HERE' | translate }}
+                  </a>
+               </div>
             </div>
-            
-            <button [disabled]="land.isFull" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
-              {{ land.isFull ? ('LANDS.FULL_BUTTON' | translate) : ('LANDS.PLANT_HERE' | translate) }}
-            </button>
+          </section>
+
+          <!-- Empty State for Sidebar (optional) -->
+          <div *ngIf="plannedPlantations.length === 0" class="glass-card" style="padding: 2rem; text-align: center; color: var(--color-text-light); border: 1px dashed rgba(0,0,0,0.1); background: transparent;">
+             <i class="fa-solid fa-seedling" style="font-size: 2rem; opacity: 0.3; margin-bottom: 10px;"></i>
+             <p style="font-size: 0.9rem;">{{ 'PLANNED_PLANTATION.EMPTY_LIST' | translate }}</p>
           </div>
         </div>
         

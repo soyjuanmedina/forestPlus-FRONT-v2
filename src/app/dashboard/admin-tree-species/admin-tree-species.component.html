@@ -2,51 +2,49 @@
   <div class="page-header d-flex justify-content-between align-items-center">
     <div>
       <h1>{{ 'MENU.ADMIN.TREE_SPECIES' | translate }}</h1>
-      <p>{{ 'Maneja las diferentes especies de árboles disponibles' }}</p>
+      <p>{{ 'TREE_SPECIES.SUBTITLE' | translate }}</p>
     </div>
     <button (click)="openNew()" class="btn btn-primary">
-      <i class="fas fa-plus"></i> Nueva Especie
+       {{ 'TREE_SPECIES.NEW_TITLE' | translate }}
     </button>
   </div>
 
-  <div class="users-table-container glass" *ngIf="!loading">
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>{{ 'TREE_SPECIES.NAME' | translate }}</th>
-          <th>{{ 'TREE_SPECIES.SCIENTIFIC_NAME' | translate }}</th>
-          <th>{{ 'COMMON.ACTIONS' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let s of treeSpecies">
-          <td>{{ s.id }}</td>
-          <td>
-             <div style="display: flex; align-items: center; gap: 10px;">
-                <img *ngIf="s.picture" [src]="s.picture" alt="img" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
-                <span>{{ s.name }}</span>
-             </div>
-          </td>
-          <td>{{ s.scientificName || '-' }}</td>
-          <td>
-            <div class="action-buttons">
-              <button (click)="editSpecies(s)" class="btn-icon" [title]="'COMMON.EDIT' | translate">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button (click)="deleteSpecies(s.id)" class="btn-icon btn-delete" [title]="'COMMON.DELETE' | translate">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-        <tr *ngIf="treeSpecies.length === 0">
-          <td colspan="4" class="text-center" style="padding: 2rem;">
-            No hay especies registradas.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>{{ 'ADMIN_PAGE.LOADING' | translate }}</p>
+  </div>
+
+  <div class="species-grid" *ngIf="!loading">
+    <div *ngFor="let s of treeSpecies" class="species-card">
+      <div class="species-image" [style.backgroundImage]="s.picture ? 'url(' + s.picture + ')' : ''" 
+           style="display: flex; align-items: center; justify-content: center; height: 180px; background-size: cover; background-position: center;">
+        <i *ngIf="!s.picture" class="fa-solid fa-image" style="font-size: 3rem; color: var(--color-primary); opacity: 0.2;"></i>
+      </div>
+      <div class="species-info">
+        <h3>{{ s.name }}</h3>
+        <p class="scientific-name">{{ s.scientificName || '-' }}</p>
+        
+        <div class="species-stats">
+          <span [title]="'Absorción CO2'"><i class="fas fa-cloud-download-alt"></i> {{ s.co2AbsorptionAt20 || 0 }}kg</span>
+          <span [title]="'Altura típica'"><i class="fas fa-arrows-alt-v"></i> {{ s.typicalHeight || 0 }}m</span>
+        </div>
+
+        <div class="card-actions">
+          <button (click)="editSpecies(s)" class="btn btn-secondary btn-sm">
+            {{ 'COMMON.EDIT' | translate }}
+          </button>
+          <button (click)="deleteSpecies(s.id)" class="btn btn-danger btn-sm">
+            {{ 'COMMON.DELETE' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="treeSpecies.length === 0" class="glass-card text-center" style="grid-column: 1 / -1; padding: 4rem;">
+      <i class="fa-solid fa-seedling" style="font-size: 3rem; color: var(--color-primary); opacity: 0.3; margin-bottom: 1rem;"></i>
+      <p>{{ 'TREE_SPECIES.EMPTY_LIST' | translate }}</p>
+    </div>
   </div>
 
   <!-- Formulario Modal -->
@@ -81,14 +79,30 @@
       </div>
 
       <div class="form-group">
-        <label>URL Imagen</label>
-        <input type="text" class="form-control" [(ngModel)]="editingSpecies.picture">
+        <label>{{ 'LAND_MODAL.IMAGE_PREVIEW' | translate }}</label>
+        <div class="image-preview-container" style="margin-bottom: 20px; text-align: center; position: relative;">
+          <!-- Preview de Especie -->
+          <div style="width: 100%; height: 180px; border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); background: #f1f8e9; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">
+            <img *ngIf="editingSpecies.picture" [src]="editingSpecies.picture" style="width: 100%; height: 100%; object-fit: cover;">
+            <div *ngIf="!editingSpecies.picture" style="color: #4caf50; opacity: 0.5; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+              <i class="fa-solid fa-seedling" style="font-size: 3rem;"></i>
+              <span style="font-size: 0.8rem; font-weight: 600;">{{ 'TREE_SPECIES.NO_PICTURE' | translate }}</span>
+            </div>
+          </div>
+          
+          <div style="margin-top: 15px;">
+            <input type="file" #fileInputSpecies style="display: none" (change)="onFileSelected($event)" accept="image/*">
+            <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 8px 18px; display: flex; align-items: center; gap: 8px; margin: 0 auto;" (click)="fileInputSpecies.click()">
+               {{ 'USER.SELECT_IMAGE' | translate }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="modal-actions">
         <button (click)="cancelEdit()" class="btn btn-secondary">{{ 'COMMON.CANCEL' | translate }}</button>
-        <button (click)="saveSpecies()" class="btn btn-primary" [disabled]="!editingSpecies.name">
-          {{ isNew ? ('TREE_SPECIES.CREATE' | translate) : ('COMMON.EDIT' | translate) }}
+        <button (click)="saveSpecies()" class="btn btn-primary" [disabled]="!isModified()">
+          {{ isNew ? ('TREE_SPECIES.CREATE' | translate) : ('COMMON.SAVE' | translate) }}
         </button>
       </div>
     </div>

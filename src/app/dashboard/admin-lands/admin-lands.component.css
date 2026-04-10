@@ -73,17 +73,54 @@
 .card-actions {
   display: flex;
   gap: 10px;
+  justify-content: flex-end; /* Alineados a la derecha */
+}
+ 
+.badge-success {
+    background: rgba(105, 210, 145, 0.1);
+    color: var(--color-primary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-warning {
+    background: rgba(255, 159, 67, 0.1);
+    color: #ff9f43;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
 .btn-sm {
-  padding: 6px 14px;
+  padding: 6px 18px;
   font-size: 0.8rem;
+  border-radius: 50px; /* Redondeados */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary {
+    background: rgba(105, 210, 145, 0.08);
+    color: var(--color-primary);
+    border: 1px solid rgba(105, 210, 145, 0.4);
+}
+
+.btn-secondary:hover {
+    background: var(--color-primary);
+    color: #fff;
 }
 
 .btn-danger {
   background: rgba(255,71,87,0.08);
   color: #ff4757;
-  border: 1px solid rgba(255,71,87,0.3);
+  border: 1px solid rgba(255,71,87,0.4);
 }
 
 .btn-danger:hover {
@@ -95,23 +132,26 @@
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.2s ease;
+  overflow-y: auto;
+  padding: 40px 20px;
 }
 
 .modal-card {
   width: 100%;
-  max-width: 550px;
+  max-width: 650px;
   padding: 35px;
   background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
-  animation: slideUp 0.3s ease;
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  animation: slideUp 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .modal-card h3 {
@@ -152,10 +192,10 @@ textarea.form-control {
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,0.06);
+  gap: 20px;
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(0,0,0,0.08);
 }
 
 /* Loading */
@@ -190,3 +230,63 @@ textarea.form-control {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Coordinadas */
+.coordinades-section {
+  background: rgba(0,0,0,0.02);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.05);
+  margin-bottom: 25px;
+}
+
+.coordinate-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+.coordinate-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.coord-input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coord-input span {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+}
+
+.form-control.sm {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  height: auto;
+}
+
+.btn-icon-danger {
+  background: none;
+  border: none;
+  color: #ff4757;
+  padding: 10px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.btn-icon-danger:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+

@@ -17,8 +17,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AdminLandsComponent implements OnInit {
   lands: any[] = [];
   loading = true;
-  editingLand: any = null;
+  private _editingLand: any = null;
+  private _originalLand: any = null;
   isNew = false;
+
+  get editingLand() { return this._editingLand; }
+  set editingLand(val: any) {
+    this._editingLand = val;
+    if (val) document.body.classList.add('modal-open');
+    else document.body.classList.remove('modal-open');
+  }
 
   statusModal = {
     visible: false,
@@ -42,6 +50,10 @@ export class AdminLandsComponent implements OnInit {
     this.loadLands();
   }
 
+  ngOnDestroy() {
+    document.body.classList.remove('modal-open');
+  }
+
   loadLands() {
     this.adminService.getLands().subscribe({
       next: (data) => {
@@ -57,19 +69,28 @@ export class AdminLandsComponent implements OnInit {
 
   openNew() {
     this.isNew = true;
+    this._originalLand = null;
     this.editingLand = {
       name: '',
       description: '',
       location: '',
       area: 0,
       maxTrees: 1000,
-      picture: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800'
+      picture: '',
+      coordinates: []
     };
   }
 
   editLand(land: any) {
     this.isNew = false;
-    this.editingLand = { ...land };
+    this._originalLand = { ...land, coordinates: [...(land.coordinates || [])] };
+    this.editingLand = { ...land, coordinates: [...(land.coordinates || [])] };
+  }
+
+  isModified(): boolean {
+    if (this.isNew) return true;
+    if (!this._originalLand || !this.editingLand) return false;
+    return JSON.stringify(this.editingLand) !== JSON.stringify(this._originalLand);
   }
 
   cancelEdit() {
@@ -77,6 +98,8 @@ export class AdminLandsComponent implements OnInit {
   }
 
   saveLand() {
+    this.editingLand.picture = this.ensureBase64Prefix(this.editingLand.picture);
+    
     const action = this.isNew 
       ? this.adminService.createLand(this.editingLand)
       : this.adminService.updateLand(this.editingLand.id, this.editingLand);
@@ -129,5 +152,43 @@ export class AdminLandsComponent implements OnInit {
 
   cancelDelete() {
     this.confirmModal.visible = false;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > 1 * 1024 * 1024) {
+        this.showStatus('error', 'Error', 'El archivo es demasiado grande (máx 1MB)');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.editingLand.picture = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  private ensureBase64Prefix(picture: string): string {
+    if (!picture || picture.startsWith('http') || picture.startsWith('data:')) {
+      return picture;
+    }
+    // Si parece base64 (sin espacios y de longitud mínima), añadimos el prefijo PNG por defecto
+    if (!picture.includes(' ') && picture.length > 30) {
+      return `data:image/png;base64,${picture}`;
+    }
+    return picture;
+  }
+ 
+  addCoordinate() {
+    if (!this.editingLand.coordinates) {
+      this.editingLand.coordinates = [];
+    }
+    this.editingLand.coordinates.push({ latitude: 0, longitude: 0 });
+  }
+ 
+  removeCoordinate(index: number) {
+    this.editingLand.coordinates.splice(index, 1);
   }
 }
