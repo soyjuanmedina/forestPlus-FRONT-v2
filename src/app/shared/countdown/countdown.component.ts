@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,12 +11,14 @@ import { LoopsService } from '../../services/loops.service';
 @Component({
   selector: 'app-countdown',
   standalone: true,
-  imports: [CommonModule, TranslateModule, FormsModule],
+  imports: [CommonModule, TranslateModule, FormsModule, RouterModule],
   template: `
     <div class="countdown-overlay">
       <div class="countdown-card glass-card">
         <div class="logo-area">
-          <img src="assets/logo_forestplus_color.png" alt="forest+" class="logo-anim">
+          <a routerLink="/">
+            <img src="assets/logo_forestplus_color.png" alt="forest+" class="logo-anim">
+          </a>
         </div>
         
         <h2>{{ 'COUNTDOWN.TITLE' | translate }}</h2>
@@ -54,6 +57,12 @@ import { LoopsService } from '../../services/loops.service';
             <p>{{ 'COUNTDOWN.SUCCESS_MSG' | translate }}</p>
           </div>
         </div>
+
+        <div class="footer-actions">
+           <a routerLink="/" class="back-link">
+             <i class="fa-solid fa-arrow-left"></i> {{ 'COMMON.BACK' | translate }}
+           </a>
+        </div>
       </div>
     </div>
   `,
@@ -85,11 +94,14 @@ import { LoopsService } from '../../services/loops.service';
     .number { font-size: 3rem; font-weight: 800; color: var(--color-primary); line-height: 1; }
     .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-light); margin-top: 0.5rem; }
     .timer-divider { font-size: 2rem; font-weight: 300; color: var(--color-border); margin-bottom: 1.5rem; }
-    .access-info { border-top: 1px solid var(--color-border); padding-top: 2rem; }
+    .access-info { border-top: 1px solid var(--color-border); padding-top: 2rem; margin-bottom: 2rem; }
     .email-input { display: flex; gap: 10px; max-width: 400px; margin: 15px auto 0; background: white; padding: 6px; border-radius: 50px; border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); }
     .email-input input { border: none; padding: 0 20px; flex: 1; outline: none; background: transparent; }
     .success-message { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--color-primary); font-weight: 600; padding: 1rem; }
     .success-message i { font-size: 2rem; }
+    .footer-actions { border-top: 1px dotted var(--color-border); padding-top: 1.5rem; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--color-text-light); text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
+    .back-link:hover { color: var(--color-primary); transform: translateX(-5px); }
   `]
 })
 export class CountdownComponent implements OnInit, OnDestroy {

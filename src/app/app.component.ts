@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterModule } from '@angular/router';
+import { RouterOutlet, RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { CountdownComponent } from './shared/countdown/countdown.component';
@@ -55,6 +54,13 @@ export class AppComponent {
   }
 
   ngOnInit () {
+    // Escuchar cambios de ruta para actualizar el countdown
+    this.router.events.pipe(
+      filter( event => event instanceof NavigationEnd )
+    ).subscribe( () => {
+      this.checkLaunch();
+    } );
+
     this.checkLaunch();
     this.userSub = this.authService.currentUser$.subscribe( user => {
       // Si estamos en la home ('/') y el usuario se loguea, redirigir a dashboard
@@ -88,7 +94,15 @@ export class AppComponent {
   }
 
   private checkLaunch() {
-    this.showCountdown = Date.now() < this.launchDate.getTime();
+    const isPending = Date.now() < this.launchDate.getTime();
+    
+    // Check if we are on login, register or related auth pages
+    // Using includes to catch variants if any, but specifically targeting /login and /register
+    const isAuthPage = this.router.url.includes('/login') || this.router.url.includes('/register');
+
+    // Mostramos countdown solo si es fecha futura Y estamos en una página de autenticación.
+    // Esto permite que el componente Home (landing) sea accesible siempre.
+    this.showCountdown = isPending && isAuthPage;
     
     // El banner se muestra en cualquier entorno que no sea producción
     this.showEnvBanner = !environment.production;
