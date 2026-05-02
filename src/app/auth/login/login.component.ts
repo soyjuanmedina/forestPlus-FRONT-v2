@@ -5,11 +5,12 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
+import { RequestAccessComponent } from '../../shared/request-access/request-access.component';
 
 @Component( {
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, RequestAccessComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 } )

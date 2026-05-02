@@ -1,3 +1,10 @@
+
+.footer-actions { border-top: 1px dotted var(--color-border); padding-top: 1.5rem; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--color-text-light); text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
+.back-link:hover { color: var(--color-primary); transform: translateX(-5px); }
+    
+    
+    
 .auth-container {
   width: 100%;
   max-width: 480px;
@@ -66,6 +73,8 @@
   color: var(--color-primary-hover);
   text-decoration: underline;
 }
+
+
 
 /* Response for mobile */
 @media (max-width: 576px) {

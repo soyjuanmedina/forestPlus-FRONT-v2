@@ -165,7 +165,10 @@
     "NO_ACCOUNT": "¿No tienes cuenta?",
     "REGISTER": "Regístrate",
     "EMAIL_NOT_VERIFIED": "El email no ha sido verificado",
-    "EMAIL_ALREADY_EXISTS": "El email ya existe en nuestra aplicación. Prueba a iniciar sesión"
+    "EMAIL_ALREADY_EXISTS": "El email ya existe en nuestra aplicación. Prueba a iniciar sesión",
+    "REQUEST_ACCESS_INFO": "El registro directo está cerrado temporalmente. Si lo deseas, déjanos tu email y te contactaremos para crearte una cuenta.",
+    "REQUEST_BUTTON": "Solicitar cuenta",
+    "REQUEST_SUCCESS": "¡Recibido! Te contactaremos pronto."
   },
   "MENU": {
     "MENU": "Menú",
