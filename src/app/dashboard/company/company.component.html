@@ -1,0 +1,147 @@
+<div class="company-detail animate-fade-in">
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loader-container">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading && company" class="content-wrapper">
+    <!-- HERO SECTION -->
+    <header class="company-hero glass">
+      <div class="hero-main">
+        <div class="company-logo" [style.backgroundImage]="company.picture ? 'url(' + company.picture + ')' : ''">
+          <i *ngIf="!company.picture" class="fas fa-building"></i>
+        </div>
+        <div class="company-info">
+          <h1>{{ company.name }}</h1>
+          <p class="address"><i class="fas fa-location-dot"></i> {{ company.address || 'Ubicación no especificada' }}</p>
+        </div>
+      </div>
+      
+      <div class="hero-actions">
+        <button (click)="openAssignModal()" class="btn btn-primary">
+          <i class="fas fa-tree"></i> {{ 'ASSIGN_TREES.ASSIGN' | translate }}
+        </button>
+        <button [routerLink]="['/company/form', company.id]" class="btn btn-outline">
+          <i class="fas fa-edit"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- KPI GRID -->
+    <div class="kpi-grid">
+      <div class="kpi-card glass animate-slide-up" style="animation-delay: 0.1s;">
+        <div class="kpi-icon total"><i class="fas fa-tree"></i></div>
+        <div class="kpi-content">
+          <span class="kpi-value">{{ stats.totalTrees }}</span>
+          <span class="kpi-label">Árboles Plantados</span>
+        </div>
+      </div>
+
+      <div class="kpi-card glass animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="kpi-icon co2"><i class="fas fa-cloud-arrow-down"></i></div>
+        <div class="kpi-content">
+          <span class="kpi-value">{{ stats.totalCo2 | number }}</span>
+          <span class="kpi-label">Kg CO₂ Compensados (Total)</span>
+        </div>
+      </div>
+
+      <div class="kpi-card glass animate-slide-up" style="animation-delay: 0.3s;">
+        <div class="kpi-icon users"><i class="fas fa-users"></i></div>
+        <div class="kpi-content">
+          <span class="kpi-value">{{ company.users?.length || 0 }}</span>
+          <span class="kpi-label">Miembros en la plataforma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPACT SECTION -->
+    <section class="impact-section glass animate-fade-in" style="animation-delay: 0.4s;">
+      <div class="section-title">
+        <h2>Impacto Ambiental Consolidado</h2>
+        <p>Equivalencia de la reforestación corporativa de {{ company.name }}</p>
+      </div>
+      
+      <div class="equivalence-grid">
+        <div class="eq-item">
+          <div class="eq-icon">🚗</div>
+          <div class="eq-data">
+            <span class="eq-val">{{ (stats.totalCo2 * 5) | number:'1.0-0' }} km</span>
+            <span class="eq-lab">Km en coche evitados</span>
+          </div>
+        </div>
+        <div class="eq-item">
+          <div class="eq-icon">✈️</div>
+          <div class="eq-data">
+            <span class="eq-val">{{ (stats.totalCo2 / 150) | number:'1.1-1' }}</span>
+            <span class="eq-lab">Vuelos Madrid-París</span>
+          </div>
+        </div>
+        <div class="eq-item">
+          <div class="eq-icon">🏠</div>
+          <div class="eq-data">
+            <span class="eq-val">{{ (stats.totalCo2 / 3500 * 100) | number:'1.1-1' }} %</span>
+            <span class="eq-lab">Consumo anual de un hogar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CO2 HISTORY -->
+    <section class="co2-history">
+      <div class="section-header">
+        <h2><i class="fas fa-chart-line"></i> Histórico de Huella de Carbono</h2>
+      </div>
+
+      <div *ngIf="co2Records.length === 0" class="empty-list glass">
+        <i class="fas fa-info-circle"></i>
+        <p>No hay registros históricos de CO₂ para esta empresa.</p>
+      </div>
+
+      <div *ngIf="co2Records.length > 0" class="co2-table-wrapper glass">
+        <table class="co2-table">
+          <thead>
+            <tr>
+              <th>Año</th>
+              <th>Emisiones</th>
+              <th>Compensado</th>
+              <th>Estado Neto</th>
+              <th>Progreso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of netCo2Records">
+              <td class="year-cell">{{ record.year }}</td>
+              <td class="val-red">{{ record.totalEmissions }} t</td>
+              <td class="val-green">{{ record.totalCompensations }} t</td>
+              <td>
+                <span class="badge" [class.badge-success]="record.net <= 0" [class.badge-danger]="record.net > 0">
+                  {{ record.net <= 0 ? 'NEUTRO' : '+' + (record.net | number:'1.1-2') + ' t' }}
+                </span>
+              </td>
+              <td class="progress-cell">
+                <div class="mini-bar-bg">
+                  <div class="mini-bar-fill" 
+                    [style.width.%]="record.totalEmissions ? (record.totalCompensations! / record.totalEmissions! * 100) : 0"
+                    [class.full]="(record.totalCompensations || 0) >= (record.totalEmissions || 1)">
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODALS -->
+  <app-assign-trees-modal 
+    *ngIf="showingAssignModal"
+    [companyId]="companyId"
+    (close)="closeAssignModal()"
+    (assigned)="onTreesAssigned($event)">
+  </app-assign-trees-modal>
+
+  <app-status-modal [visible]="statusModal.visible" [type]="statusModal.type"
+    [title]="statusModal.title" [message]="statusModal.message" (close)="closeStatus()">
+  </app-status-modal>
+</div>

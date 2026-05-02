@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { CompanyService } from '../../services/company.service';
 import { UserService } from '../../services/user.service';
 import { AdminService } from '../../services/admin.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -32,8 +33,11 @@ export class ProfileComponent implements OnInit {
     surname: '',
     secondSurname: '',
     role: 'USER',
-    receiveEmails: false
+    receiveEmails: false,
+    companyId: null as number | null
   };
+
+  companies: any[] = [];
 
   passwordForm = {
     currentPassword: '',
@@ -57,6 +61,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private adminService: AdminService,
+    private companyService: CompanyService,
     private treeService: TreeService,
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -88,6 +93,15 @@ export class ProfileComponent implements OnInit {
         this.showStatus( 'error', 'Seguridad', this.translate.instant( 'PROFILE.MUST_CHANGE_NOTICE' ) );
       }
     } );
+
+    this.loadCompanies();
+  }
+
+  loadCompanies() {
+    this.companyService.getAllCompanies().subscribe({
+      next: (data) => this.companies = data,
+      error: (err) => console.error('Error cargando compañías:', err)
+    });
   }
 
   toggleEdit () {
@@ -98,18 +112,24 @@ export class ProfileComponent implements OnInit {
         surname: this.user.surname || '',
         secondSurname: this.user.secondSurname || '',
         role: this.user.role || 'USER',
-        receiveEmails: this.user.receiveEmails || false
+        receiveEmails: this.user.receiveEmails || false,
+        companyId: this.user.company?.id || null
       };
     }
   }
 
   saveProfile () {
+    if (this.isAdminEditing && !this.shouldShowCompanySelector()) {
+      this.editForm.companyId = null;
+    }
+
     const payload = {
       name: this.editForm.name,
       surname: this.editForm.surname,
       secondSurname: this.editForm.secondSurname,
       role: this.editForm.role as any,
       receiveEmails: this.editForm.receiveEmails,
+      companyId: this.editForm.companyId,
       picture: this.user?.picture
     };
 
@@ -202,6 +222,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  shouldShowCompanySelector(): boolean {
+    const role = this.editForm.role;
+    return role === 'COMPANY_ADMIN' || role === 'COMPANY_USER';
+  }
+
   private loadAdminUser ( id: number ) {
     this.adminService.getUserById( id ).subscribe( {
       next: ( user ) => {
@@ -223,7 +248,8 @@ export class ProfileComponent implements OnInit {
         surname: user.surname || '',
         secondSurname: user.secondSurname || '',
         role: user.role || 'USER',
-        receiveEmails: user.receiveEmails || false
+        receiveEmails: user.receiveEmails || false,
+        companyId: user.company?.id || null
       };
     }
   }

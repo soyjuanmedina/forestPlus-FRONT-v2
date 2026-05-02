@@ -9,6 +9,8 @@ import { LandsComponent } from './lands/lands.component';
 import { AdminUsersComponent } from './dashboard/admin-users/admin-users.component';
 import { AdminLandsComponent } from './dashboard/admin-lands/admin-lands.component';
 import { AdminTreeSpeciesComponent } from './dashboard/admin-tree-species/admin-tree-species.component';
+import { AdminCompaniesComponent } from './dashboard/admin-companies/admin-companies.component';
+import { CompanyComponent } from './dashboard/company/company.component';
 
 import { authGuard } from './auth.guard';
 import { adminGuard } from './admin.guard';
@@ -30,11 +32,11 @@ export const routes: Routes = [
   { path: 'admin/users', component: AdminUsersComponent, canActivate: [authGuard, adminGuard] },
   { path: 'admin/lands', component: AdminLandsComponent, canActivate: [authGuard, adminGuard] },
   { path: 'admin/tree-species', component: AdminTreeSpeciesComponent, canActivate: [authGuard, adminGuard] },
-  { path: 'admin/companies', loadComponent: () => import( './dashboard/admin-companies/admin-companies.component' ).then( c => c.AdminCompaniesComponent ), canActivate: [authGuard, adminGuard] },
+  { path: 'admin/companies', component: AdminCompaniesComponent, canActivate: [authGuard, adminGuard] },
   { path: 'admin/tree-types', loadComponent: () => import( './dashboard/admin-tree-types/admin-tree-types.component' ).then( c => c.AdminTreeTypesComponent ), canActivate: [authGuard, adminGuard] },
   { path: 'admin/planned-plantations', loadComponent: () => import( './dashboard/admin-planned-plantations/admin-planned-plantations.component' ).then( c => c.AdminPlannedPlantationsComponent ), canActivate: [authGuard, adminGuard] },
-  { path: 'company', loadComponent: () => import( './dashboard/company/company.component' ).then( c => c.CompanyComponent ), canActivate: [authGuard] },
-  { path: 'company/:id', loadComponent: () => import( './dashboard/company/company.component' ).then( c => c.CompanyComponent ), canActivate: [authGuard] },
+  { path: 'company', component: CompanyComponent, canActivate: [authGuard] },
+  { path: 'company/:id', component: CompanyComponent, canActivate: [authGuard] },
   { path: 'company/form/:id', loadComponent: () => import( './dashboard/company/company-form/company-form.component' ).then( c => c.CompanyFormComponent ), canActivate: [authGuard, adminGuard] },
   { path: 'tree-type/:id', loadComponent: () => import( './dashboard/tree-type/tree-type.component' ).then( c => c.TreeTypeComponent ), canActivate: [authGuard] },
   { path: 'tree-type/form/:id', loadComponent: () => import( './dashboard/tree-type/tree-form/tree-form.component' ).then( c => c.TreeFormComponent ), canActivate: [authGuard] },

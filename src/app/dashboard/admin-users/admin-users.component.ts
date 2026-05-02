@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
+import { CompanyService } from '../../services/company.service';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
 import { Router } from '@angular/router';
@@ -28,9 +29,11 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   searchQuery = '';
   private searchSubject = new Subject<string>();
   
-  private _editingUser: any = null;
+  _editingUser: any = null;
   private _originalUser: any = null;
   isNew = false;
+  
+  companies: any[] = [];
   
   get editingUser() { return this._editingUser; }
   set editingUser(val: any) {
@@ -56,6 +59,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
   constructor (
     private adminService: AdminService,
+    private companyService: CompanyService,
     private router: Router,
     private translate: TranslateService
   ) { 
@@ -70,6 +74,14 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this.loadUsers();
+    this.loadCompanies();
+  }
+
+  loadCompanies() {
+    this.companyService.getAllCompanies().subscribe({
+      next: (data) => this.companies = data,
+      error: (err) => console.error('Error cargando compañías:', err)
+    });
   }
 
   loadUsers () {
@@ -137,6 +149,11 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
   saveUser () {
     if ( this.editingUser ) {
+      // Limpiar companyId si el rol no lo requiere
+      if (!this.shouldShowCompanySelector()) {
+        this.editingUser.companyId = null;
+      }
+
       if ( this.editingUser.picture ) {
         this.editingUser.picture = this.ensureBase64Prefix( this.editingUser.picture );
       }
@@ -232,5 +249,11 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       return `data:image/png;base64,${picture}`;
     }
     return picture;
+  }
+
+  shouldShowCompanySelector(): boolean {
+    if (!this.editingUser) return false;
+    const role = this.editingUser.role;
+    return role === 'COMPANY_ADMIN' || role === 'COMPANY_USER';
   }
 }

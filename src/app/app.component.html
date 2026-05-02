@@ -10,14 +10,14 @@
 
   <!-- CONTENIDO DE LA APP -->
   <ng-template #appContent>
-    <div [class.dashboard-layout]="authService.currentUser$ | async" 
-         class="app-content-area"
-         *ngIf="authService.currentUser$ | async as user; else guestView">
+    <div [class.dashboard-layout]="authService.currentUser$ | async" class="app-content-area"
+      *ngIf="authService.currentUser$ | async as user; else guestView">
 
       <!-- Sidebar para usuarios logueados -->
       <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
         <a routerLink="/" class="sidebar-logo">
-          <img *ngIf="!sidebarCollapsed" src="assets/logo_forestplus_color.png" alt="forest+" style="height: 32px;">
+          <img *ngIf="!sidebarCollapsed" src="assets/logo_forestplus_color.png" alt="forest+"
+            style="height: 32px;">
           <img *ngIf="sidebarCollapsed" src="assets/icon.png" alt="forest+" style="height: 32px;">
         </a>
 
@@ -37,12 +37,20 @@
             <i class="fa-solid fa-map"></i>
             <span *ngIf="!sidebarCollapsed">{{ 'MENU.LANDS' | translate }}</span>
           </a>
+          <a *ngIf="user.company?.id" [routerLink]="['/company', user.company?.id]"
+            routerLinkActive="active" class="nav-item"
+            [attr.data-tooltip]="'MENU.MY_COMPANY' | translate">
+            <i class="fa-solid fa-building"></i>
+            <span *ngIf="!sidebarCollapsed">{{ 'MENU.MY_COMPANY' | translate }}</span>
+          </a>
 
           <!-- Sección de Admin (si aplica) -->
           <ng-container *ngIf="user.role === 'ADMIN' || user.role === 'COMPANY_ADMIN'">
-            <div class="nav-divider" style="height: 1px; background: var(--color-border); margin: 1rem 0;"></div>
-            
-            <div class="admin-label-container" [attr.data-tooltip]="sidebarCollapsed ? ('MENU.ADMIN.ADMIN' | translate) : null">
+            <div class="nav-divider"
+              style="height: 1px; background: var(--color-border); margin: 1rem 0;"></div>
+
+            <div class="admin-label-container"
+              [attr.data-tooltip]="sidebarCollapsed ? ('MENU.ADMIN.ADMIN' | translate) : null">
               <i class="fa-solid fa-shield-halved" style="font-size: 0.9rem;"></i>
               <span *ngIf="!sidebarCollapsed"
                 style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-text-light); letter-spacing: 1px; white-space: nowrap;">
@@ -59,6 +67,11 @@
               <i class="fa-solid fa-mountain-sun"></i>
               <span *ngIf="!sidebarCollapsed">{{ 'MENU.ADMIN.LANDS' | translate }}</span>
             </a>
+            <a routerLink="/admin/companies" routerLinkActive="active" class="nav-item"
+              [attr.data-tooltip]="'MENU.ADMIN.COMPANIES' | translate">
+              <i class="fa-solid fa-building"></i>
+              <span *ngIf="!sidebarCollapsed">{{ 'MENU.ADMIN.COMPANIES' | translate }}</span>
+            </a>
             <a routerLink="/admin/tree-species" routerLinkActive="active" class="nav-item"
               [attr.data-tooltip]="'MENU.ADMIN.TREE_SPECIES' | translate">
               <i class="fa-solid fa-leaf"></i>
@@ -67,14 +80,16 @@
             <a routerLink="/admin/planned-plantations" routerLinkActive="active" class="nav-item"
               [attr.data-tooltip]="'MENU.ADMIN.PLANNED_PLANTATIONS' | translate">
               <i class="fa-solid fa-tree-city"></i>
-              <span *ngIf="!sidebarCollapsed">{{ 'MENU.ADMIN.PLANNED_PLANTATIONS' | translate }}</span>
+              <span *ngIf="!sidebarCollapsed">{{ 'MENU.ADMIN.PLANNED_PLANTATIONS' | translate
+                }}</span>
             </a>
           </ng-container>
         </nav>
 
         <footer class="sidebar-footer">
-          <div class="nav-divider" style="height: 1px; background: var(--color-border); margin: 0.5rem 1rem;"></div>
-          
+          <div class="nav-divider"
+            style="height: 1px; background: var(--color-border); margin: 0.5rem 1rem;"></div>
+
           <a routerLink="/profile" routerLinkActive="active" class="nav-item"
             [attr.data-tooltip]="'MENU.PROFILE' | translate">
             <i class="fa-solid fa-user"></i>
@@ -142,7 +157,7 @@
               <button (click)="changeLang('en')" [class.active]="currentLang === 'en'">EN</button>
             </div>
             <a routerLink="/login" class="nav-link">{{ 'MENU.LOGIN' | translate }}</a>
-            <a routerLink="/register" class="btn btn-primary"
+            <a *ngIf="features.allowRegistration" routerLink="/register" class="btn btn-primary"
               style="padding: 8px 16px; font-size: 14px;">{{ 'MENU.REGISTER' | translate }}</a>
           </div>
         </div>

@@ -68,7 +68,17 @@
               <select name="role" [(ngModel)]="editForm.role" class="form-control">
                 <option value="USER">USER</option>
                 <option value="COMPANY_ADMIN">COMPANY_ADMIN</option>
+                <option value="COMPANY_USER">COMPANY_USER</option>
                 <option value="ADMIN">ADMIN</option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="isAdminEditing && shouldShowCompanySelector()">
+              <label>{{ 'USER.COMPANY_LABEL' | translate }}</label>
+              <select name="companyId" [(ngModel)]="editForm.companyId" class="form-control">
+                <option [ngValue]="null" disabled selected>{{ 'USER.SELECT_COMPANY' | translate }}</option>
+                <option *ngFor="let company of companies" [value]="company.id">
+                  {{ company.name }}
+                </option>
               </select>
             </div>
             <div class="form-group">
@@ -119,6 +129,10 @@
             <div class="detail-item" *ngIf="isAdminEditing">
               <span class="label">{{ 'USER.ROLE_LABEL' | translate }}</span>
               <span class="value">{{ user?.role }}</span>
+            </div>
+            <div class="detail-item" *ngIf="user?.company">
+              <span class="label">{{ 'USER.COMPANY_LABEL' | translate }}</span>
+              <span class="value">{{ user?.company?.name }}</span>
             </div>
             <div class="detail-item">
               <span class="label">{{ 'PROFILE.RECEIVE_EMAILS' | translate }}</span>

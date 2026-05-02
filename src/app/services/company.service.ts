@@ -46,7 +46,7 @@ export class CompanyService {
     );
   }
 
-  updateCompany ( id: number, payload: CompanyUpdateRequestDto ): Observable<CompanyResponseDto> {
+  updateCompany ( id: number, payload: any ): Observable<CompanyResponseDto> {
     return this.companyApi.updateCompany( id, payload ).pipe(
       tap( c => {
         if ( this.getCurrentCompany()?.id === c.id ) this.persist( c );

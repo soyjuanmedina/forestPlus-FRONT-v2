@@ -467,6 +467,11 @@
     "PLANTED": "Planted",
     "PLANT_HERE": "Plant here"
   },
+  "COMPANIES": {
+    "TITLE": "Companies",
+    "NEW_COMPANY": "New Company",
+    "EDIT_COMPANY": "Edit Company"
+  },
   "ADMIN_TREE_TYPES": {
     "CONFIRM_DELETE_TREE_TYPE": {
       "TITLE": "Delete tree type",
@@ -474,6 +479,10 @@
     },
     "TREE_TYPE_DELETED": "✅ Tree type deleted",
     "TREE_TYPE_DELETE_ERROR": "❌ Error deleting tree type"
+  },
+  "ADMIN_COMPANIES": {
+    "TITLE": "Company Management",
+    "SUBTITLE": "Manage companies associated with forest+"
   },
   "ADMIN_USERS": {
     "TITLE": "User Management",

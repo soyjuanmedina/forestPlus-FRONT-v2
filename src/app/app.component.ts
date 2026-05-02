@@ -15,14 +15,15 @@ import { CountdownComponent } from './shared/countdown/countdown.component';
   styleUrl: './app.component.css'
 } )
 export class AppComponent {
+  features = environment.features;
   title = 'forest+';
   private userSub: Subscription | undefined;
   currentLang: string;
   showCountdown: boolean = false;
   showEnvBanner: boolean = false;
   envName: string = environment.name || 'development';
-  envColor: string = (environment as any).envColor || '#ff9800';
-  launchDate: Date = new Date(environment.launchDate);
+  envColor: string = ( environment as any ).envColor || '#ff9800';
+  launchDate: Date = new Date( environment.launchDate );
   sidebarCollapsed: boolean = true;
 
   constructor (
@@ -93,22 +94,22 @@ export class AppComponent {
     }
   }
 
-  private checkLaunch() {
+  private checkLaunch () {
     const isPending = Date.now() < this.launchDate.getTime();
-    
+
     // Check if we are on login, register or related auth pages
     // Using includes to catch variants if any, but specifically targeting /login and /register
-    const isAuthPage = this.router.url.includes('/login') || this.router.url.includes('/register');
+    const isAuthPage = this.router.url.includes( '/login' ) || this.router.url.includes( '/register' );
 
     // Mostramos countdown solo si es fecha futura Y estamos en una página de autenticación.
     // Esto permite que el componente Home (landing) sea accesible siempre.
     this.showCountdown = isPending && isAuthPage;
-    
+
     // El banner se muestra en cualquier entorno que no sea producción
     this.showEnvBanner = !environment.production;
   }
 
-  toggleSidebar() {
+  toggleSidebar () {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 }

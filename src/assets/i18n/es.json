@@ -180,7 +180,7 @@
     "ADMIN": {
       "ADMIN": "Administración",
       "USERS": "Usuarios",
-      "COMPANIES": "Compañias",
+      "COMPANIES": "Compañías",
       "TREE_SPECIES": "Especies de árboles",
       "PLANNED_PLANTATIONS": "Plantaciones previstas",
       "TREES": "Árboles",
@@ -483,6 +483,11 @@
     "PLANTED": "Plantados",
     "PLANT_HERE": "Plantar aquí"
   },
+  "COMPANIES": {
+    "TITLE": "Compañías",
+    "NEW_COMPANY": "Nueva Compañía",
+    "EDIT_COMPANY": "Editar Compañía"
+  },
   "ADMIN_TREE_TYPES": {
     "CONFIRM_DELETE_TREE_TYPE": {
       "TITLE": "Eliminar tipo de árbol",
@@ -490,6 +495,10 @@
     },
     "TREE_TYPE_DELETED": "✅ Tipo de árbol eliminado",
     "TREE_TYPE_DELETE_ERROR": "❌ Error al eliminar tipo de árbol"
+  },
+  "ADMIN_COMPANIES": {
+    "TITLE": "Gestión de Compañías",
+    "SUBTITLE": "Administra las empresas asociadas a forest+"
   },
   "ADMIN_USERS": {
     "TITLE": "Gestión de Usuarios",

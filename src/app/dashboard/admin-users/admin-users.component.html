@@ -128,6 +128,17 @@
           <option value="USER">USER</option>
           <option value="ADMIN">ADMIN</option>
           <option value="COMPANY_ADMIN">COMPANY_ADMIN</option>
+          <option value="COMPANY_USER">COMPANY_USER</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="shouldShowCompanySelector()">
+        <label>{{ 'USER.COMPANY_LABEL' | translate }}</label>
+        <select [(ngModel)]="editingUser.companyId" class="form-control">
+          <option [ngValue]="null" disabled selected>{{ 'USER.SELECT_COMPANY' | translate }}</option>
+          <option *ngFor="let company of companies" [value]="company.id">
+            {{ company.name }}
+          </option>
         </select>
       </div>
 

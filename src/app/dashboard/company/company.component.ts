@@ -1,43 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AssignTreesModalComponent } from '../../modals/assign-trees-modal/assign-trees-modal.component';
+import { CompanyService } from '../../services/company.service';
+import { CompanyCo2Service } from '../../services/company-co2.service';
+import { CompanyResponseDto, CompanyCO2YearlyResponseDto, TreeControllerService, TreeResponseDto } from '../../api';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
+import { AssignTreesModalComponent } from '../../modals/assign-trees-modal/assign-trees-modal.component';
 import { TreeService } from '../../services/tree.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-company',
   standalone: true,
-  imports: [CommonModule, TranslateModule, AssignTreesModalComponent, StatusModalComponent],
-  template: `
-    <div class="p-8">
-      <h1 class="text-3xl font-bold mb-4">Company View</h1>
-      <p class="mb-8 text-gray-600">Próximamente: información de compañía y estadísticas de CO2.</p>
-
-      <button *ngIf="companyId" (click)="openAssignModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 text-white font-medium shadow-md hover:shadow-lg transition-all">
-        <i class="fa-solid fa-tree mr-2"></i> {{ 'ASSIGN_TREES.ASSIGN' | translate }}
-      </button>
-    </div>
-
-    <!-- Modal Asignar Árboles -->
-    <app-assign-trees-modal 
-      *ngIf="showingAssignModal"
-      [companyId]="companyId"
-      (close)="closeAssignModal()"
-      (assigned)="onTreesAssigned($event)">
-    </app-assign-trees-modal>
-
-    <!-- Modal Estado -->
-    <app-status-modal [visible]="statusModal.visible" [type]="statusModal.type"
-      [title]="statusModal.title" [message]="statusModal.message" (close)="closeStatus()">
-    </app-status-modal>
-  `
+  imports: [CommonModule, TranslateModule, RouterModule, StatusModalComponent, AssignTreesModalComponent],
+  templateUrl: './company.component.html',
+  styleUrl: './company.component.css'
 })
 export class CompanyComponent implements OnInit {
-  companyId?: number;
-  showingAssignModal = false;
+  private route = inject(ActivatedRoute);
+  private companyService = inject(CompanyService);
+  private companyCo2Service = inject(CompanyCo2Service);
+  private treeApi = inject(TreeControllerService);
+  private treeService = inject(TreeService);
+  private translate = inject(TranslateService);
 
+  companyId?: number;
+  company?: CompanyResponseDto;
+  trees: TreeResponseDto[] = [];
+  co2Records: CompanyCO2YearlyResponseDto[] = [];
+  loading = true;
+
+  // KPIs calculados localmente
+  stats = {
+    totalTrees: 0,
+    totalCo2: 0
+  };
+
+  showingAssignModal = false;
   statusModal = {
     visible: false,
     type: 'success' as 'success' | 'error',
@@ -45,17 +46,50 @@ export class CompanyComponent implements OnInit {
     message: ''
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private treeService: TreeService,
-    private translate: TranslateService
-  ) {}
-
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
         this.companyId = Number(idParam);
+        this.loadAllData(this.companyId);
+      } else {
+        this.loading = false;
+      }
+    });
+  }
+
+  loadAllData(id: number) {
+    this.loading = true;
+    
+    forkJoin({
+      company: this.companyService.getCompanyById(id).pipe(catchError(err => {
+        console.error('Error info empresa:', err);
+        return of(null);
+      })),
+      trees: this.treeApi.getAllTreesByOwner(undefined, id).pipe(catchError(err => {
+        console.error('Error árboles empresa:', err);
+        return of([]);
+      }))
+    }).subscribe({
+      next: (res) => {
+        this.company = res.company || undefined;
+        this.trees = res.trees || [];
+        this.co2Records = (this.company?.co2 || []).sort((a,b) => (b.year || 0) - (a.year || 0));
+        
+        // Calcular estadísticas
+        this.stats.totalTrees = this.trees.length;
+        this.stats.totalCo2 = this.co2Records.reduce((acc, curr) => acc + (curr.totalCompensations || 0), 0);
+        
+        this.loading = false;
+
+        if (!this.company) {
+          this.showStatus('error', 'No encontrado', 'No se ha podido cargar la información de esta compañía.');
+        }
+      },
+      error: (err) => {
+        console.error('Error crítico en forkJoin:', err);
+        this.loading = false;
+        this.showStatus('error', 'Error', 'Error al sincronizar los datos de la compañía.');
       }
     });
   }
@@ -72,7 +106,8 @@ export class CompanyComponent implements OnInit {
     this.treeService.plantTreeBatch(payload).subscribe({
       next: () => {
         this.showingAssignModal = false;
-        this.showStatus('success', 'Success', this.translate.instant('ASSIGN_TREES.SUCCESS'));
+        this.showStatus('success', 'Éxito', this.translate.instant('ASSIGN_TREES.SUCCESS'));
+        if (this.companyId) this.loadAllData(this.companyId);
       },
       error: (err) => {
         this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING'));
@@ -80,11 +115,18 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  showStatus ( type: 'success' | 'error', title: string, message: string ) {
+  showStatus(type: 'success' | 'error', title: string, message: string) {
     this.statusModal = { visible: true, type, title, message };
   }
 
-  closeStatus () {
+  closeStatus() {
     this.statusModal.visible = false;
+  }
+
+  get netCo2Records() {
+    return this.co2Records.map(r => ({
+      ...r,
+      net: (r.totalEmissions || 0) - (r.totalCompensations || 0)
+    }));
   }
 }

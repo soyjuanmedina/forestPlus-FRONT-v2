@@ -4,6 +4,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader, provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
 import { routes } from './app.routes';
 import { BASE_PATH } from './api/variables';
 import { environment } from '../environments/environment';
@@ -24,7 +25,9 @@ export const appConfig: ApplicationConfig = {
           useClass: TranslateHttpLoader
         },
         defaultLanguage: 'es'
-      } )
+      } ),
+      NgxGoogleAnalyticsModule.forRoot( environment.googleAnalyticsId ),
+      NgxGoogleAnalyticsRouterModule.forRoot()
     )
   ]
 };
