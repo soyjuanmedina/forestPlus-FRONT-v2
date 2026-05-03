@@ -1,3 +1,34 @@
+.profile-avatar {
+  width: 200px;         /* Ancho fijo del contenedor */
+  height: 200px;        /* Alto fijo para que sea un cuadrado */
+  overflow: hidden;     /* Corta lo que sobresalga */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;   /* Opcional: bordes redondeados */
+  background-color: #f0f0f0;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* La imagen se encoge para caber entera */
+  background-color: #f0f0f0; /* Color de fondo para los huecos */
+  display: block;
+}
+
+/* Estilos para que el placeholder tenga el mismo tamaño */
+.profile-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;      /* Letra grande para la inicial */
+  background-color: #007bff;
+  color: white;
+}
+
 .company-detail {
   padding: 20px;
   max-width: 1200px;

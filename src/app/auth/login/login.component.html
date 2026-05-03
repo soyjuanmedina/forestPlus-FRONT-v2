@@ -37,12 +37,12 @@
       </div>
     </div>
 
-    <div class="auth-footer" *ngIf="features.allowRegistration">
+    <div class="auth-footer" *ngIf="features.registration">
       <p>{{ 'LOGIN.NO_ACCOUNT' | translate }} <a routerLink="/register">{{ 'LOGIN.REGISTER' |
           translate }}</a></p>
     </div>
 
-    <div *ngIf="!features.allowRegistration">
+    <div *ngIf="!features.registration">
       <app-request-access></app-request-access>
     </div>
     <div class="footer-actions">

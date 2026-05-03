@@ -5,12 +5,13 @@ import { TreeService } from '../../services/tree.service';
 import { AdminService } from '../../services/admin.service';
 import { TranslateModule } from '@ngx-translate/core';
 import * as L from 'leaflet';
- 
+import { environment } from '../../../environments/environment';
+
 // Configuración de iconos de Leaflet para evitar errores en producción
 const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
 const iconUrl = 'assets/leaflet/marker-icon.png';
 const shadowUrl = 'assets/leaflet/marker-shadow.png';
-const iconDefault = L.icon({
+const iconDefault = L.icon( {
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
@@ -19,16 +20,16 @@ const iconDefault = L.icon({
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
   shadowSize: [41, 41]
-});
+} );
 L.Marker.prototype.options.icon = iconDefault;
 
-@Component({
+@Component( {
   selector: 'app-land-detail',
   standalone: true,
   imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: './land-detail.component.html',
   styleUrl: './land-detail.component.css'
-})
+} )
 export class LandDetailComponent implements OnInit {
   land: any;
   loading = true;
@@ -36,6 +37,7 @@ export class LandDetailComponent implements OnInit {
   plannedPlantations: any[] = [];
   loadingPlantations = false;
   private map: any;
+  features = environment.features;
 
   constructor (
     private route: ActivatedRoute,
@@ -63,9 +65,9 @@ export class LandDetailComponent implements OnInit {
       next: ( data ) => {
         this.land = data;
         this.loading = false;
-        
-        if (this.land.coordinates && this.land.coordinates.length >= 3) {
-          setTimeout(() => this.initMap(), 500);
+
+        if ( this.land.coordinates && this.land.coordinates.length >= 3 ) {
+          setTimeout( () => this.initMap(), 500 );
         }
       },
       error: ( err ) => {
@@ -91,32 +93,32 @@ export class LandDetailComponent implements OnInit {
       }
     } );
   }
- 
-  private initMap(): void {
-    if (!this.land || !this.land.coordinates || this.land.coordinates.length < 3) return;
- 
-    const points: L.LatLngExpression[] = this.land.coordinates.map((c: any) => [c.latitude, c.longitude] as L.LatLngExpression);
- 
+
+  private initMap (): void {
+    if ( !this.land || !this.land.coordinates || this.land.coordinates.length < 3 ) return;
+
+    const points: L.LatLngExpression[] = this.land.coordinates.map( ( c: any ) => [c.latitude, c.longitude] as L.LatLngExpression );
+
     // Crear el mapa centrado en el primer punto
-    this.map = L.map('map', {
+    this.map = L.map( 'map', {
       center: points[0],
       zoom: 15
-    });
- 
+    } );
+
     // Añadir capa de OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(this.map);
- 
+    } ).addTo( this.map );
+
     // Dibujar el polígono
-    const polygon = L.polygon(points, {
+    const polygon = L.polygon( points, {
       color: '#69D291',
       fillColor: '#69D291',
       fillOpacity: 0.3
-    }).addTo(this.map);
- 
+    } ).addTo( this.map );
+
     // Ajustar la vista para que quepa todo el polígono con un poco de margen
-    this.map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+    this.map.fitBounds( polygon.getBounds(), { padding: [50, 50] } );
   }
 }

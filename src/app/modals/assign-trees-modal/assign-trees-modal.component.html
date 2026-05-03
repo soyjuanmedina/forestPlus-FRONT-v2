@@ -1,8 +1,9 @@
 <div class="modal-overlay">
   <div class="modal-card scrollable-modal" style="max-width: 500px; position: relative;">
-    
+
     <!-- Close Button Top Right -->
-    <button (click)="close.emit()" class="btn-icon" style="position: absolute; top: 1.5rem; right: 1.5rem; color: #999;">
+    <button (click)="close.emit()" class="btn-icon"
+      style="position: absolute; top: 1.5rem; right: 1.5rem; color: #999;">
       <i class="fas fa-times"></i>
     </button>
 
@@ -25,7 +26,8 @@
         <select formControlName="plannedPlantationId" class="form-control">
           <option [ngValue]="null" disabled>{{ 'COMMON.SELECT_OPTION' | translate }}</option>
           <option *ngFor="let pp of plannedPlantations" [value]="pp.id">
-            {{ pp.plannedDate | date:'dd/MM/yyyy' }} · {{ pp.maxTrees }} {{ 'PLANNED_PLANTATION.MAX_TREES' | translate }}
+            {{ pp.plannedDate | date:'dd/MM/yyyy' }} · {{ pp.maxTrees }} {{
+            'PLANNED_PLANTATION.MAX_TREES' | translate }}
           </option>
         </select>
       </div>
@@ -40,18 +42,22 @@
       </div>
 
       <!-- Quantity -->
-      <div class="form-group" *ngIf="form.get('plannedPlantationId')?.value">
+      <div class="form-group" *ngIf="form.get('treeTypeId')?.value">
         <label>{{ 'ASSIGN_TREES.QUANTITY' | translate }}</label>
-        <input type="number" formControlName="quantity" min="1" [placeholder]="'ASSIGN_TREES.QUANTITY' | translate" class="form-control" />
+        <input type="number" formControlName="quantity" min="1"
+          [placeholder]="'ASSIGN_TREES.QUANTITY' | translate" class="form-control" />
       </div>
 
       <!-- Actions -->
-      <div class="modal-actions" style="margin-top: 1.5rem; justify-content: flex-end; width: 100%;">
-        <button type="button" (click)="close.emit()" [disabled]="isSubmitting" class="btn btn-secondary">
+      <div class="modal-actions"
+        style="margin-top: 1.5rem; justify-content: flex-end; width: 100%;">
+        <button type="button" (click)="close.emit()" [disabled]="isSubmitting"
+          class="btn btn-secondary">
           {{ 'COMMON.CANCEL' | translate }}
         </button>
 
-        <button type="submit" [disabled]="form.invalid || isSubmitting" class="btn btn-primary" style="background: #10b981; border-color: #10b981; color: white !important;">
+        <button type="submit" [disabled]="form.invalid || isSubmitting" class="btn btn-primary"
+          style="background: #10b981; border-color: #10b981; color: white !important;">
           {{ 'ASSIGN_TREES.ASSIGN' | translate }}
         </button>
       </div>

@@ -48,12 +48,9 @@ export class LoginComponent implements OnInit {
     if ( this.email && this.password ) {
       this.authService.login( this.email, this.password ).subscribe( {
         next: ( res ) => {
-          console.log( 'Login response user:', res.user );
           if ( res.user?.forcePasswordChange ) {
-            console.log( 'Redirecting to profile for password change' );
             this.router.navigate( ['/profile'], { queryParams: { mustChange: 'true' } } );
           } else {
-            console.log( 'Redirecting to dashboard' );
             this.router.navigate( ['/dashboard'] );
           }
         },

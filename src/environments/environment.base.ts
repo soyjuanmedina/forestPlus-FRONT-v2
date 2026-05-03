@@ -6,6 +6,7 @@ export const baseEnvironment = {
   apiBaseUrl: 'http://localhost:8080',
   googleAnalyticsId: '',
   features: {
-    allowRegistration: false
+    registration: false,
+    buyTrees: false
   }
 };

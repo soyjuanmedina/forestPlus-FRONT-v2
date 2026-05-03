@@ -31,6 +31,20 @@
 .main-card.primary-border { border-top: 6px solid var(--color-primary); }
 .main-card.secondary-border { border-top: 6px solid #3b82f6; }
 
+/* EQUIVALENCIAS EN FILA PARA ANCHO COMPLETO */
+.full-row .equivalence-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 10px;
+}
+
+.full-row .eq-item {
+    background: rgba(0,0,0,0.02);
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
 .main-stat {
   display: flex;
   flex-direction: column;

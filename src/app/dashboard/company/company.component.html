@@ -8,18 +8,33 @@
     <!-- HERO SECTION -->
     <header class="company-hero glass">
       <div class="hero-main">
-        <div class="company-logo" [style.backgroundImage]="company.picture ? 'url(' + company.picture + ')' : ''">
-          <i *ngIf="!company.picture" class="fas fa-building"></i>
+        <div class="profile-avatar-wrapper"> <!-- Reutilizamos tus clases de CSS -->
+          <div class="profile-avatar">
+
+            <!-- Usamos ng-container igual que en el perfil -->
+            <ng-container *ngIf="company?.picture; else companyPlaceholder">
+              <img [src]="company.picture" (error)="onCompanyLogoError()" [alt]="company.name">
+            </ng-container>
+
+            <!-- Placeholder con la inicial de la compañía si no hay imagen -->
+            <ng-template #companyPlaceholder>
+              <div class="profile-avatar-placeholder">
+                {{ company.name?.charAt(0)?.toUpperCase() || 'C' }}
+              </div>
+            </ng-template>
+
+          </div>
         </div>
         <div class="company-info">
           <h1>{{ company.name }}</h1>
-          <p class="address"><i class="fas fa-location-dot"></i> {{ company.address || 'Ubicación no especificada' }}</p>
+          <p class="address"><i class="fas fa-location-dot"></i> {{ company.address || 'Ubicación no
+            especificada' }}</p>
         </div>
       </div>
-      
+
       <div class="hero-actions">
         <button (click)="openAssignModal()" class="btn btn-primary">
-          <i class="fas fa-tree"></i> {{ 'ASSIGN_TREES.ASSIGN' | translate }}
+          <i class="fas fa-tree"></i>&nbsp;{{ 'ASSIGN_TREES.ASSIGN' | translate }}
         </button>
         <button [routerLink]="['/company/form', company.id]" class="btn btn-outline">
           <i class="fas fa-edit"></i>
@@ -60,7 +75,7 @@
         <h2>Impacto Ambiental Consolidado</h2>
         <p>Equivalencia de la reforestación corporativa de {{ company.name }}</p>
       </div>
-      
+
       <div class="equivalence-grid">
         <div class="eq-item">
           <div class="eq-icon">🚗</div>
@@ -114,13 +129,14 @@
               <td class="val-red">{{ record.totalEmissions }} t</td>
               <td class="val-green">{{ record.totalCompensations }} t</td>
               <td>
-                <span class="badge" [class.badge-success]="record.net <= 0" [class.badge-danger]="record.net > 0">
+                <span class="badge" [class.badge-success]="record.net <= 0"
+                  [class.badge-danger]="record.net > 0">
                   {{ record.net <= 0 ? 'NEUTRO' : '+' + (record.net | number:'1.1-2') + ' t' }}
-                </span>
+                    </span>
               </td>
               <td class="progress-cell">
                 <div class="mini-bar-bg">
-                  <div class="mini-bar-fill" 
+                  <div class="mini-bar-fill"
                     [style.width.%]="record.totalEmissions ? (record.totalCompensations! / record.totalEmissions! * 100) : 0"
                     [class.full]="(record.totalCompensations || 0) >= (record.totalEmissions || 1)">
                   </div>
@@ -134,11 +150,8 @@
   </div>
 
   <!-- MODALS -->
-  <app-assign-trees-modal 
-    *ngIf="showingAssignModal"
-    [companyId]="companyId"
-    (close)="closeAssignModal()"
-    (assigned)="onTreesAssigned($event)">
+  <app-assign-trees-modal *ngIf="showingAssignModal" [companyId]="companyId"
+    (close)="closeAssignModal()" (assigned)="onTreesAssigned($event)">
   </app-assign-trees-modal>
 
   <app-status-modal [visible]="statusModal.visible" [type]="statusModal.type"

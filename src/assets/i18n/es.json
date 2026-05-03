@@ -31,7 +31,8 @@
     "ERROR_PROCESSING": "❌ Hubo un problema al procesar la solicitud",
     "EMAIL_VERIFIED": "Correo verificado",
     "CLEAR": "Limpiar",
-    "OPTIONAL": "opcional"
+    "OPTIONAL": "opcional",
+    "SELECT_OPTION": "Selecciona una opción"
   },
   "HOME": {
     "TITLE": "Gestiona tu bosque digital Mide tu impacto real",
