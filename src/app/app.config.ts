@@ -8,12 +8,18 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 import { routes } from './app.routes';
 import { BASE_PATH } from './api/variables';
 import { environment } from '../environments/environment';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter( routes, withHashLocation() ),
     provideHttpClient( withInterceptors( [authInterceptor] ) ),
     { provide: BASE_PATH, useValue: environment.apiBaseUrl },
+    { provide: LOCALE_ID, useValue: 'es-ES' },
     provideTranslateHttpLoader( {
       prefix: './assets/i18n/',
       suffix: '.json'

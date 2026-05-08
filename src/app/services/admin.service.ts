@@ -16,7 +16,9 @@ import {
   TreeTypeUpdateRequestDto,
   PlannedPlantationResponseDto,
   PlannedPlantationRequestDto,
-  PlannedPlantationUpdateRequestDto
+  PlannedPlantationUpdateRequestDto,
+  TreeControllerService,
+  TreeResponseDto
 } from '../api';
 
 @Injectable( {
@@ -28,7 +30,8 @@ export class AdminService {
     private userApi: UserControllerService,
     private landApi: LandControllerService,
     private treeTypeApi: TreeTypeControllerService,
-    private plannedPlantationApi: PlannedPlantationControllerService
+    private plannedPlantationApi: PlannedPlantationControllerService,
+    private treeApi: TreeControllerService
   ) { }
 
   // Usuarios
@@ -106,5 +109,14 @@ export class AdminService {
 
   deletePlannedPlantation ( id: number ): Observable<any> {
     return this.plannedPlantationApi._delete( id );
+  }
+
+  // Árboles
+  getTrees (): Observable<TreeResponseDto[]> {
+    return this.treeApi.getAllTrees();
+  }
+
+  deleteTree ( id: number ): Observable<any> {
+    return this.treeApi.deleteTree( id );
   }
 }

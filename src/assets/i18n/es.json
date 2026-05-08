@@ -36,13 +36,13 @@
   },
   "HOME": {
     "TITLE": "Gestiona tu bosque digital Mide tu impacto real",
-    "SUBTITLE": "forest+ es una startup de reforestación diseñada para personas y empresas que miden cada árbol plantado. Crea tu bosque digital y rastrea el impacto en tiempo real con nuestro dashboard. Desde particulares que quieren Net Zero hasta grandes empresas cumpliendo normativa: una plataforma, un propósito, impacto verificable.",
+    "SUBTITLE": "forest+ es una startup de reforestación diseñada para personas y compañías que miden cada árbol plantado. Crea tu bosque digital y rastrea el impacto en tiempo real con nuestro dashboard. Desde particulares que quieren Net Zero hasta grandes compañías cumpliendo normativa: una plataforma, un propósito, impacto verificable.",
     "LOGIN": "Iniciar Sesión",
     "REGISTER": "Crear Cuenta",
     "HERO": {
       "BADGE": "Confianza",
       "TITLE": "Gestiona tu bosque digital Mide tu impacto real",
-      "SUBTITLE": "forest+ es una startup de reforestación diseñada para personas y empresas que miden cada árbol plantado. Crea tu bosque digital y rastrea el impacto en tiempo real con nuestro dashboard. Desde particulares que quieren Net Zero hasta grandes empresas cumpliendo normativa: una plataforma, un propósito, impacto verificable.",
+      "SUBTITLE": "forest+ es una startup de reforestación diseñada para personas y compañías que miden cada árbol plantado. Crea tu bosque digital y rastrea el impacto en tiempo real con nuestro dashboard. Desde particulares que quieren Net Zero hasta grandes compañías cumpliendo normativa: una plataforma, un propósito, impacto verificable.",
       "CTA": "Comenzar"
     },
     "FEATURES": {
@@ -114,7 +114,7 @@
           "ITEM1": "Priorizamos el ecosistema",
           "ITEM2": "Cuidamos suelo, agua, clima y biodiversidad",
           "ITEM3": "Árboles reales, no solo métricas",
-          "ITEM4": "Certificados para ti y tu empresa",
+          "ITEM4": "Certificados para ti y tu compañía",
           "ITEM5": "Las personas primero"
         }
       }
@@ -122,7 +122,7 @@
     "CONTACT": {
       "BADGE": "Contacta",
       "TITLE": "¿Quieres saber más?",
-      "DESC": "Escríbenos si quieres más información, entender mejor cómo funciona tu bosque digital o hablar de un proyecto para ti o tu empresa.",
+      "DESC": "Escríbenos si quieres más información, entender mejor cómo funciona tu bosque digital o hablar de un proyecto para ti o tu compañía.",
       "SUBMIT": "Enviar"
     }
   },
@@ -178,8 +178,9 @@
     "PROFILE": "Perfil",
     "MY_COMPANY": "Mi compañía",
     "MY_LANDS": "Mis terrenos",
-    "MY_TREES": "Mis árboles",
-    "MY_COMPANY_TREES": "Los árboles de la compañia",
+    "MY_TREES": "Los árboles de mi compañía",
+    "MY_TREES_PERSONAL": "Mis árboles",
+    "MY_COMPANY_TREES": "Los árboles de la compañía",
     "LANDS": "Terrenos",
     "ADMIN": {
       "ADMIN": "Administración",
@@ -199,12 +200,19 @@
     "LANDS_TITLE": "Gestión de Terrenos",
     "LOADING": "Cargando..."
   },
+  "ADMIN_TREES": {
+    "TITLE": "Gestión de Árboles",
+    "SUBTITLE": "Administra los árboles plantados de tu compañía o del sistema.",
+    "SEARCH_PLACEHOLDER": "Buscar por ID, nombre, especie, propietario o terreno...",
+    "NO_RESULTS": "No se han encontrado árboles que coincidan con tu búsqueda."
+  },
   "AUTH": {
     "LOGOUT": "Cerrar sesión",
     "ROLE": "Rol",
     "ADMIN": "Administrador",
     "USER": "Usuario",
-    "COMPANY_ADMIN": "Admin de Empresa"
+    "COMPANY_ADMIN": "Admin de Compañía",
+    "COMPANY_USER": "Usuario de Compañía"
   },
   "LAND_DETAIL": {
     "BACK": "Volver a terrenos",
@@ -325,7 +333,7 @@
     "LOGIN_COUNT": "Logins exitosos",
     "ROLE": "Rol",
     "AVATAR_ALT": "Avatar",
-    "COMPANY_LABEL": "Empresa"
+    "COMPANY_LABEL": "Compañía"
   },
   "REGISTER": {
     "TITLE": "Crear cuenta",
@@ -452,16 +460,16 @@
     "NO_PICTURE": "Sin imagen"
   },
   "MY_TREES": {
-    "TITLE": "Mis Árboles",
-    "SUBTITLE": "Gestiona tu bosque personal y observa el impacto que estás creando.",
+    "TITLE": "Los árboles de mi compañía",
+    "SUBTITLE": "Gestiona el bosque de tu compañía y observa el impacto que estáis creando.",
     "STATS": {
       "TOTAL": "Total Árboles",
       "CO2": "CO₂ Compensado"
     },
-    "LOADING": "Cargando tu bosque...",
+    "LOADING": "Cargando el bosque...",
     "EMPTY": {
-      "TITLE": "Aún no tienes árboles",
-      "SUBTITLE": "Comienza tu impacto ambiental adquiriendo tu primer árbol hoy mismo.",
+      "TITLE": "Vuestra compañía aún no tiene árboles",
+      "SUBTITLE": "Aún no hay árboles asignados a vuestro perfil o compañía.",
       "CTA": "Adquirir Árbol"
     },
     "NO_NAME": "Árbol sin nombre",
@@ -502,7 +510,7 @@
   },
   "ADMIN_COMPANIES": {
     "TITLE": "Gestión de Compañías",
-    "SUBTITLE": "Administra las empresas asociadas a forest+"
+    "SUBTITLE": "Administra las compañías asociadas a forest+"
   },
   "ADMIN_USERS": {
     "TITLE": "Gestión de Usuarios",
@@ -570,5 +578,26 @@
     "TREES_LABEL": "árboles",
     "AVAILABLE": "Disponible",
     "GOAL": "Objetivo"
+  },
+  "ERRORS": {
+    "LAND": {
+      "NOT_FOUND": "❌ Terreno no encontrado",
+      "HAS_TREES": "❌ No se puede eliminar el terreno porque tiene árboles plantados",
+      "HAS_PLANTATIONS": "❌ No se puede eliminar el terreno porque tiene plantaciones previstas"
+    },
+    "PLANTATION": {
+      "NOT_FOUND": "❌ Plantación no encontrada",
+      "HAS_TREES": "❌ No se puede eliminar la plantación porque tiene árboles asociados"
+    },
+    "TREE_TYPE": {
+      "NOT_FOUND": "❌ Tipo de árbol no encontrado"
+    },
+    "USER": {
+      "NOT_FOUND": "❌ Usuario no encontrado"
+    },
+    "COMMON": {
+      "DATA_INTEGRITY": "❌ No se puede realizar la acción debido a que existen datos vinculados",
+      "INTERNAL_ERROR": "❌ Error interno del servidor"
+    }
   }
 }

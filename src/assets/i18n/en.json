@@ -166,7 +166,8 @@
     "PROFILE": "Profile",
     "MY_COMPANY": "My company",
     "MY_LANDS": "My lands",
-    "MY_TREES": "My trees",
+    "MY_TREES": "My Company Trees",
+    "MY_TREES_PERSONAL": "My Trees",
     "MY_COMPANY_TREES": "Company trees",
     "LANDS": "Lands",
     "ADMIN": {
@@ -187,12 +188,19 @@
     "LANDS_TITLE": "Land Management",
     "LOADING": "Loading..."
   },
+  "ADMIN_TREES": {
+    "TITLE": "Tree Management",
+    "SUBTITLE": "Manage planted trees for your company or the system.",
+    "SEARCH_PLACEHOLDER": "Search by ID, name, species, owner or land...",
+    "NO_RESULTS": "No trees found matching your search."
+  },
   "AUTH": {
     "LOGOUT": "Logout",
     "ROLE": "Role",
     "ADMIN": "Administrator",
     "USER": "User",
-    "COMPANY_ADMIN": "Company Admin"
+    "COMPANY_ADMIN": "Company Admin",
+    "COMPANY_USER": "Company User"
   },
   "LAND_DETAIL": {
     "BACK": "Back to lands",
@@ -432,16 +440,16 @@
     "NO_PICTURE": "No image"
   },
   "MY_TREES": {
-    "TITLE": "My Trees",
-    "SUBTITLE": "Manage your personal forest and watch the impact you're creating.",
+    "TITLE": "My Company's Trees",
+    "SUBTITLE": "Manage your company's forest and track the impact you are creating.",
     "STATS": {
       "TOTAL": "Total Trees",
-      "CO2": "CO₂ Offset"
+      "CO2": "Offset CO₂"
     },
-    "LOADING": "Loading your forest...",
+    "LOADING": "Loading forest...",
     "EMPTY": {
-      "TITLE": "You don't have trees yet",
-      "SUBTITLE": "Start your environmental impact by acquiring your first tree today.",
+      "TITLE": "Your company doesn't have trees yet",
+      "SUBTITLE": "There are no trees assigned to your profile or company yet.",
       "CTA": "Acquire Tree"
     },
     "NO_NAME": "Untitled tree",
@@ -545,5 +553,26 @@
     "TREES_LABEL": "trees",
     "AVAILABLE": "Available",
     "GOAL": "Goal"
+  },
+  "ERRORS": {
+    "LAND": {
+      "NOT_FOUND": "❌ Land not found",
+      "HAS_TREES": "❌ Cannot delete land because it has trees planted",
+      "HAS_PLANTATIONS": "❌ Cannot delete land because it has planned plantations"
+    },
+    "PLANTATION": {
+      "NOT_FOUND": "❌ Plantation not found",
+      "HAS_TREES": "❌ Cannot delete plantation because it has associated trees"
+    },
+    "TREE_TYPE": {
+      "NOT_FOUND": "❌ Tree type not found"
+    },
+    "USER": {
+      "NOT_FOUND": "❌ User not found"
+    },
+    "COMMON": {
+      "DATA_INTEGRITY": "❌ Cannot perform action due to linked data",
+      "INTERNAL_ERROR": "❌ Internal server error"
+    }
   }
 }

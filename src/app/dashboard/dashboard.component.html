@@ -52,7 +52,7 @@
             </div>
             <div class="eq-item">
               <span class="icon">🏠</span>
-              <span class="val">{{ getHomePercent(kpis.annualCo2Compensated || 0) }}% <small>de un
+              <span class="val">{{ getHomePercent(kpis.annualCo2Compensated || 0) | number:'1.1-1' }}% <small>de un
                   hogar / año</small></span>
             </div>
           </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="eq-item">
               <span class="icon">🏠</span>
-              <span class="val">{{ getHomesCount(kpis.globalAnnualCo2Compensated || 0) }}
+              <span class="val">{{ getHomesCount(kpis.globalAnnualCo2Compensated || 0) | number:'1.1-1' }}
                 <small>hogares / año</small></span>
             </div>
           </div>

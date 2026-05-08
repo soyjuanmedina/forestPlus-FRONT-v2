@@ -35,6 +35,7 @@ export const routes: Routes = [
   { path: 'admin/companies', component: AdminCompaniesComponent, canActivate: [authGuard, adminGuard] },
   { path: 'admin/tree-types', loadComponent: () => import( './dashboard/admin-tree-types/admin-tree-types.component' ).then( c => c.AdminTreeTypesComponent ), canActivate: [authGuard, adminGuard] },
   { path: 'admin/planned-plantations', loadComponent: () => import( './dashboard/admin-planned-plantations/admin-planned-plantations.component' ).then( c => c.AdminPlannedPlantationsComponent ), canActivate: [authGuard, adminGuard] },
+  { path: 'admin/trees', loadComponent: () => import( './dashboard/admin-trees/admin-trees.component' ).then( c => c.AdminTreesComponent ), canActivate: [authGuard, adminGuard] },
   { path: 'company', component: CompanyComponent, canActivate: [authGuard] },
   { path: 'company/:id', component: CompanyComponent, canActivate: [authGuard] },
   { path: 'company/form/:id', loadComponent: () => import( './dashboard/company/company-form/company-form.component' ).then( c => c.CompanyFormComponent ), canActivate: [authGuard, adminGuard] },

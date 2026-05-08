@@ -139,7 +139,8 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
         this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('PLANNED_PLANTATION.SUCCESS_' + (this.isNew ? 'CREATE' : 'EDIT')));
       },
       error: (err) => {
-        this.showStatus('error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant('PLANNED_PLANTATION.ERROR'));
+        const errorMessage = err.error?.message ? this.translate.instant(err.error.message) : this.translate.instant('PLANNED_PLANTATION.ERROR');
+        this.showStatus('error', this.translate.instant('COMMON.ERROR'), errorMessage);
         console.error(err);
       }
     });
@@ -171,7 +172,8 @@ export class AdminPlannedPlantationsComponent implements OnInit, OnDestroy {
           this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('PLANNED_PLANTATION.SUCCESS_DELETE'));
         },
         error: (err) => {
-          this.showStatus('error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant('COMMON.ERROR_DELETE'));
+          const errorMessage = err.error?.message ? this.translate.instant(err.error.message) : this.translate.instant('COMMON.ERROR_DELETE');
+          this.showStatus('error', this.translate.instant('COMMON.ERROR'), errorMessage);
           console.error(err);
         }
       });

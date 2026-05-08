@@ -70,9 +70,8 @@ export class DashboardComponent implements OnInit {
     return parseFloat( value.toFixed( 1 ) );
   }
 
-  getHomesCount ( co2: number ): string {
-    if ( !co2 ) return "0";
-    const value = co2 / this.HOME_FACTOR;
-    return value.toFixed( 1 );
+  getHomesCount ( co2: number ): number {
+    if ( !co2 ) return 0;
+    return co2 / this.HOME_FACTOR;
   }
 }

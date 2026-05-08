@@ -112,4 +112,13 @@ export class AppComponent {
   toggleSidebar () {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
+
+  getCompanyIcon ( companyId: number | undefined ): string {
+    if ( !companyId ) return 'assets/icon.png';
+    return `assets/companies/company-${companyId}.png`;
+  }
+
+  handleCompanyIconError ( event: any ) {
+    event.target.src = 'assets/icon.png';
+  }
 }

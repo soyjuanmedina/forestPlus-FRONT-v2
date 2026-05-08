@@ -80,22 +80,22 @@
         <div class="eq-item">
           <div class="eq-icon">🚗</div>
           <div class="eq-data">
-            <span class="eq-val">{{ (stats.totalCo2 * 5) | number:'1.0-0' }} km</span>
-            <span class="eq-lab">Km en coche evitados</span>
+            <span class="eq-val">{{ getCarKm(stats.totalCo2) | number }} km</span>
+            <span class="eq-lab">en coche</span>
           </div>
         </div>
         <div class="eq-item">
           <div class="eq-icon">✈️</div>
           <div class="eq-data">
-            <span class="eq-val">{{ (stats.totalCo2 / 150) | number:'1.1-1' }}</span>
-            <span class="eq-lab">Vuelos Madrid-París</span>
+            <span class="eq-val">{{ getPlaneKm(stats.totalCo2) | number }} km</span>
+            <span class="eq-lab">en avión</span>
           </div>
         </div>
         <div class="eq-item">
           <div class="eq-icon">🏠</div>
           <div class="eq-data">
-            <span class="eq-val">{{ (stats.totalCo2 / 3500 * 100) | number:'1.1-1' }} %</span>
-            <span class="eq-lab">Consumo anual de un hogar</span>
+            <span class="eq-val">{{ getHomesCount(stats.totalCo2) | number:'1.1-1' }}</span>
+            <span class="eq-lab">hogares / año</span>
           </div>
         </div>
       </div>

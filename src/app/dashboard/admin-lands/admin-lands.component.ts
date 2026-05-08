@@ -108,10 +108,11 @@ export class AdminLandsComponent implements OnInit {
       next: () => {
         this.loadLands();
         this.editingLand = null;
-        this.showStatus('success', 'Success', this.translate.instant('LAND_MODAL.SUCCESS_' + (this.isNew ? 'CREATE' : 'EDIT')));
+        this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('LAND_MODAL.SUCCESS_' + (this.isNew ? 'CREATE' : 'EDIT')));
       },
       error: (err) => {
-        this.showStatus('error', 'Error', err.error?.message || this.translate.instant('LAND_MODAL.ERROR'));
+        const errorMessage = err.error?.message ? this.translate.instant(err.error.message) : this.translate.instant('LAND_MODAL.ERROR');
+        this.showStatus('error', this.translate.instant('COMMON.ERROR'), errorMessage);
         console.error(err);
       }
     });
@@ -140,10 +141,11 @@ export class AdminLandsComponent implements OnInit {
       this.adminService.deleteLand(id).subscribe({
         next: () => {
           this.loadLands();
-          this.showStatus('success', 'Success', this.translate.instant('COMMON.SUCCESS_DELETE'));
+          this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('COMMON.SUCCESS_DELETE'));
         },
         error: (err) => {
-          this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_DELETE'));
+          const errorMessage = err.error?.message ? this.translate.instant(err.error.message) : this.translate.instant('COMMON.ERROR_DELETE');
+          this.showStatus('error', this.translate.instant('COMMON.ERROR'), errorMessage);
           console.error(err);
         }
       });

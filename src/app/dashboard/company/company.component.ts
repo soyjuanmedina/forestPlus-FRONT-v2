@@ -32,13 +32,29 @@ export class CompanyComponent implements OnInit {
   trees: TreeResponseDto[] = [];
   co2Records: CompanyCO2YearlyResponseDto[] = [];
   loading = true;
+  stats = { totalTrees: 0, totalCo2: 0 };
 
-  // KPIs calculados localmente
-  stats = {
-    totalTrees: 0,
-    totalCo2: 0
-  };
+  // Factores de equivalencia unificados
+  readonly CAR_FACTOR = 120;   // 120g CO2 por km = 0.12kg/km
+  readonly PLANE_FACTOR = 100; // 100g CO2 por km = 0.10kg/km
+  readonly HOME_FACTOR = 1800; // 1.8 Toneladas por hogar/año
+
   features = environment.features;
+
+  getCarKm ( co2: number ): number {
+    if ( !co2 ) return 0;
+    return Math.round( co2 / ( this.CAR_FACTOR / 1000 ) );
+  }
+
+  getPlaneKm ( co2: number ): number {
+    if ( !co2 ) return 0;
+    return Math.round( co2 / ( this.PLANE_FACTOR / 1000 ) );
+  }
+
+  getHomesCount ( co2: number ): number {
+    if ( !co2 ) return 0;
+    return co2 / this.HOME_FACTOR;
+  }
 
   showingAssignModal = false;
   statusModal = {
@@ -80,7 +96,14 @@ export class CompanyComponent implements OnInit {
 
         // Calcular estadísticas
         this.stats.totalTrees = this.trees.length;
-        this.stats.totalCo2 = this.co2Records.reduce( ( acc, curr ) => acc + ( curr.totalCompensations || 0 ), 0 );
+        
+        // Si hay registros históricos, los usamos. Si no, calculamos el CO2 en tiempo real de los árboles actuales
+        if (this.co2Records.length > 0) {
+          this.stats.totalCo2 = this.co2Records.reduce((acc, curr) => acc + (curr.totalCompensations || 0), 0);
+        } else {
+          // Suma de la absorción a los 20 años de todos los árboles de la compañía
+          this.stats.totalCo2 = this.trees.reduce((acc, tree) => acc + (tree.co2AbsorptionAt20 || 0), 0);
+        }
 
         this.loading = false;
 

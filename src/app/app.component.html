@@ -16,9 +16,20 @@
       <!-- Sidebar para usuarios logueados -->
       <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
         <a routerLink="/" class="sidebar-logo">
-          <img *ngIf="!sidebarCollapsed" src="assets/logo_forestplus_color.png" alt="forest+"
-            style="height: 32px;">
-          <img *ngIf="sidebarCollapsed" src="assets/icon.png" alt="forest+" style="height: 32px;">
+          <!-- Logo para Empresa (Company Admin o Company User) -->
+          <ng-container *ngIf="(user.role === 'COMPANY_ADMIN' || user.role === 'COMPANY_USER') && user.company?.picture; else defaultLogo">
+            <img *ngIf="!sidebarCollapsed" [src]="user.company?.picture" alt="Company Logo"
+              style="width: 100%; height: auto; max-height: 80px; object-fit: contain;">
+            <img *ngIf="sidebarCollapsed" [src]="getCompanyIcon(user.company?.id)" 
+              (error)="handleCompanyIconError($event)" alt="Company Icon" style="height: 32px; width: 32px; object-fit: contain;">
+          </ng-container>
+
+          <!-- Logo por defecto (Forest+) -->
+          <ng-template #defaultLogo>
+            <img *ngIf="!sidebarCollapsed" src="assets/logo_forestplus_color.png" alt="forest+"
+              style="height: 40px; width: auto; object-fit: contain;">
+            <img *ngIf="sidebarCollapsed" src="assets/icon.png" alt="forest+" style="height: 32px;">
+          </ng-template>
         </a>
 
         <nav class="nav-menu">
@@ -28,9 +39,9 @@
             <span *ngIf="!sidebarCollapsed">{{ 'MENU.HOME' | translate }}</span>
           </a>
           <a routerLink="/my-trees" routerLinkActive="active" class="nav-item"
-            *ngIf="features.buyTrees" [attr.data-tooltip]="'MENU.MY_TREES' | translate">
+            [attr.data-tooltip]="(user.role === 'COMPANY_ADMIN' ? 'MENU.MY_TREES' : 'MENU.MY_TREES_PERSONAL') | translate">
             <i class="fa-solid fa-tree"></i>
-            <span *ngIf="!sidebarCollapsed">{{ 'MENU.MY_TREES' | translate }}</span>
+            <span *ngIf="!sidebarCollapsed">{{ (user.role === 'COMPANY_ADMIN' ? 'MENU.MY_TREES' : 'MENU.MY_TREES_PERSONAL') | translate }}</span>
           </a>
           <a routerLink="/lands" routerLinkActive="active" class="nav-item"
             [attr.data-tooltip]="'MENU.LANDS' | translate">
@@ -84,6 +95,11 @@
               <span *ngIf="!sidebarCollapsed">{{ 'MENU.ADMIN.PLANNED_PLANTATIONS' | translate
                 }}</span>
             </a>
+            <a routerLink="/admin/trees" routerLinkActive="active" class="nav-item"
+              [attr.data-tooltip]="'MENU.ADMIN.TREES' | translate">
+              <i class="fa-solid fa-tree"></i>
+              <span *ngIf="!sidebarCollapsed">{{ 'MENU.ADMIN.TREES' | translate }}</span>
+            </a>
           </ng-container>
         </nav>
 
@@ -120,7 +136,7 @@
               </div>
               <div class="user-meta-mini">
                 <span class="user-name-mini">{{ user.name }}</span>
-                <span class="user-role-mini" *ngIf="user.role !== 'USER'">{{ user.role }}</span>
+                <span class="user-role-mini" *ngIf="user.role !== 'USER'">{{ 'AUTH.' + user.role | translate }}</span>
               </div>
             </div>
 

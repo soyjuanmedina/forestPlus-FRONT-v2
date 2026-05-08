@@ -33,7 +33,8 @@ export class TreeFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.getRole() === 'ADMIN';
+    const role = this.authService.getRole();
+    this.isAdmin = role === 'ADMIN' || role === 'COMPANY_ADMIN';
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.treeService.getTreeById(+id).subscribe({
