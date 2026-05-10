@@ -234,7 +234,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar.collapsed .nav-menu {
-  overflow: visible;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidebar-footer {
@@ -271,12 +272,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom Tooltip for Sidebar */
 .sidebar.collapsed .nav-item::after,
-.sidebar.collapsed .sidebar-toggle-btn::after {
+.sidebar.collapsed .sidebar-toggle-btn::after,
+.sidebar.collapsed .admin-label-container::after {
   content: attr(data-tooltip);
   position: absolute;
-  left: 90%;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%) translateY(-10px);
   background: #222;
   color: white;
   padding: 6px 12px;
@@ -293,10 +295,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar.collapsed .nav-item:hover::after,
-.sidebar.collapsed .sidebar-toggle-btn:hover::after {
+.sidebar.collapsed .sidebar-toggle-btn:hover::after,
+.sidebar.collapsed .admin-label-container:hover::after {
   opacity: 1;
   visibility: visible;
-  left: 110%;
+  bottom: 110%;
 }
 
 .sidebar.collapsed .nav-item {
@@ -349,32 +352,6 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar.collapsed .admin-label-container {
   justify-content: center;
   padding: 0;
-}
-
-.sidebar.collapsed .admin-label-container::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 90%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #222;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.15s ease;
-  pointer-events: none;
-  z-index: 10000;
-}
-
-.sidebar.collapsed .admin-label-container:hover::after {
-  opacity: 1;
-  visibility: visible;
-  left: 110%;
 }
 
 .main-content {

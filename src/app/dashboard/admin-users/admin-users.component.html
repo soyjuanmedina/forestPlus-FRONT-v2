@@ -68,7 +68,7 @@
               <a [routerLink]="['/profile', user.id]" class="btn-icon" style="color: var(--color-primary);" [title]="'COMMON.EDIT' | translate">
                 <i class="fas fa-edit"></i>
               </a>
-              <button (click)="deleteUser(user.id)" class="btn-icon btn-delete"
+              <button *ngIf="user.id !== currentUserId" (click)="deleteUser(user.id)" class="btn-icon btn-delete"
                 [title]="'COMMON.DELETE' | translate">
                 <i class="fas fa-trash"></i>
               </button>

@@ -58,6 +58,10 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     userId: null as number | null
   };
 
+  get currentUserId() {
+    return this.authService.getUserId();
+  }
+
   constructor (
     private adminService: AdminService,
     private companyService: CompanyService,
