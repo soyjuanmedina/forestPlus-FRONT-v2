@@ -72,8 +72,36 @@
 
 .card-actions {
   display: flex;
-  gap: 10px;
-  justify-content: flex-end; /* Alineados a la derecha */
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.management-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-view {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(105, 210, 145, 0.1);
+  color: var(--color-primary);
+  border: 1px solid rgba(105, 210, 145, 0.2);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-view:hover {
+  background: var(--color-primary);
+  color: #fff;
+  transform: translateY(-2px);
 }
  
 .badge-success {

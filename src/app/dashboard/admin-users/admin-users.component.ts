@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { CompanyService } from '../../services/company.service';
+import { AuthService } from '../../services/auth.service';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
 import { Router } from '@angular/router';
@@ -60,6 +61,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   constructor (
     private adminService: AdminService,
     private companyService: CompanyService,
+    private authService: AuthService,
     private router: Router,
     private translate: TranslateService
   ) { 
@@ -119,13 +121,20 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   openNew() {
     this.isNew = true;
     this._originalUser = null;
+    
+    const currentUserRole = this.authService.getRole();
+    const defaultRole = currentUserRole === 'COMPANY_ADMIN' ? 'COMPANY_USER' : 'USER';
+    const defaultCompanyId = currentUserRole === 'COMPANY_ADMIN' ? this.authService.getCompanyId() : null;
+    
+    console.log('Creando nuevo usuario. Rol creador:', currentUserRole, 'Compañía asignada:', defaultCompanyId);
+    
     this.editingUser = {
       name: '',
       surname: '',
       secondSurname: '',
       email: '',
-      role: 'USER',
-      companyId: null
+      role: defaultRole,
+      companyId: defaultCompanyId
     };
   }
 
@@ -151,7 +160,23 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     if ( this.editingUser ) {
       // Limpiar companyId si el rol no lo requiere
       if (!this.shouldShowCompanySelector()) {
-        this.editingUser.companyId = null;
+        const currentUserRole = this.authService.getRole();
+        if (currentUserRole === 'COMPANY_ADMIN') {
+          this.editingUser.companyId = this.authService.getCompanyId();
+        } else {
+          this.editingUser.companyId = null;
+        }
+      }
+
+      // Validación de seguridad final
+      if (this.shouldShowCompanySelector() && !this.editingUser.companyId) {
+        this.showStatus('error', 'Error', 'Debes seleccionar una compañía para este tipo de usuario');
+        return;
+      }
+      
+      if ((this.editingUser.role === 'COMPANY_ADMIN' || this.editingUser.role === 'COMPANY_USER') && !this.editingUser.companyId) {
+        this.showStatus('error', 'Error', 'No se ha podido determinar tu compañía. Por favor, cierra sesión y vuelve a entrar.');
+        return;
       }
 
       if ( this.editingUser.picture ) {
@@ -165,10 +190,10 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
         next: () => {
           this.loadUsers();
           this.editingUser = null;
-          this.showStatus( 'success', 'Success', this.translate.instant( 'USER.SUCCESS_MSG' ) );
+          this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'USER.SUCCESS_MSG' ) );
         },
         error: ( err ) => {
-          this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+          this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
           console.error( err );
         }
       } );
@@ -198,10 +223,10 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       this.adminService.deleteUser( id ).subscribe( {
         next: () => {
           this.loadUsers();
-          this.showStatus( 'success', 'Success', this.translate.instant( 'COMMON.SUCCESS_DELETE' ) );
+          this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'COMMON.SUCCESS_DELETE' ) );
         },
         error: ( err ) => {
-          this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_DELETE' ) );
+          this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant( 'COMMON.ERROR_DELETE' ) );
           console.error( err );
         }
       } );
@@ -253,7 +278,23 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
   shouldShowCompanySelector(): boolean {
     if (!this.editingUser) return false;
+    
+    const currentUserRole = this.authService.getRole();
+    // Solo el ADMIN global puede elegir compañía. 
+    // Un COMPANY_ADMIN no debería poder cambiarla, ya que está prefijada a la suya.
+    if (currentUserRole !== 'ADMIN') return false;
+
     const role = this.editingUser.role;
     return role === 'COMPANY_ADMIN' || role === 'COMPANY_USER';
+  }
+
+  getAvailableRoles(): string[] {
+    const currentUserRole = this.authService.getRole();
+    if (currentUserRole === 'ADMIN') {
+      return ['USER', 'ADMIN', 'COMPANY_ADMIN', 'COMPANY_USER'];
+    } else if (currentUserRole === 'COMPANY_ADMIN') {
+      return ['COMPANY_ADMIN', 'COMPANY_USER'];
+    }
+    return ['USER']; // Fallback por seguridad
   }
 }

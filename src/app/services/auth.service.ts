@@ -67,6 +67,10 @@ export class AuthService {
     return this.currentUserSubject.value?.role;
   }
 
+  getCompanyId () {
+    return this.currentUserSubject.value?.company?.id;
+  }
+
   getCurrentUser () {
     return this.currentUserSubject.value;
   }

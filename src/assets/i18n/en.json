@@ -20,6 +20,7 @@
     "SAVE_CHANGES": "Save Changes",
     "DELETE": "Delete",
     "EDIT": "Edit",
+    "VIEW": "View",
     "READ_ONLY": "Read-only",
     "VERIFIED": "Verified",
     "ACTIONS": "Actions",
@@ -125,6 +126,11 @@
   },
   "DASHBOARD": {
     "WELCOME": "Welcome, {{name}}!",
+    "EMPTY_STATE": {
+      "TITLE": "Your forest journey starts here!",
+      "DESC": "You don't have any trees planted in your personal forest yet. Join our project and start offsetting your carbon footprint today.",
+      "CTA": "Plant my first tree"
+    },
     "PANEL": "This is your personal dashboard on forest+.",
     "LOGOUT": "Log out",
     "PENDING_TREES_ALERT_TITLE": "Trees pending planting",
@@ -215,7 +221,8 @@
   "ADMIN_LANDS": {
     "TITLE": "Land Management",
     "SUBTITLE": "Add new lands or edit existing ones",
-    "ADD_BUTTON": "New Land"
+    "ADD_BUTTON": "New Land",
+    "MANAGE_DESC": "As an administrator, you can manage the details and coordinates of this land."
   },
   "ASSIGN_TREES": {
     "TITLE": "Assign tree",
@@ -456,10 +463,14 @@
     "NO_LOCATION": "Location pending",
     "VIEW_DETAILS": "View details"
   },
+
   "LANDS": {
-    "TITLE": "Available Lands",
-    "SUBTITLE": "Explore reforestation zones and choose where to plant your next tree.",
-    "LOADING": "Searching lands...",
+    "TITLE": "Plantation Lands",
+    "SUBTITLE": "Explore the different lands where forest+ is regenerating the territory.",
+    "LOADING": "Loading lands...",
+    "EMPTY_TITLE": "No lands available",
+    "EMPTY_DESC": "There are currently no lands configured on the platform for plantations.",
+    "CREATE_FIRST_LAND": "Create first land",
     "FULL": "Full",
     "NO_DESCRIPTION": "No description available.",
     "AREA": "Area",
@@ -507,6 +518,7 @@
     "ADD_BUTTON": "New Plantation"
   },
   "PLANNED_PLANTATION": {
+    "EMPTY_LIST": "There are no planned plantations for this land.",
     "ACTIVE": "Active",
     "SEARCH_PLACEHOLDER": "Search by land name...",
     "PLANNED_DATE": "Planned date",

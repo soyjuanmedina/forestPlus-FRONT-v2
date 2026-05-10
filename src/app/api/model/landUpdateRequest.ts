@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CoordinateRequestDto } from './coordinateRequest';
 
 
 export interface LandUpdateRequestDto { 
@@ -16,6 +17,6 @@ export interface LandUpdateRequestDto {
     area?: number;
     picture?: string;
     maxTrees?: number;
-    coordinates?: Array<any>;
+    coordinates?: Array<CoordinateRequestDto>;
 }
 

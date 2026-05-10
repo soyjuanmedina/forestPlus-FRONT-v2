@@ -11,9 +11,26 @@
   </div>
 
   <div *ngIf="!loading && kpis" class="dashboard-impact-grid">
+    <!-- EMPTY STATE HERO (Only if no trees, no pending, and no global company trees) -->
+    <div class="empty-state-card glass animate-slide-up" *ngIf="user.role !== 'ADMIN' && (kpis.plantedTrees || 0) === 0 && (kpis.pendingTreesCount || 0) === 0 && (kpis.globalPlantedTrees || 0) === 0">
+      <div class="empty-content">
+        <div class="empty-icon-box">
+          <i class="fa-solid fa-seedling"></i>
+        </div>
+        <div class="empty-text">
+          <h3>{{ 'DASHBOARD.EMPTY_STATE.TITLE' | translate }}</h3>
+          <p>{{ 'DASHBOARD.EMPTY_STATE.DESC' | translate }}</p>
+        </div>
+        <div class="empty-actions">
+          <a routerLink="/lands" class="btn btn-primary btn-lg pulse-animation">
+            {{ 'DASHBOARD.EMPTY_STATE.CTA' | translate }}
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- TU CONTRIBUCIÓN -->
-    <div class="impact-section animate-slide-up delay-1" *ngIf="user.role !== 'COMPANY_ADMIN'">
+    <div class="impact-section animate-slide-up delay-1" *ngIf="user.role !== 'COMPANY_ADMIN' && ((kpis.plantedTrees || 0) > 0 || (kpis.pendingTreesCount || 0) > 0)">
       <h2 class="impact-title">{{ 'DASHBOARD.STATS.YOUR_CONTRIBUTION' | translate | uppercase }}
       </h2>
       <div class="main-card glass primary-border">
@@ -62,7 +79,8 @@
 
     <!-- NUESTRO PROYECTO -->
     <div class="impact-section animate-slide-up delay-2"
-      [class.full-row]="user.role === 'COMPANY_ADMIN'">
+      *ngIf="(kpis.globalPlantedTrees || 0) > 0"
+      [class.full-row]="user.role === 'COMPANY_ADMIN' || ((kpis.plantedTrees || 0) === 0 && (kpis.pendingTreesCount || 0) === 0)">
       <h2 class="impact-title">{{ 'DASHBOARD.STATS.OUR_PROJECT' | translate | uppercase }}</h2>
       <div class="main-card glass secondary-border">
         <div class="main-stat">

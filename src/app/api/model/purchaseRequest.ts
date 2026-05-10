@@ -13,6 +13,6 @@ export interface PurchaseRequestDto {
     landId?: number;
     plannedPlantationId?: number;
     treeTypeId?: number;
-    quantity?: number;
+    quantity: number;
 }
 

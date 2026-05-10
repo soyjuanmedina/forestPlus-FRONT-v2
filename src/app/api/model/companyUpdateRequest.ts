@@ -12,5 +12,6 @@
 export interface CompanyUpdateRequestDto { 
     name?: string;
     address?: string;
+    picture?: string;
 }
 

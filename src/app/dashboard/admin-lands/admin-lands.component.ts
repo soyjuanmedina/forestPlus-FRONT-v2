@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AdminService } from '../../services/admin.service';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
@@ -10,7 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-admin-lands',
   standalone: true,
-  imports: [CommonModule, FormsModule, StatusModalComponent, ConfirmModalComponent, TranslateModule],
+  imports: [CommonModule, FormsModule, StatusModalComponent, ConfirmModalComponent, TranslateModule, RouterModule],
   templateUrl: './admin-lands.component.html',
   styleUrl: './admin-lands.component.css'
 })
@@ -43,7 +44,8 @@ export class AdminLandsComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -59,10 +61,23 @@ export class AdminLandsComponent implements OnInit {
       next: (data) => {
         this.lands = data;
         this.loading = false;
+        this.checkAutoEdit();
       },
       error: (err) => {
         console.error(err);
         this.loading = false;
+      }
+    });
+  }
+
+  private checkAutoEdit() {
+    this.route.queryParams.subscribe(params => {
+      const editId = params['editId'];
+      if (editId) {
+        const landToEdit = this.lands.find(l => l.id === +editId);
+        if (landToEdit) {
+          this.editLand(landToEdit);
+        }
       }
     });
   }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TreeService } from '../services/tree.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-my-trees',
@@ -13,7 +14,9 @@ import { RouterModule } from '@angular/router';
 })
 export class MyTreesComponent implements OnInit {
   trees: any[] = [];
+  totalCo2: number = 0;
   loading = true;
+  features = environment.features;
 
   constructor(private treeService: TreeService) {}
 
@@ -21,6 +24,7 @@ export class MyTreesComponent implements OnInit {
     this.treeService.getMyTrees().subscribe({
       next: (data) => {
         this.trees = data;
+        this.totalCo2 = this.trees.reduce((acc, tree) => acc + (tree.co2AbsorptionAt20 || 0), 0);
         this.loading = false;
       },
       error: (err) => {

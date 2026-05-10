@@ -137,11 +137,11 @@ export class ProfileComponent implements OnInit {
       this.adminService.updateUser( this.user.id, payload as any ).subscribe( {
         next: () => {
           this.editing = false;
-          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_UPDATE' ) );
+          this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'PROFILE.SUCCESS_UPDATE' ) );
           this.router.navigate( ['/admin/users'] );
         },
         error: ( err ) => {
-          this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+          this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
         }
       } );
       return;
@@ -150,10 +150,10 @@ export class ProfileComponent implements OnInit {
     this.userService.updateProfile( payload as any ).subscribe( {
       next: () => {
         this.editing = false;
-        this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_UPDATE' ) );
+        this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'PROFILE.SUCCESS_UPDATE' ) );
       },
       error: ( err ) => {
-        this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+        this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
       }
     } );
   }
@@ -175,17 +175,17 @@ export class ProfileComponent implements OnInit {
       next: () => {
         this.confirmingDelete = false;
         if ( this.isAdminEditing ) {
-          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_DELETE_USER' ) );
+          this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'PROFILE.SUCCESS_DELETE_USER' ) );
           this.router.navigate( ['/admin/users'] );
         } else {
-          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_DELETE_SELF' ) );
+          this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'PROFILE.SUCCESS_DELETE_SELF' ) );
           this.authService.logout();
           this.router.navigate( ['/'] );
         }
       },
       error: ( err ) => {
         this.confirmingDelete = false;
-        this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+        this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
       }
     } );
   }
@@ -209,14 +209,14 @@ export class ProfileComponent implements OnInit {
           this.previewImage = null;
           this.selectedFile = null;
           // El servicio ya actualiza el authService vía tap()
-          this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_PICTURE' ) );
+          this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'PROFILE.SUCCESS_PICTURE' ) );
         },
         error: ( err ) => {
           let msg = err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' );
           if ( err.error?.error === 'FILE_TOO_LARGE' ) {
             msg = this.translate.instant( 'PROFILE.FILE_TOO_LARGE' );
           }
-          this.showStatus( 'error', 'Error', msg );
+          this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), msg );
         }
       } );
     }
@@ -234,7 +234,7 @@ export class ProfileComponent implements OnInit {
       },
       error: ( err ) => {
         console.error( 'Error cargando usuario para edición:', err );
-        this.showStatus( 'error', 'Error', this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+        this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
         this.router.navigate( ['/admin/users'] );
       }
     } );
@@ -284,10 +284,15 @@ export class ProfileComponent implements OnInit {
     } ).subscribe( {
       next: () => {
         this.changingPassword = false;
-        this.showStatus( 'success', 'Success', this.translate.instant( 'PROFILE.SUCCESS_PASSWORD' ) );
+        // IMPORTANTE: Actualizar el estado de la sesión para quitar el flag de cambio obligatorio
+        if (this.currentUser) {
+          this.currentUser.forcePasswordChange = false;
+          this.authService.updateCurrentUser(this.currentUser);
+        }
+        this.showStatus( 'success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant( 'PROFILE.SUCCESS_PASSWORD' ) );
       },
       error: ( err ) => {
-        this.showStatus( 'error', 'Error', err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
+        this.showStatus( 'error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant( 'COMMON.ERROR_PROCESSING' ) );
       }
     } );
   }
@@ -319,13 +324,13 @@ export class ProfileComponent implements OnInit {
     this.treeService.plantTreeBatch(payload).subscribe({
       next: () => {
         this.showingAssignModal = false;
-        this.showStatus('success', 'Success', this.translate.instant('ASSIGN_TREES.SUCCESS'));
+        this.showStatus('success', this.translate.instant('COMMON.SUCCESS'), this.translate.instant('ASSIGN_TREES.SUCCESS'));
         if (this.editingUserId) {
           this.loadAdminUser(this.editingUserId);
         }
       },
-      error: (err) => {
-        this.showStatus('error', 'Error', err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING'));
+      error: ( err ) => {
+        this.showStatus('error', this.translate.instant('COMMON.ERROR'), err.error?.message || this.translate.instant('COMMON.ERROR_PROCESSING'));
       }
     });
   }

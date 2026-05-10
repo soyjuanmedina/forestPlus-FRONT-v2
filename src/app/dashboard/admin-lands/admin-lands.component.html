@@ -34,8 +34,13 @@
           </span>
         </div>
         <div class="card-actions">
-          <button (click)="editLand(land)" class="btn btn-secondary btn-sm">{{ 'COMMON.EDIT' | translate }}</button>
-          <button (click)="deleteLand(land.id)" class="btn btn-danger btn-sm">{{ 'COMMON.DELETE' | translate }}</button>
+          <a [routerLink]="['/lands', land.id]" class="btn-view" [title]="'COMMON.VIEW' | translate">
+            <i class="fa-solid fa-eye"></i>
+          </a>
+          <div class="management-actions">
+            <button (click)="editLand(land)" class="btn btn-secondary btn-sm">{{ 'COMMON.EDIT' | translate }}</button>
+            <button (click)="deleteLand(land.id)" class="btn btn-danger btn-sm">{{ 'COMMON.DELETE' | translate }}</button>
+          </div>
         </div>
       </div>
     </div>

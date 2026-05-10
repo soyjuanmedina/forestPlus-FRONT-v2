@@ -20,6 +20,7 @@
     "SAVE_CHANGES": "Guardar Cambios",
     "DELETE": "Eliminar",
     "EDIT": "Editar",
+    "VIEW": "Ver",
     "READ_ONLY": "Solo lectura",
     "SUCCESS": "Éxito",
     "ERROR": "Error",
@@ -128,6 +129,11 @@
   },
   "DASHBOARD": {
     "WELCOME": "¡Bienvenido/a, {{name}}!",
+    "EMPTY_STATE": {
+      "TITLE": "¡Tu viaje forestal comienza aquí!",
+      "DESC": "Aún no tienes árboles plantados en tu bosque personal. Únete a nuestro proyecto y empieza a compensar tu huella de carbono hoy mismo.",
+      "CTA": "Plantar mi primer árbol"
+    },
     "PANEL": "Este es tu panel personal en forest+.",
     "LOGOUT": "Cerrar sesión",
     "PENDING_TREES_ALERT_TITLE": "Árboles pendientes de plantar",
@@ -228,7 +234,8 @@
   "ADMIN_LANDS": {
     "TITLE": "Gestión de Terrenos",
     "SUBTITLE": "Añade nuevos terrenos o edita los existentes",
-    "ADD_BUTTON": "Nuevo Terreno"
+    "ADD_BUTTON": "Nuevo Terreno",
+    "MANAGE_DESC": "Como administrador, puedes gestionar los detalles y coordenadas de este terreno."
   },
   "ASSIGN_TREES": {
     "TITLE": "Asignar árbol",
@@ -476,10 +483,14 @@
     "NO_LOCATION": "Ubicación pendiente",
     "VIEW_DETAILS": "Ver detalles"
   },
+
   "LANDS": {
-    "TITLE": "Terrenos Disponibles",
-    "SUBTITLE": "Explora las zonas donde estamos reforestando y elige dónde plantar tu próximo árbol.",
-    "LOADING": "Buscando terrenos...",
+    "TITLE": "Terrenos de Plantación",
+    "SUBTITLE": "Explora los diferentes terrenos donde forest+ está regenerando el territorio.",
+    "LOADING": "Cargando terrenos...",
+    "EMPTY_TITLE": "No hay terrenos disponibles",
+    "EMPTY_DESC": "Actualmente no existen terrenos configurados en la plataforma para realizar plantaciones.",
+    "CREATE_FIRST_LAND": "Crear primer terreno",
     "FULL": "Completo",
     "NO_DESCRIPTION": "Sin descripción disponible.",
     "AREA": "Área",
@@ -527,6 +538,7 @@
     "ADD_BUTTON": "Nueva Plantación"
   },
   "PLANNED_PLANTATION": {
+    "EMPTY_LIST": "No hay plantaciones previstas para este terreno.",
     "ACTIVE": "Activa",
     "SEARCH_PLACEHOLDER": "Buscar por nombre de terreno...",
     "PLANNED_DATE": "Fecha prevista",

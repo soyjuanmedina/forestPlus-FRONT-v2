@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { CoordinateResponseDto } from './coordinateResponse';
 
 
 export interface LandResponseDto { 
@@ -20,6 +21,7 @@ export interface LandResponseDto {
     createdAt?: string;
     userIds?: Array<number>;
     companyIds?: Array<number>;
-    coordinates?: Array<any>;
+    coordinates?: Array<CoordinateResponseDto>;
+    plantedTreesCount?: number;
 }
 

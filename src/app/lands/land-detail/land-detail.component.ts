@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TreeService } from '../../services/tree.service';
 import { AdminService } from '../../services/admin.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import * as L from 'leaflet';
 import { environment } from '../../../environments/environment';
@@ -42,7 +44,9 @@ export class LandDetailComponent implements OnInit {
   constructor (
     private route: ActivatedRoute,
     private treeService: TreeService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit () {
@@ -120,5 +124,10 @@ export class LandDetailComponent implements OnInit {
 
     // Ajustar la vista para que quepa todo el polígono con un poco de margen
     this.map.fitBounds( polygon.getBounds(), { padding: [50, 50] } );
+  }
+
+  canEdit(): boolean {
+    const role = this.authService.getRole();
+    return role === 'ADMIN' || role === 'COMPANY_ADMIN';
   }
 }

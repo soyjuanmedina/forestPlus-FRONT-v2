@@ -10,7 +10,6 @@
 
 
 export interface TreeRequestDto { 
-    scientificName?: string;
     customName?: string;
     co2AbsorptionAt20?: number;
     co2AbsorptionAt25?: number;
