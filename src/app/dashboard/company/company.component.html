@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="hero-actions">
+      <div *ngIf="isAdmin" class="hero-actions">
         <button (click)="openAssignModal()" class="btn btn-primary">
           <i class="fas fa-tree"></i>&nbsp;{{ 'ASSIGN_TREES.ASSIGN' | translate }}
         </button>

@@ -74,8 +74,8 @@
       </tbody>
     </table>
 
-    <div *ngIf="filteredTrees.length === 0" style="text-align: center; padding: 3rem; opacity: 0.5;">
-      <i class="fa-solid fa-tree" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+    <div *ngIf="filteredTrees.length === 0" class="glass-card text-center" style="padding: 4rem; margin-top: 2rem;">
+      <i class="fa-solid fa-tree" style="font-size: 3rem; color: var(--color-primary); opacity: 0.3; margin-bottom: 1rem;"></i>
       <p>{{ 'ADMIN_TREES.NO_RESULTS' | translate }}</p>
     </div>
   </div>

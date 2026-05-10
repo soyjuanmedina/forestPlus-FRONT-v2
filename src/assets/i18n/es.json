@@ -33,7 +33,8 @@
     "EMAIL_VERIFIED": "Correo verificado",
     "CLEAR": "Limpiar",
     "OPTIONAL": "opcional",
-    "SELECT_OPTION": "Selecciona una opción"
+    "SELECT_OPTION": "Selecciona una opción",
+    "NONE": "Ninguno/a"
   },
   "HOME": {
     "TITLE": "Gestiona tu bosque digital Mide tu impacto real",
@@ -249,7 +250,11 @@
     "CLOSE_BUTTON": "Cerrar",
     "LAND": "Terreno",
     "QUANTITY": "Cantidad",
-    "ASSIGN": "Asignar Árboles"
+    "ASSIGN": "Asignar Árboles",
+    "LOADING_LANDS": "Cargando terrenos...",
+    "NO_LANDS_WARNING": "No existen terrenos disponibles. Por favor, crea un terreno desde la sección de administración primero.",
+    "LOADING_PLANTATIONS": "Cargando plantaciones...",
+    "NO_PLANTATIONS_WARNING": "Este terreno no tiene plantaciones previstas. Crea una plantación prevista en este terreno para poder asignar árboles."
   },
   "LAND_MODAL": {
     "NEW_TITLE": "Nuevo Terreno",
@@ -433,6 +438,7 @@
     "MAX_ARBOLES": "Capacidad máxima"
   },
   "TREE_SPECIES": {
+    "SUBTITLE": "Administra y define las especies de árboles disponibles.",
     "EDIT_TITLE": "Editar Especie de Árbol",
     "NEW_TITLE": "Nueva Especie de Árbol",
     "IMAGE_ALT": "Imagen de la especie",
@@ -483,7 +489,6 @@
     "NO_LOCATION": "Ubicación pendiente",
     "VIEW_DETAILS": "Ver detalles"
   },
-
   "LANDS": {
     "TITLE": "Terrenos de Plantación",
     "SUBTITLE": "Explora los diferentes terrenos donde forest+ está regenerando el territorio.",

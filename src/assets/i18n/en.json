@@ -236,7 +236,11 @@
     "CLOSE_BUTTON": "Close",
     "LAND": "Land",
     "QUANTITY": "Quantity",
-    "ASSIGN": "Assign Trees"
+    "ASSIGN": "Assign Trees",
+    "LOADING_LANDS": "Loading lands...",
+    "NO_LANDS_WARNING": "No lands available. Please create a land from the administration section first.",
+    "LOADING_PLANTATIONS": "Loading plantations...",
+    "NO_PLANTATIONS_WARNING": "This land has no planned plantations. Create a planned plantation in this land to be able to assign trees."
   },
   "LAND_MODAL": {
     "NEW_TITLE": "New Land",
@@ -413,6 +417,7 @@
     "MAX_ARBOLES": "Max capacity"
   },
   "TREE_SPECIES": {
+    "SUBTITLE": "Manage and define the available tree species.",
     "EDIT_TITLE": "Edit Tree Species",
     "NEW_TITLE": "New Tree Species",
     "IMAGE_ALT": "Tree species image",

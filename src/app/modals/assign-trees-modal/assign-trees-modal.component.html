@@ -11,13 +11,38 @@
 
     <form [formGroup]="form" (ngSubmit)="submit()">
 
+      <!-- Loading Lands -->
+      <div *ngIf="loadingLands" class="form-group text-center" style="padding: 1rem; opacity: 0.7;">
+        <div class="spinner" style="width: 24px; height: 24px; border-width: 2px; margin: 0 auto 10px;"></div>
+        <p style="margin:0; font-size: 0.9rem;">{{ 'ASSIGN_TREES.LOADING_LANDS' | translate }}</p>
+      </div>
+
+      <!-- No Lands Warning -->
+      <div *ngIf="!loadingLands && lands.length === 0" class="form-group notice-box error" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 1rem; border-radius: 4px;">
+        <p style="margin: 0; color: #ef4444; font-size: 0.9rem;"><i class="fas fa-exclamation-triangle"></i> {{ 'ASSIGN_TREES.NO_LANDS_WARNING' | translate }}</p>
+      </div>
+
       <!-- Land -->
-      <div class="form-group">
+      <div class="form-group" *ngIf="!loadingLands && lands.length > 0">
         <label>{{ 'ASSIGN_TREES.LAND' | translate }}</label>
         <select formControlName="landId" (change)="onLandChange($event)" class="form-control">
           <option [ngValue]="null" disabled>{{ 'COMMON.SELECT_OPTION' | translate }}</option>
-          <option *ngFor="let land of lands" [value]="land.id">{{ land.name }}</option>
+          <option *ngFor="let land of lands" [value]="land.id" [disabled]="isLandFull(land)">
+            {{ land.name }} 
+            ({{ (land.maxTrees || 0) - (land.plantedTreesCount || 0) }} libres)
+          </option>
         </select>
+      </div>
+
+      <!-- Loading Plantations -->
+      <div *ngIf="loadingPlantations" class="form-group text-center" style="padding: 1rem; opacity: 0.7;">
+        <div class="spinner" style="width: 24px; height: 24px; border-width: 2px; margin: 0 auto 10px;"></div>
+        <p style="margin:0; font-size: 0.9rem;">{{ 'ASSIGN_TREES.LOADING_PLANTATIONS' | translate }}</p>
+      </div>
+
+      <!-- No Plantations Warning -->
+      <div *ngIf="hasSelectedLand && !loadingPlantations && plannedPlantations.length === 0" class="form-group notice-box error" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 1rem; border-radius: 4px;">
+        <p style="margin: 0; color: #ef4444; font-size: 0.9rem;"><i class="fas fa-exclamation-triangle"></i> {{ 'ASSIGN_TREES.NO_PLANTATIONS_WARNING' | translate }}</p>
       </div>
 
       <!-- Planned Plantation -->
@@ -25,9 +50,9 @@
         <label>{{ 'ASSIGN_TREES.PLANNED_PLANTATION' | translate }}</label>
         <select formControlName="plannedPlantationId" class="form-control">
           <option [ngValue]="null" disabled>{{ 'COMMON.SELECT_OPTION' | translate }}</option>
-          <option *ngFor="let pp of plannedPlantations" [value]="pp.id">
-            {{ pp.plannedDate | date:'dd/MM/yyyy' }} · {{ pp.maxTrees }} {{
-            'PLANNED_PLANTATION.MAX_TREES' | translate }}
+          <option *ngFor="let pp of plannedPlantations" [value]="pp.id" [disabled]="isPlantationFull(pp)">
+            {{ pp.plannedDate | date:'dd/MM/yyyy' }} · 
+            {{ (pp.maxTrees || 0) - (pp.purchasedTrees || 0) }} libres
           </option>
         </select>
       </div>
@@ -46,6 +71,9 @@
         <label>{{ 'ASSIGN_TREES.QUANTITY' | translate }}</label>
         <input type="number" formControlName="quantity" min="1"
           [placeholder]="'ASSIGN_TREES.QUANTITY' | translate" class="form-control" />
+        <div *ngIf="isCapacityExceeded" class="error-message" style="color: var(--color-danger); font-size: 0.8rem; margin-top: 5px;">
+          <i class="fas fa-exclamation-circle"></i> Supera el máximo disponible ({{ getRemainingCapacity() }})
+        </div>
       </div>
 
       <!-- Actions -->
@@ -56,7 +84,7 @@
           {{ 'COMMON.CANCEL' | translate }}
         </button>
 
-        <button type="submit" [disabled]="form.invalid || isSubmitting" class="btn btn-primary"
+        <button type="submit" [disabled]="form.invalid || isSubmitting || isCapacityExceeded" class="btn btn-primary"
           style="background: #10b981; border-color: #10b981; color: white !important;">
           {{ 'ASSIGN_TREES.ASSIGN' | translate }}
         </button>

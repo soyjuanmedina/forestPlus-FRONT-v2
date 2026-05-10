@@ -5,7 +5,7 @@
       <p>{{ 'TREE_SPECIES.SUBTITLE' | translate }}</p>
     </div>
     <button (click)="openNew()" class="btn btn-primary">
-       {{ 'TREE_SPECIES.NEW_TITLE' | translate }}
+      <i class="fas fa-plus"></i>&nbsp;{{ 'TREE_SPECIES.NEW_TITLE' | translate }}
     </button>
   </div>
 
@@ -70,7 +70,7 @@
       <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
         <div class="form-group" style="flex:1;">
           <label>{{ 'TREE_SPECIES.CO2' | translate }} (a los 20 años)</label>
-          <input type="number" class="form-control" [(ngModel)]="editingSpecies.co2AbsorptionAt20">
+          <input type="number" class="form-control" [(ngModel)]="editingSpecies.co2AbsorptionAt20" [disabled]="!isSuperAdmin">
         </div>
         <div class="form-group" style="flex:1;">
           <label>{{ 'TREE_SPECIES.HEIGHT' | translate }}</label>

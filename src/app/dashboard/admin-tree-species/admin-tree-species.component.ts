@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { StatusModalComponent } from '../../shared/status-modal/status-modal.component';
 import { ConfirmModalComponent } from '../../shared/confirm-modal/confirm-modal.component';
+import { AuthService } from '../../services/auth.service';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -20,6 +21,7 @@ export class AdminTreeSpeciesComponent implements OnInit {
   private _editingSpecies: any = null;
   private _originalSpecies: any = null;
   isNew = false;
+  isSuperAdmin = false;
 
   get editingSpecies() { return this._editingSpecies; }
   set editingSpecies(val: any) {
@@ -43,10 +45,12 @@ export class AdminTreeSpeciesComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.isSuperAdmin = this.authService.getRole() === 'ADMIN';
     this.loadTreeSpecies();
   }
 

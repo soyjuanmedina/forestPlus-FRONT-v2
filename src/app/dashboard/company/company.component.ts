@@ -11,6 +11,7 @@ import { TreeService } from '../../services/tree.service';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component( {
   selector: 'app-company',
@@ -26,6 +27,7 @@ export class CompanyComponent implements OnInit {
   private treeApi = inject( TreeControllerService );
   private treeService = inject( TreeService );
   private translate = inject( TranslateService );
+  private authService = inject( AuthService );
 
   companyId?: number;
   company?: CompanyResponseDto;
@@ -33,6 +35,7 @@ export class CompanyComponent implements OnInit {
   co2Records: CompanyCO2YearlyResponseDto[] = [];
   loading = true;
   stats = { totalTrees: 0, totalCo2: 0 };
+  isAdmin = false;
 
   // Factores de equivalencia unificados
   readonly CAR_FACTOR = 120;   // 120g CO2 por km = 0.12kg/km
@@ -65,6 +68,9 @@ export class CompanyComponent implements OnInit {
   };
 
   ngOnInit () {
+    const role = this.authService.getRole();
+    this.isAdmin = role === 'ADMIN' || role === 'COMPANY_ADMIN';
+
     this.route.paramMap.subscribe( params => {
       const idParam = params.get( 'id' );
       if ( idParam ) {

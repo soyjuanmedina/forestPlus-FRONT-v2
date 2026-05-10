@@ -19,6 +19,7 @@ export class TreeFormComponent implements OnInit {
   treeForm!: FormGroup;
   tree!: TreeResponseDto;
   isAdmin = false;
+  isSuperAdmin = false;
   loading = true;
 
   plannedPlantations: PlannedPlantationResponseDto[] = [];
@@ -35,6 +36,7 @@ export class TreeFormComponent implements OnInit {
   ngOnInit(): void {
     const role = this.authService.getRole();
     this.isAdmin = role === 'ADMIN' || role === 'COMPANY_ADMIN';
+    this.isSuperAdmin = role === 'ADMIN';
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.treeService.getTreeById(+id).subscribe({
@@ -64,11 +66,11 @@ export class TreeFormComponent implements OnInit {
       customName: [this.tree.customName || ''],
       treeTypeName: [{ value: this.tree.treeType?.name, disabled: true }],
       scientificName: [{ value: this.tree.scientificName, disabled: true }],
-      co2AbsorptionAt20: [{ value: this.tree.co2AbsorptionAt20, disabled: !this.isAdmin }, [Validators.required, Validators.min(0)]],
-      co2AbsorptionAt25: [{ value: this.tree.co2AbsorptionAt25, disabled: !this.isAdmin }, [Validators.min(0)]],
-      co2AbsorptionAt30: [{ value: this.tree.co2AbsorptionAt30, disabled: !this.isAdmin }, [Validators.min(0)]],
-      co2AbsorptionAt35: [{ value: this.tree.co2AbsorptionAt35, disabled: !this.isAdmin }, [Validators.min(0)]],
-      co2AbsorptionAt40: [{ value: this.tree.co2AbsorptionAt40, disabled: !this.isAdmin }, [Validators.min(0)]],
+      co2AbsorptionAt20: [{ value: this.tree.co2AbsorptionAt20, disabled: !this.isSuperAdmin }, [Validators.required, Validators.min(0)]],
+      co2AbsorptionAt25: [{ value: this.tree.co2AbsorptionAt25, disabled: !this.isSuperAdmin }, [Validators.min(0)]],
+      co2AbsorptionAt30: [{ value: this.tree.co2AbsorptionAt30, disabled: !this.isSuperAdmin }, [Validators.min(0)]],
+      co2AbsorptionAt35: [{ value: this.tree.co2AbsorptionAt35, disabled: !this.isSuperAdmin }, [Validators.min(0)]],
+      co2AbsorptionAt40: [{ value: this.tree.co2AbsorptionAt40, disabled: !this.isSuperAdmin }, [Validators.min(0)]],
       plantedAt: [{ value: this.tree.plantedAt, disabled: !this.isAdmin }],
       landName: [{ value: this.tree.land?.name, disabled: true }],
       ownerName: [{ value: this.tree.ownerUserName, disabled: true }],

@@ -30,7 +30,11 @@
         <span style="font-weight: 600;">{{ 'TREE_SPECIES.SCIENTIFIC_NAME' | translate }}</span>
         <span>{{ tree.scientificName || ('TREE.ESPECIE_NO_DEFINIDA' | translate) }}</span>
       </div>
-      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
+      <div *ngIf="tree.plannedPlantation" style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
+        <span style="font-weight: 600;">{{ 'TREE.PLANTACION_PLANIFICADA' | translate }}</span>
+        <span>{{ tree.plannedPlantation.plannedDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div *ngIf="tree.plantedAt" style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
         <span style="font-weight: 600;">{{ 'TREE.PLANTADO_EL' | translate }}</span>
         <span>{{ tree.plantedAt | date:'dd/MM/yyyy' }}</span>
       </div>

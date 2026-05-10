@@ -24,6 +24,9 @@ export class AssignTreesModalComponent implements OnInit {
   plannedPlantations: PlannedPlantationResponseDto[] = [];
   treeTypes: TreeTypeResponseDto[] = [];
   isSubmitting = false;
+  loadingLands = true;
+  loadingPlantations = false;
+  hasSelectedLand = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +42,13 @@ export class AssignTreesModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.treeService.getLands().subscribe(lands => this.lands = lands);
+    this.treeService.getLands().subscribe({
+      next: (lands) => {
+        this.lands = lands;
+        this.loadingLands = false;
+      },
+      error: () => this.loadingLands = false
+    });
     this.treeService.getTreeSpecies().subscribe(types => this.treeTypes = types);
   }
 
@@ -52,14 +61,54 @@ export class AssignTreesModalComponent implements OnInit {
     });
     this.plannedPlantations = [];
 
+    this.hasSelectedLand = !!landId;
+
     if (landId) {
+      this.loadingPlantations = true;
       this.plannedPlantationService.getByLand(landId)
-        .subscribe(pp => this.plannedPlantations = pp);
+        .subscribe({
+          next: (pp) => {
+            this.plannedPlantations = pp;
+            this.loadingPlantations = false;
+          },
+          error: () => this.loadingPlantations = false
+        });
     }
   }
 
+  isLandFull(land: LandResponseDto): boolean {
+    return (land.maxTrees || 0) <= (land.plantedTreesCount || 0);
+  }
+
+  isPlantationFull(pp: PlannedPlantationResponseDto): boolean {
+    return (pp.maxTrees || 0) <= (pp.purchasedTrees || 0);
+  }
+
+  getRemainingCapacity(): number | null {
+    const landId = this.form.get('landId')?.value;
+    const ppId = this.form.get('plannedPlantationId')?.value;
+    
+    if (!landId || !ppId) return null;
+    
+    const land = this.lands.find(l => l.id === Number(landId));
+    const pp = this.plannedPlantations.find(p => p.id === Number(ppId));
+    
+    if (!land || !pp) return null;
+    
+    const landRemaining = (land.maxTrees || 0) - (land.plantedTreesCount || 0);
+    const ppRemaining = (pp.maxTrees || 0) - (pp.purchasedTrees || 0);
+    
+    return Math.max(0, Math.min(landRemaining, ppRemaining));
+  }
+
+  get isCapacityExceeded(): boolean {
+    const remaining = this.getRemainingCapacity();
+    const quantity = this.form.get('quantity')?.value;
+    return remaining !== null && quantity !== null && quantity > remaining;
+  }
+
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.isCapacityExceeded) return;
 
     this.isSubmitting = true;
     const payload = {
