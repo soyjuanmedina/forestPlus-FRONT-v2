@@ -163,7 +163,20 @@
     "NO_ACCOUNT": "Don't have an account?",
     "REGISTER": "Register",
     "EMAIL_NOT_VERIFIED": "Email has not been verified",
-    "EMAIL_ALREADY_EXISTS": "Email already exists. Try to login"
+    "EMAIL_ALREADY_EXISTS": "Email already exists. Try to login",
+    "WRONG_PASSWORD": "Wrong password",
+    "RESEND_EMAIL": "Resend verification email",
+    "GENERIC_ERROR": "Login error. Please check your credentials.",
+    "RESEND_ERROR": "Error resending email.",
+    "VERIFIED_SUCCESS": "Your email has been successfully verified! You can now log in.",
+    "RESEND_SUCCESS": "A new link has been sent to your email.",
+    "RESET_PASSWORD": "Forgot password?",
+    "RESET_INFO": "We have sent password reset instructions to your email.",
+    "ACCOUNT_LOCKED": "Your account has been locked due to too many failed attempts.",
+    "UNLOCK_ACCOUNT": "Unlock my account",
+    "UNLOCK_INFO": "We have sent an unlock link to your email. You don't need to change your password.",
+    "UNLOCK_SUCCESS": "Your account has been successfully unlocked! You can now log in.",
+    "UNLOCK_FAILED": "The unlock link is invalid or has expired."
   },
   "MENU": {
     "MENU": "Menu",

@@ -176,7 +176,20 @@
     "EMAIL_ALREADY_EXISTS": "El email ya existe en nuestra aplicación. Prueba a iniciar sesión",
     "REQUEST_ACCESS_INFO": "El registro directo está cerrado temporalmente. Si lo deseas, déjanos tu email y te contactaremos para crearte una cuenta.",
     "REQUEST_BUTTON": "Solicitar cuenta",
-    "REQUEST_SUCCESS": "¡Recibido! Te contactaremos pronto."
+    "REQUEST_SUCCESS": "¡Recibido! Te contactaremos pronto.",
+    "WRONG_PASSWORD": "La contraseña es incorrecta",
+    "RESEND_EMAIL": "Reenviar email de verificación",
+    "GENERIC_ERROR": "Error en el login. Comprueba tus credenciales.",
+    "RESEND_ERROR": "Error al reenviar el correo.",
+    "VERIFIED_SUCCESS": "¡Tu correo ha sido verificado con éxito! Ahora puedes iniciar sesión.",
+    "RESEND_SUCCESS": "Se ha enviado un nuevo enlace a tu correo.",
+    "RESET_PASSWORD": "Olvidé mi contraseña",
+    "RESET_INFO": "Te hemos enviado las instrucciones para resetear tu contraseña por email.",
+    "ACCOUNT_LOCKED": "Tu cuenta ha sido bloqueada tras demasiados intentos fallidos.",
+    "UNLOCK_ACCOUNT": "Desbloquear mi cuenta",
+    "UNLOCK_INFO": "Te hemos enviado un enlace para desbloquear tu acceso por email. No es necesario cambiar tu contraseña.",
+    "UNLOCK_SUCCESS": "¡Tu cuenta ha sido desbloqueada con éxito! Ya puedes iniciar sesión.",
+    "UNLOCK_FAILED": "El enlace de desbloqueo no es válido o ha caducado."
   },
   "MENU": {
     "MENU": "Menú",

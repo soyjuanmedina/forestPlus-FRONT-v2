@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { 
   AuthControllerService, 
   RegisterUserRequestDto, 
@@ -17,7 +19,12 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<UserResponseDto | null>( null );
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor ( private authApi: AuthControllerService ) {
+  private apiUrl = environment.apiBaseUrl + '/api/auth';
+
+  constructor ( 
+    private authApi: AuthControllerService,
+    private http: HttpClient
+  ) {
     // Comprobar si hay sesión en localStorage al recargar (persistencia básica)
     const storedUser = localStorage.getItem( 'forestPlus_user' );
     if ( storedUser ) {
@@ -82,5 +89,17 @@ export class AuthService {
 
   verifyEmail ( uuid: string ): Observable<MessageResponseDto> {
     return this.authApi.verifyEmail( uuid );
+  }
+
+  forgotPassword ( email: string ): Observable<MessageResponseDto> {
+    return this.http.post<MessageResponseDto>( `${this.apiUrl}/forgot-password`, { email } );
+  }
+
+  requestUnlock ( email: string ): Observable<MessageResponseDto> {
+    return this.http.post<MessageResponseDto>( `${this.apiUrl}/unlock-account`, { email } );
+  }
+
+  unlockAccount ( uuid: string ): Observable<MessageResponseDto> {
+    return this.http.get<MessageResponseDto>( `${this.apiUrl}/unlock`, { params: { uuid } } );
   }
 }

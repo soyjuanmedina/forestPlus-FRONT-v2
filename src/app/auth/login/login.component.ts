@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   password = '';
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  showResendButton = false;
+  errorAction: 'resend' | 'reset' | 'unlock' | null = null;
   features = environment.features;
 
   constructor (
@@ -39,12 +39,22 @@ export class LoginComponent implements OnInit {
     // Si viene del enlace de validación del backend '?verified=true'
     this.route.queryParams.subscribe( params => {
       if ( params['verified'] === 'true' ) {
-        this.successMessage = '¡Tu correo ha sido verificado con éxito! Ahora puedes iniciar sesión.';
+        this.successMessage = 'VERIFIED_SUCCESS';
+      }
+      if ( params['unlocked'] === 'true' && params['uuid'] ) {
+        this.authService.unlockAccount( params['uuid'] ).subscribe( {
+          next: () => this.successMessage = 'UNLOCK_SUCCESS',
+          error: () => this.errorMessage = 'UNLOCK_FAILED'
+        } );
       }
     } );
   }
 
   onSubmit () {
+    this.successMessage = null;
+    this.errorMessage = null;
+    this.errorAction = null;
+
     if ( this.email && this.password ) {
       this.authService.login( this.email, this.password ).subscribe( {
         next: ( res ) => {
@@ -56,9 +66,16 @@ export class LoginComponent implements OnInit {
         },
         error: ( err ) => {
           console.error( err );
-          this.errorMessage = err.error?.message || 'Error en el login. Comprueba tus credenciales.';
-          if ( err.status === 403 ) {
-            this.showResendButton = true;
+          this.errorMessage = err.error?.message || 'GENERIC_ERROR';
+          
+          if (this.errorMessage === 'WRONG_PASSWORD') {
+            this.errorAction = 'reset';
+          } else if (this.errorMessage === 'ACCOUNT_LOCKED') {
+            this.errorAction = 'unlock';
+          } else if (err.status === 403 || this.errorMessage === 'EMAIL_NOT_VERIFIED') {
+            this.errorAction = 'resend';
+          } else {
+            this.errorAction = null;
           }
         }
       } );
@@ -68,13 +85,53 @@ export class LoginComponent implements OnInit {
   onResendVerification () {
     this.authService.resendVerification( this.email ).subscribe( {
       next: ( res ) => {
-        this.successMessage = 'Se ha enviado un nuevo enlace a tu correo.';
+        this.successMessage = 'RESEND_SUCCESS';
         this.errorMessage = null;
-        this.showResendButton = false;
+        this.errorAction = null;
       },
       error: ( err ) => {
-        this.errorMessage = err.error?.message || 'Error al reenviar el correo.';
+        this.errorMessage = err.error?.message || 'RESEND_ERROR';
       }
     } );
+  }
+
+  onResetPassword() {
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    if (!this.email) {
+      this.errorMessage = 'EMAIL_REQUIRED';
+      return;
+    }
+    this.authService.forgotPassword(this.email).subscribe({
+      next: () => {
+        this.successMessage = 'RESET_INFO';
+        this.errorMessage = null;
+        this.errorAction = null;
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'GENERIC_ERROR';
+      }
+    });
+  }
+
+  onUnlockAccount() {
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    if (!this.email) {
+      this.errorMessage = 'EMAIL_REQUIRED';
+      return;
+    }
+    this.authService.requestUnlock(this.email).subscribe({
+      next: () => {
+        this.successMessage = 'UNLOCK_INFO';
+        this.errorMessage = null;
+        this.errorAction = null;
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'GENERIC_ERROR';
+      }
+    });
   }
 }
