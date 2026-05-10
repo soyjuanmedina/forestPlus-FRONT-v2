@@ -39,9 +39,9 @@
             <span *ngIf="!sidebarCollapsed">{{ 'MENU.HOME' | translate }}</span>
           </a>
           <a routerLink="/my-trees" routerLinkActive="active" class="nav-item"
-            [attr.data-tooltip]="(user.role === 'COMPANY_ADMIN' ? 'MENU.MY_TREES' : 'MENU.MY_TREES_PERSONAL') | translate">
+            [attr.data-tooltip]="(user.role === 'COMPANY_ADMIN' || user.role === 'COMPANY_USER' ? 'MENU.MY_TREES' : 'MENU.MY_TREES_PERSONAL') | translate">
             <i class="fa-solid fa-tree"></i>
-            <span *ngIf="!sidebarCollapsed">{{ (user.role === 'COMPANY_ADMIN' ? 'MENU.MY_TREES' : 'MENU.MY_TREES_PERSONAL') | translate }}</span>
+            <span *ngIf="!sidebarCollapsed">{{ (user.role === 'COMPANY_ADMIN' || user.role === 'COMPANY_USER' ? 'MENU.MY_TREES' : 'MENU.MY_TREES_PERSONAL') | translate }}</span>
           </a>
           <a routerLink="/lands" routerLinkActive="active" class="nav-item"
             [attr.data-tooltip]="'MENU.LANDS' | translate">
