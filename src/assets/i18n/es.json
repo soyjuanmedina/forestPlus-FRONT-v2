@@ -348,6 +348,7 @@
     "MUST_CHANGE_NOTICE": "⚠️ Por seguridad, debes cambiar tu contraseña temporal antes de continuar.",
     "DELETE_ACCOUNT": "Eliminar cuenta",
     "DELETE_ACCOUNT_DESC": "Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate de que realmente quieres hacerlo.",
+    "ADMIN_DELETE_NOTICE": "Como administrador, para eliminar tu cuenta debes contactar con el administrador de la aplicación.",
     "DELETE_CONFIRM_TITLE": "Confirmar eliminación",
     "CONFIRM_DELETE": "Eliminar definitivamente",
     "CONFIRM_SELF_DELETE": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.",

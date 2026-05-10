@@ -161,10 +161,19 @@
           </button>
 
           <div class="danger-zone">
-            <p class="danger-desc">{{ 'PROFILE.DELETE_ACCOUNT_DESC' | translate }}</p>
-            <button class="btn btn-danger-outline" (click)="deleteUser()">
-              <i class="fa-solid fa-trash-can"></i> {{ 'PROFILE.DELETE_ACCOUNT' | translate }}
-            </button>
+            <ng-container *ngIf="canDeleteAccount; else adminDeleteNotice">
+              <p class="danger-desc">{{ 'PROFILE.DELETE_ACCOUNT_DESC' | translate }}</p>
+              <button class="btn btn-danger-outline" (click)="deleteUser()">
+                <i class="fa-solid fa-trash-can"></i> {{ 'PROFILE.DELETE_ACCOUNT' | translate }}
+              </button>
+            </ng-container>
+            <ng-template #adminDeleteNotice>
+               <div class="notice-box info" style="border-left: 4px solid var(--color-primary); background: rgba(105, 210, 145, 0.05); padding: 1rem; border-radius: 8px;">
+                 <p style="font-size: 0.9rem; color: var(--color-text-dark); margin: 0;">
+                   <i class="fa-solid fa-circle-info" style="color: var(--color-primary);"></i> {{ 'PROFILE.ADMIN_DELETE_NOTICE' | translate }}
+                 </p>
+               </div>
+            </ng-template>
           </div>
         </div>
       </div>

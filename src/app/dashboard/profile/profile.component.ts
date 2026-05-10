@@ -57,6 +57,11 @@ export class ProfileComponent implements OnInit {
   
   showingAssignModal = false;
 
+  get canDeleteAccount(): boolean {
+    if (!this.currentUser) return false;
+    return this.currentUser.role === 'USER' || this.currentUser.role === 'COMPANY_USER';
+  }
+
   constructor (
     private authService: AuthService,
     private userService: UserService,
